@@ -11,7 +11,7 @@ const NUT_W = 10;
 const ROW_H = 44;
 
 // Real fret spacing: each fret is ~5.6% narrower than the previous one.
-const FRET_WEIGHTS = Array.from({ length: FRET_COUNT }, (_, i) => 2 ** (-i / 12) - 2 ** (-(i + 1) / 12));
+const FRET_WEIGHTS = Array.from({ length: FRET_COUNT }, (_, i) => 2 ** (-i / 24) - 2 ** (-(i + 1) / 24));
 const FRET_COLUMNS = FRET_WEIGHTS.map((w) => `minmax(0, ${(w * 100).toFixed(3)}fr)`).join(' ');
 const GRID_TEMPLATE = `${LABEL_W}px ${OPEN_W}px ${NUT_W}px ${FRET_COLUMNS}`;
 const BOARD_LEFT = LABEL_W + OPEN_W + NUT_W;

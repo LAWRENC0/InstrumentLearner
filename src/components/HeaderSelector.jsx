@@ -20,13 +20,26 @@ function Menu({ label, items, value, open, onToggle, onSelect, className }) {
 
 export default function HeaderSelector({
   instrument, mode, modes, difficulty, difficulties, exercise, exercises, openMenu, onMenuToggle,
-  onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange,
+  onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange, sidebarOpen, onToggleSidebar,
 }) {
   const instrumentModes = instrument === 'guitar' ? modes : ['Register & Intonation', 'Register Graph'];
   return (
-    <header className="relative z-50 mb-6 rounded-2xl border border-slate-700 bg-slate-900/70 p-4 text-center backdrop-blur-md">
+    <>
+      <button
+        type="button"
+        onClick={onToggleSidebar}
+        aria-expanded={sidebarOpen}
+        aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
+        className="fixed left-0 top-1/2 z-[60] -translate-y-1/2 rounded-r-xl border border-l-0 border-cyan-400/70 bg-slate-900/95 px-2 py-4 text-cyan-200 shadow-xl backdrop-blur-md"
+      >
+        <span className="text-lg">{sidebarOpen ? '‹' : '›'}</span>
+      </button>
+      <header className={[
+        'fixed inset-y-3 left-0 z-50 w-72 rounded-r-2xl border border-l-0 border-slate-700 bg-slate-900/95 p-4 text-center shadow-2xl shadow-black/50 backdrop-blur-md transition-transform duration-200',
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full',
+      ].join(' ')}>
       <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Instrument Learner</p>
-      <div className="mt-4 flex flex-wrap items-start justify-center gap-3">
+      <div className="mt-6 flex flex-col items-stretch gap-3">
         <Menu
           value={instrument}
           items={['guitar', 'trumpet']}
@@ -64,6 +77,7 @@ export default function HeaderSelector({
           />
         )}
       </div>
-    </header>
+      </header>
+    </>
   );
 }

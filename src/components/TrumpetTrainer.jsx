@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import ControlSidebar from './ControlSidebar';
 import {
   evaluateTrumpetConfiguration,
   calculateTrumpetPitch,
@@ -38,8 +39,8 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
 
   return (
     <div className="mb-5 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950/70 p-3">
-      <div className="relative mx-auto h-28 min-w-fit" style={{ width: `${whiteNotes.length * 32}px` }}>
-        <div className="absolute inset-x-0 bottom-0 flex h-24">
+      <div className="relative mx-auto h-24 min-w-fit" style={{ width: `${whiteNotes.length * 32}px` }}>
+        <div className="absolute inset-x-0 bottom-0 flex h-20">
           {whiteNotes.map((midi) => (
             <div
               key={midi}
@@ -62,7 +63,7 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
             <div
               key={midi}
               className={[
-                'absolute top-0 z-10 h-16 w-5 -translate-x-1/2 rounded-b border border-slate-950 bg-slate-900',
+                'absolute top-0 z-10 h-12 w-5 -translate-x-1/2 rounded-b border border-slate-950 bg-slate-900',
                 midi === targetDisplayMidi
                   ? 'z-20 border-2 border-emerald-200 bg-emerald-400 shadow-[0_0_14px_rgba(52,211,153,0.9)]'
                   : '',
@@ -272,6 +273,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
   const [graphScale, setGraphScale] = useState('keyboard');
   const [result, setResult] = useState(null);
   const [showProducedNote, setShowProducedNote] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(false);
 
   const producedPreview = calculateTrumpetPitch({ partial, valves, pump1, pump3 });
   const graphMode = mode === 'Register Graph';
@@ -381,14 +383,6 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
                 </span>
               </div>
             </div>
-            <button
-              type="button"
-              onClick={() => setBbNotation((current) => !current)}
-              aria-pressed={bbNotation}
-              className="mt-4 w-full min-w-44 rounded-xl border border-slate-700 bg-slate-950/60 px-4 py-2.5 text-sm font-semibold text-slate-200 hover:border-slate-400"
-            >
-              Intonation: {bbNotation ? 'trumpet' : 'real'}
-            </button>
           </label>
 
           <div className="rounded-2xl border border-amber-200/20 bg-black/20 p-4">
@@ -442,17 +436,22 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
               3rd slide: {pump3}%
               <input type="range" min="0" max="4" step="1" value={PUMP_LEVELS.indexOf(pump3)} onChange={(event) => setPump3(PUMP_LEVELS[Number(event.target.value)])} className="accent-amber-300" />
             </label>
-            {!graphMode && <button
-              type="button"
-              onClick={() => setShowProducedNote((current) => !current)}
-              aria-pressed={showProducedNote}
-              className="w-full min-w-44 rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100 hover:border-slate-400"
-            >
-              {showProducedNote ? 'Hide note' : 'Show note'}
-            </button>}
           </div>
         </div>
       </section>
+
+      <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Trumpet controls">
+        <button type="button" onClick={() => setBbNotation((current) => !current)}
+          className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+          Intonation: {bbNotation ? 'trumpet' : 'real'}
+        </button>
+        {!graphMode && (
+          <button type="button" onClick={() => setShowProducedNote((current) => !current)}
+            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+            {showProducedNote ? 'Hide note' : 'Show note'}
+          </button>
+        )}
+      </ControlSidebar>
 
       {!graphMode && <section>
         <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900/80 p-5">

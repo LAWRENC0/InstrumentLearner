@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import HeaderSelector from './components/HeaderSelector';
 import GuitarTrainer from './components/GuitarTrainer';
 import TrumpetTrainer from './components/TrumpetTrainer';
+import ControlSidebar from './components/ControlSidebar';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
 } from './utils/questionHelpers';
@@ -384,6 +385,8 @@ function App() {
   const [instrument, setInstrument] = useState('guitar');
   const [trumpetMode, setTrumpetMode] = useState('Register & Intonation');
   const [openMenu, setOpenMenu] = useState(null);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [controlsOpen, setControlsOpen] = useState(false);
   const trainer = useGuitarTrainerState();
   const handleModeChange = (nextMode) => {
     trainer.setMode(nextMode);
@@ -400,6 +403,11 @@ function App() {
           difficulties={instrument === 'guitar' && trainer.mode === 'Fill in the Chords' ? CHORD_DIFFICULTIES : []}
           exercises={instrument === 'guitar' && trainer.mode === 'Scale & Triads' ? SCALE_TRIAD_EXERCISES : []}
           exercise={trainer.scaleTriadExercise}
+          sidebarOpen={sidebarOpen}
+          onToggleSidebar={() => {
+            setSidebarOpen((open) => !open);
+            setOpenMenu(null);
+          }}
           onMenuToggle={(menu) => setOpenMenu((current) => current === menu ? null : menu)}
           onInstrumentChange={(next) => { setInstrument(next); setOpenMenu(null); }}
           mode={instrument === 'guitar' ? trainer.mode : trumpetMode}
@@ -447,6 +455,24 @@ function App() {
             displayScaleRoot={trainer.displayScaleRoot}
             displayScaleType={trainer.displayScaleType}
           />
+        )}
+        {instrument === 'guitar' && (
+          <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Controls">
+            <button type="button" onClick={() => trainer.setRevealNames((value) => !value)}
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+              {trainer.revealNames ? 'Hide notes' : 'Show notes'}
+            </button>
+            {trainer.revealNames && (
+              <button type="button" onClick={() => trainer.setDisplayScaleDegrees((value) => !value)}
+                className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+                {trainer.displayScaleDegrees ? 'Show notes' : 'Show degrees'} ({trainer.displayScaleRoot} {trainer.displayScaleType === 'minor' ? 'min' : 'maj'})
+              </button>
+            )}
+            <button type="button" onClick={() => trainer.setAudioEnabled((value) => !value)}
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+              Audio {trainer.audioEnabled ? 'ON' : 'OFF'}
+            </button>
+          </ControlSidebar>
         )}
       </div>
     </div>

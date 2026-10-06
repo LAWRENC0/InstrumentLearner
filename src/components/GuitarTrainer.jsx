@@ -113,22 +113,6 @@ export default function GuitarTrainer({
             className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-center text-sm text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none"
           />
         )}
-        <div className="flex justify-between gap-3">
-          <button type="button" onClick={onToggleReveal}
-            className="w-44 rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-slate-400">
-            {revealNames ? 'Hide notes' : 'Reveal notes'}
-          </button>
-          {revealNames && (
-            <button type="button" onClick={onToggleDisplayScaleDegrees} aria-pressed={displayScaleDegrees}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-3 py-2.5 text-xs font-semibold text-slate-100 transition hover:border-slate-400">
-              {displayScaleDegrees ? 'Show notes' : 'Show degrees'} ({displayScaleRoot} {displayScaleType === 'minor' ? 'min' : 'maj'})
-            </button>
-          )}
-          <button type="button" onClick={onToggleAudio} aria-pressed={audioEnabled}
-            className="w-44 rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100 transition hover:border-slate-400">
-            Audio {audioEnabled ? 'ON' : 'OFF'}
-          </button>
-        </div>
       </section>
       {!isExplorer && <aside className="space-y-4">
         <div className="rounded-2xl border border-slate-700 bg-slate-900/80 p-4">
