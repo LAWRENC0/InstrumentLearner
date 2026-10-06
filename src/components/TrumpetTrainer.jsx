@@ -106,15 +106,16 @@ function createQuestion(previousMidi = null, previousOffset = null, bbNotation =
 
 function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPreview, scale, onScaleChange }) {
   const width = 900;
-  const height = 620;
-  const pad = { left: 156, right: 24, top: 24, bottom: 52 };
-  const minMidi = TRUMPET_LOW_MIDI;
-  const maxMidi = calculateTrumpetPitch({
-    partial: MAX_TRUMPET_PARTIAL,
-    valves: [],
-    pump1: 0,
-    pump3: 0,
-  }).nearestMidi;
+  const height = scale === 'cents' ? 360 : 460;
+  const pad = scale === 'cents'
+    ? { left: 156, right: 24, top: 12, bottom: 34 }
+    : { left: 156, right: 24, top: 18, bottom: 42 };
+  const points = Array.from({ length: MAX_TRUMPET_PARTIAL }, (_, index) => {
+    const registerPartial = index + 1;
+    return { partial: registerPartial, ...calculateTrumpetPitch({ partial: registerPartial, valves, pump1, pump3 }) };
+  });
+  const minMidi = Math.floor(Math.min(TRUMPET_LOW_MIDI, ...points.map((point) => point.exactMidi)));
+  const maxMidi = Math.ceil(Math.max(...points.map((point) => point.exactMidi)));
   const keyboardWidth = 128;
   const keyHeight = (height - pad.top - pad.bottom) / (maxMidi - minMidi + 1);
   const x = (value) => pad.left + ((value - 1) / (MAX_TRUMPET_PARTIAL - 1)) * (width - pad.left - pad.right);
@@ -123,10 +124,6 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
   const y = (value) => scale === 'keyboard'
     ? pad.top + (maxMidi + 0.5 - value) * keyHeight
     : pad.top + (1 - (value - centsMin) / (centsMax - centsMin)) * (height - pad.top - pad.bottom);
-  const points = Array.from({ length: MAX_TRUMPET_PARTIAL }, (_, index) => {
-    const registerPartial = index + 1;
-    return { partial: registerPartial, ...calculateTrumpetPitch({ partial: registerPartial, valves, pump1, pump3 }) };
-  });
   const currentMidi = producedPreview.exactMidi;
   const keyboardNotes = Array.from({ length: maxMidi - minMidi + 1 }, (_, index) => maxMidi - index);
   const isBlackKey = (midi) => BLACK_PITCH_CLASSES.has(midi % 12);
@@ -142,8 +139,7 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
 
   return (
     <section className="rounded-2xl border border-cyan-700/60 bg-slate-900/85 p-5 shadow-xl">
-      <div className="mb-3 flex flex-wrap items-baseline justify-between gap-2">
-        <p className="text-xs uppercase tracking-[0.25em] text-cyan-300">Trumpet · Register graph</p>
+      <div className="mb-3 flex flex-wrap items-baseline justify-end gap-2">
         <div className="flex flex-wrap items-center justify-end">
           <button
             type="button"
@@ -325,7 +321,23 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
         />
       ) : <section className="rounded-2xl border border-amber-700/50 bg-slate-900/80 p-5">
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] text-amber-300">Trumpet · Intonation</p>
+          <div className="mb-3 flex flex-wrap items-center justify-center gap-6">
+            <p className="text-center text-3xl font-bold text-white">
+              {getTrumpetQuestionText(question.targetMidi, bbNotation)}
+            </p>
+            {showProducedNote && (
+              <p className={[
+                'text-center text-3xl font-bold',
+                result
+                  ? result.quality === 'wrong' ? 'text-red-300' : 'text-amber-300'
+                  : 'text-cyan-200',
+              ].join(' ')}>
+                {producedDisplayNote}{' '}
+                {producedPreview.centsFromTarget >= 0 ? '+' : ''}
+                {producedPreview.centsFromTarget.toFixed(1)} cents
+              </p>
+            )}
+          </div>
           <PianoKeyboard
             targetMidi={question.targetMidi}
             producedMidi={producedPreview.exactMidi + (bbNotation ? 2 : 0)}
@@ -337,7 +349,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
       </section>}
 
       <section className="rounded-2xl border border-amber-900/70 bg-gradient-to-br from-[#4a2a18] to-[#17100c] p-5 shadow-2xl">
-        <div className="grid gap-6 md:grid-cols-[0.8fr_1.4fr_0.8fr] md:items-center">
+        <div className="grid gap-3 md:grid-cols-[1fr_1.1fr_1fr] md:items-stretch">
           <label className="flex flex-col gap-3 rounded-2xl border border-amber-200/20 bg-black/20 p-4">
             <span className="text-xs uppercase tracking-[0.2em] text-amber-200">Partial</span>
             <input
@@ -385,27 +397,8 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
             </div>
           </label>
 
-          <div className="rounded-2xl border border-amber-200/20 bg-black/20 p-4">
-            <div className="mb-5 flex items-center justify-center gap-6">
-              <p className="text-center text-4xl font-bold text-white">
-                {graphMode
-                  ? `${producedDisplayNote} ${producedPreview.centsFromTarget >= 0 ? '+' : ''}${producedPreview.centsFromTarget.toFixed(1)} cents`
-                  : getTrumpetQuestionText(question.targetMidi, bbNotation)}
-              </p>
-              {(showProducedNote && !graphMode) && (
-                <p className={[
-                  'text-center text-4xl font-bold',
-                  result
-                    ? result.quality === 'wrong' ? 'text-red-300' : 'text-amber-300'
-                    : 'text-cyan-200',
-                ].join(' ')}>
-                  {producedDisplayNote}{' '}
-                  {producedPreview.centsFromTarget >= 0 ? '+' : ''}
-                  {producedPreview.centsFromTarget.toFixed(1)}
-                </p>
-              )}
-            </div>
-            <p className="mb-3 text-center text-xs uppercase tracking-[0.2em] text-amber-200">Valves</p>
+          <div className="rounded-2xl border border-amber-200/20 bg-black/20 p-3">
+            <p className="mb-2 text-center text-xs uppercase tracking-[0.2em] text-amber-200">Valves</p>
             <div className="flex justify-center gap-3">
               {VALVES.map((valve) => (
                 <button
@@ -413,7 +406,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
                   type="button"
                   onClick={() => toggleValve(valve)}
                   className={[
-                    'flex h-20 w-20 flex-col items-center justify-center rounded-full border-4 font-bold transition',
+                    'flex h-16 w-16 flex-col items-center justify-center rounded-full border-4 font-bold transition',
                     valves.includes(valve)
                       ? 'border-amber-200 bg-amber-300 text-amber-950 shadow-[0_0_24px_rgba(252,211,77,0.45)]'
                       : 'border-slate-400 bg-slate-800 text-slate-100 hover:border-amber-200',
