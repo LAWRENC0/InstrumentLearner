@@ -8,7 +8,7 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
   },
-  base: '/LAWRENC0/InstrumentLearner/',
+  base: '/InstrumentLearner/',
   build: {
     outDir: 'docs',
   },
