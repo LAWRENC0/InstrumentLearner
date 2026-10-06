@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import ControlSidebar from './ControlSidebar';
 import {
   evaluateTrumpetConfiguration,
@@ -6,6 +6,7 @@ import {
   formatTrumpetNote,
   formatTrumpetConfiguration,
   getBestTrumpetConfiguration,
+  getTrumpetConfigurations,
   getRandomTrumpetTarget,
   getTrumpetQuestionText,
   getWrittenBbTrumpetMidi,
@@ -14,6 +15,7 @@ import {
   TRUMPET_HIGH_MIDI,
   TRUMPET_LOW_MIDI,
 } from '../utils/trumpetTheory';
+import { noteToMidi, NOTE_NAMES } from '../utils/musicTheory';
 
 // Player's view: valve 1, valve 2, and valve 3 from left to right.
 const VALVES = [1, 2, 3];
@@ -259,6 +261,135 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
   );
 }
 
+const SCALE_INTERVALS = {
+  major: [0, 2, 4, 5, 7, 9, 11],
+  minor: [0, 2, 3, 5, 7, 8, 10],
+};
+
+function valveNotation(valves) {
+  return VALVES.map((valve) => (valves.includes(valve) ? '●' : '−')).join('');
+}
+
+const ROMAN_DEGREES = ['I', 'bII', 'II', 'bIII', 'III', 'IV', 'bV', 'V', 'bVI', 'VI', 'bVII', 'VII'];
+
+function ScaleFingeringChart() {
+  const [root, setRoot] = useState('C');
+  const [quality, setQuality] = useState('major');
+  const [minPartial, setMinPartial] = useState(1);
+  const [maxPartial, setMaxPartial] = useState(MAX_TRUMPET_PARTIAL);
+  const [showDegrees, setShowDegrees] = useState(false);
+  const [showSlides, setShowSlides] = useState(true);
+  const [bbNotation, setBbNotation] = useState(false);
+  const [alternativeNotes, setAlternativeNotes] = useState(new Set());
+
+  const scaleNotes = useMemo(() => {
+    const rootMidi = noteToMidi(`${root}4`);
+    const scalePitchClasses = new Set(
+      SCALE_INTERVALS[quality].map((interval) => (rootMidi + interval) % 12),
+    );
+    const notes = [];
+
+    for (let midi = TRUMPET_LOW_MIDI; midi <= TRUMPET_HIGH_MIDI; midi += 1) {
+      if (scalePitchClasses.has(midi % 12)) {
+        notes.push({
+          degree: SCALE_INTERVALS[quality].findIndex(
+            (interval) => (rootMidi + interval) % 12 === midi % 12,
+          ) + 1,
+          midi,
+        });
+      }
+    }
+
+    return notes;
+  }, [root, quality]);
+  const chartNotes = useMemo(() => scaleNotes
+    .map((note) => {
+      const configurations = getTrumpetConfigurations(note.midi, minPartial, maxPartial);
+      const interval = ((note.midi - noteToMidi(`${root}4`)) % 12 + 12) % 12;
+      return {
+        ...note,
+        degreeLabel: ROMAN_DEGREES[interval],
+        configurations,
+        primary: configurations[0] ?? null,
+        alternative: configurations[1] ?? null,
+      };
+    })
+    .filter((note) => note.configurations.length > 0), [scaleNotes, root, minPartial, maxPartial]);
+
+  const setMin = (value) => {
+    const next = Number(value);
+    setMinPartial(Math.min(next, maxPartial));
+  };
+  const setMax = (value) => {
+    const next = Number(value);
+    setMaxPartial(Math.max(next, minPartial));
+  };
+
+  return (
+    <section className="space-y-3 rounded-2xl border border-cyan-700/60 bg-slate-900/85 p-3 shadow-xl">
+      <div className="flex flex-wrap items-center justify-center gap-2">
+        <select value={root} onChange={(event) => setRoot(event.target.value)}
+          className="rounded-lg border border-cyan-400/60 bg-slate-800 px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale fundamental">
+          {NOTE_NAMES.map((note) => <option key={note}>{note}</option>)}
+        </select>
+        <select value={quality} onChange={(event) => setQuality(event.target.value)}
+          className="rounded-lg border border-cyan-400/60 bg-slate-800 px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale quality">
+          <option value="major">Major</option>
+          <option value="minor">Minor</option>
+        </select>
+        <button type="button" onClick={() => setShowDegrees((value) => !value)}
+          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          {showDegrees ? 'Show notes' : 'Show degrees'}
+        </button>
+        <button type="button" onClick={() => setShowSlides((value) => !value)}
+          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          Slides {showSlides ? 'ON' : 'OFF'}
+        </button>
+        <button type="button" onClick={() => setBbNotation((value) => !value)}
+          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          {bbNotation ? 'Trumpet tuning' : 'Real tuning'}
+        </button>
+      </div>
+      <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-300">
+        <label>Partial min <input type="range" min="1" max={maxPartial} value={minPartial} onChange={(event) => setMin(event.target.value)} className="mx-1 align-middle accent-cyan-300" />{minPartial}</label>
+        <label>max <input type="range" min={minPartial} max={MAX_TRUMPET_PARTIAL} value={maxPartial} onChange={(event) => setMax(event.target.value)} className="mx-1 align-middle accent-cyan-300" />{maxPartial}</label>
+      </div>
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+        {chartNotes.map((note) => {
+          const entry = alternativeNotes.has(note.midi) && note.alternative ? note.alternative : note.primary;
+          const displayMidi = note.midi + (bbNotation ? 2 : 0);
+          return (
+            <div key={note.midi} className="relative min-h-[104px] rounded-lg border border-slate-700 bg-slate-950/80 p-3 text-sm text-slate-200">
+              {note.alternative && (
+                <button type="button" onClick={() => setAlternativeNotes((current) => {
+                  const next = new Set(current);
+                  if (next.has(note.midi)) next.delete(note.midi); else next.add(note.midi);
+                  return next;
+                })} className="absolute left-1 top-1 rounded border border-slate-600 px-1.5 py-0.5 text-xs text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
+                  {alternativeNotes.has(note.midi) ? 'A' : '+'}
+                </button>
+              )}
+              <div className="text-center text-base font-semibold text-white">
+                {showDegrees
+                  ? `${note.degreeLabel}${Math.floor(displayMidi / 12) - 1}`
+                  : formatTrumpetNote(displayMidi)}
+              </div>
+              <div className="mt-2 text-center text-sm text-cyan-200">
+                {`P${entry.configuration.partial}  ${valveNotation(entry.configuration.valves)}`}
+              </div>
+              {showSlides && entry && (
+                <div className="mt-1 text-center text-xs text-amber-200">
+                  S1: {entry.configuration.pump1}% · S3: {entry.configuration.pump3}%
+                </div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
 function TrumpetTrainer({ mode = 'Register & Intonation' }) {
   const [bbNotation, setBbNotation] = useState(false);
   const [question, setQuestion] = useState(() => createQuestion());
@@ -273,6 +404,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
 
   const producedPreview = calculateTrumpetPitch({ partial, valves, pump1, pump3 });
   const graphMode = mode === 'Register Graph';
+  const chartMode = mode === 'Scale Fingering Chart';
   const producedDisplayNote = formatTrumpetNote(
     bbNotation ? getWrittenBbTrumpetMidi(producedPreview.nearestMidi) : producedPreview.nearestMidi,
   );
@@ -308,7 +440,9 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
 
   return (
     <div className="space-y-6">
-      {graphMode ? (
+      {chartMode ? (
+        <ScaleFingeringChart />
+      ) : graphMode ? (
         <RegisterGraph
           valves={valves}
           pump1={pump1}
@@ -348,7 +482,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
         </div>
       </section>}
 
-      <section className="rounded-2xl border border-amber-900/70 bg-gradient-to-br from-[#4a2a18] to-[#17100c] p-5 shadow-2xl">
+      {!chartMode && <section className="rounded-2xl border border-amber-900/70 bg-gradient-to-br from-[#4a2a18] to-[#17100c] p-5 shadow-2xl">
         <div className="grid gap-3 md:grid-cols-[1fr_1.1fr_1fr] md:items-stretch">
           <label className="flex flex-col gap-3 rounded-2xl border border-amber-200/20 bg-black/20 p-4">
             <span className="text-xs uppercase tracking-[0.2em] text-amber-200">Partial</span>
@@ -431,9 +565,9 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
             </label>
           </div>
         </div>
-      </section>
+      </section>}
 
-      <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Trumpet controls">
+      {!chartMode && <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Trumpet controls">
         <button type="button" onClick={() => setBbNotation((current) => !current)}
           className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
           Intonation: {bbNotation ? 'trumpet' : 'real'}
@@ -444,9 +578,9 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
             {showProducedNote ? 'Hide note' : 'Show note'}
           </button>
         )}
-      </ControlSidebar>
+      </ControlSidebar>}
 
-      {!graphMode && <section>
+      {!graphMode && !chartMode && <section>
         <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
           {result?.possibleSolution && (
             <p className="rounded-xl bg-amber-500/10 px-4 py-3 text-center text-sm text-amber-200">

@@ -130,6 +130,24 @@ export function getBestTrumpetConfiguration(targetMidi) {
   return candidates.sort(comparePreference)[0] ?? null;
 }
 
+export function getTrumpetConfigurations(targetMidi, minPartial = 1, maxPartial = MAX_TRUMPET_PARTIAL) {
+  const candidates = [];
+  for (let partial = minPartial; partial <= maxPartial; partial += 1) {
+    for (const valves of VALVE_COMBINATIONS) {
+      for (const pump1 of PUMP_LEVELS) {
+        for (const pump3 of PUMP_LEVELS) {
+          const configuration = { partial, valves, pump1, pump3 };
+          const evaluation = evaluateTrumpetConfiguration(configuration, targetMidi);
+          if (evaluation.coherentPumps && evaluation.distanceCents <= 50) {
+            candidates.push({ ...evaluation, configuration });
+          }
+        }
+      }
+    }
+  }
+  return candidates.sort(comparePreference);
+}
+
 export function formatTrumpetConfiguration(configuration) {
   const valves = configuration.valves.length ? configuration.valves.join('+') : 'open';
   const partial = configuration.partial === 1 ? 'pedal' : `partial ${configuration.partial}`;

@@ -25,7 +25,7 @@ export default function HeaderSelector({
   const instrumentModes = instrument === 'guitar'
     ? modes
     : instrument === 'trumpet'
-      ? ['Register & Intonation', 'Register Graph']
+      ? ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart']
       : ['Guess the Note', 'Build Scale', 'Guess the Scale'];
   return (
     <>
