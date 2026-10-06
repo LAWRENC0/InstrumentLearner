@@ -9,4 +9,7 @@ export default defineConfig({
     port: 5173,
   },
   base: '/LAWRENC0/InstrumentLearner/',
+  build: {
+    outDir: 'docs',
+  },
 });
