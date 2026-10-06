@@ -365,20 +365,20 @@ function ScaleFingeringChart() {
                   const next = new Set(current);
                   if (next.has(note.midi)) next.delete(note.midi); else next.add(note.midi);
                   return next;
-                })} className="absolute left-1 top-1 rounded border border-slate-600 px-1.5 py-0.5 text-xs text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
+                })} className="absolute left-1 top-1 rounded border border-slate-600 px-2 py-1 text-sm font-semibold text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
                   {alternativeNotes.has(note.midi) ? 'A' : '+'}
                 </button>
               )}
-              <div className="text-center text-base font-semibold text-white">
+              <div className="text-center text-2xl font-bold leading-tight text-white">
                 {showDegrees
                   ? `${note.degreeLabel}${Math.floor(displayMidi / 12) - 1}`
                   : formatTrumpetNote(displayMidi)}
               </div>
-              <div className="mt-2 text-center text-sm text-cyan-200">
+              <div className="mt-2 text-center text-xl font-semibold leading-tight text-cyan-200">
                 {`P${entry.configuration.partial}  ${valveNotation(entry.configuration.valves)}`}
               </div>
               {showSlides && entry && (
-                <div className="mt-1 text-center text-xs text-amber-200">
+                <div className="mt-1 text-center text-base font-medium leading-tight text-amber-200">
                   S1: {entry.configuration.pump1}% · S3: {entry.configuration.pump3}%
                 </div>
               )}
