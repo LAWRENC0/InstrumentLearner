@@ -5,7 +5,7 @@ function Menu({ label, items, value, open, onToggle, onSelect, className }) {
         {value} <span className="ml-2 text-xs">▾</span>
       </button>
       {open && (
-        <div className="absolute left-0 z-50 mt-2 max-h-[calc(100vh-8rem)] min-w-40 overflow-y-auto overscroll-contain rounded-xl border border-slate-600 bg-slate-900 p-1 text-left shadow-xl">
+        <div className="absolute left-0 z-50 mt-2 max-h-[60vh] min-w-40 overflow-y-auto overscroll-contain rounded-xl border border-slate-600 bg-slate-900 p-1 text-left shadow-xl">
           {items.map((item) => (
             <button key={item} type="button" onClick={() => onSelect(item)}
               className="block w-full rounded-lg px-3 py-2 text-left text-sm text-slate-200 hover:bg-slate-800">
@@ -41,11 +41,11 @@ export default function HeaderSelector({
       <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Instrument Learner</p>
       <div className="mt-6 flex flex-col items-stretch gap-3">
         <Menu
-          value={instrument}
-          items={['guitar', 'trumpet']}
+          value={instrument === 'guitar' ? 'Guitar' : 'Trumpet'}
+          items={['Guitar', 'Trumpet']}
           open={openMenu === 'instrument'}
           onToggle={() => onMenuToggle('instrument')}
-          onSelect={onInstrumentChange}
+          onSelect={(next) => onInstrumentChange(next.toLowerCase())}
           className="min-w-40 rounded-xl border border-amber-300/70 bg-amber-300/15 px-4 py-2.5 text-sm font-semibold capitalize text-amber-200"
         />
         <Menu

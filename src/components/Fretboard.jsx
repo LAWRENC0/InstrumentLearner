@@ -104,6 +104,18 @@ function Fretboard({
   const dragStartRef = useRef(null);
   const suppressClickRef = useRef(false);
   const [dragPreview, setDragPreview] = useState(null);
+  const updateDragTarget = (element) => {
+    if (!onDragTranspose || !dragStartRef.current || !element) return;
+    const button = element.closest('button[data-string][data-fret]');
+    if (!button) return;
+    setDragPreview({
+      start: dragStartRef.current,
+      target: {
+        string: Number(button.dataset.string),
+        fret: Number(button.dataset.fret),
+      },
+    });
+  };
   const { selectedKeys, validKeys, boxKeys, rootKey, highlightedKey, selectedPitchClasses } = useMemo(() => {
     const toKey = (p) => `${p.string}-${p.fret}`;
     return {
@@ -152,7 +164,26 @@ function Fretboard({
   return (
     <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/80 p-4 shadow-2xl shadow-black/40">
       <div className="min-w-[820px]">
-        <div className="relative overflow-hidden rounded-md border border-black/70" style={woodStyle}>
+        <div
+          className="relative overflow-hidden rounded-md border border-black/70 touch-none"
+          style={woodStyle}
+          onPointerMove={(event) => updateDragTarget(event.target)}
+          onPointerUp={() => {
+            if (!onDragTranspose || !dragStartRef.current || !dragPreview) return;
+            const start = dragStartRef.current;
+            const target = dragPreview.target;
+            dragStartRef.current = null;
+            setDragPreview(null);
+            if (start.string !== target.string || start.fret !== target.fret) {
+              suppressClickRef.current = true;
+              onDragTranspose(start, target);
+            }
+          }}
+          onPointerCancel={() => {
+            dragStartRef.current = null;
+            setDragPreview(null);
+          }}
+        >
           {/* Inlays sit behind the strings, centred between frets */}
           <div
             className="pointer-events-none absolute inset-y-0 right-0 grid"
@@ -216,9 +247,12 @@ function Fretboard({
                   const cell = (
                     <button
                       key={key}
+                      data-string={stringIndex}
+                      data-fret={fret}
                       type="button"
-                      onPointerDown={() => {
+                      onPointerDown={(event) => {
                         if (onDragTranspose && selectedKeys.has(key)) {
+                          event.preventDefault();
                           dragStartRef.current = { string: stringIndex, fret };
                           setDragPreview({
                             start: { string: stringIndex, fret },
@@ -226,27 +260,7 @@ function Fretboard({
                           });
                         }
                       }}
-                      onPointerEnter={() => {
-                        if (!onDragTranspose || !dragStartRef.current) return;
-                        const start = dragStartRef.current;
-                        setDragPreview({
-                          start,
-                          target: { string: stringIndex, fret },
-                        });
-                      }}
-                      onPointerUp={() => {
-                        if (!onDragTranspose || !dragStartRef.current) return;
-                        const start = dragStartRef.current;
-                        dragStartRef.current = null;
-                        setDragPreview(null);
-                        if (start.string !== stringIndex || start.fret !== fret) {
-                          suppressClickRef.current = true;
-                          onDragTranspose(start, { string: stringIndex, fret });
-                        }
-                      }}
-                      onPointerLeave={() => {
-                        if (dragStartRef.current) setDragPreview(null);
-                      }}
+                      onPointerEnter={(event) => updateDragTarget(event.target)}
                       onClick={() => {
                         if (suppressClickRef.current) {
                           suppressClickRef.current = false;

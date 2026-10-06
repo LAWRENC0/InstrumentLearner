@@ -72,13 +72,13 @@ export default function GuitarTrainer({
               Scale lock: {explorerScaleLocked ? 'ON' : 'OFF'}
             </button>
             <select value={explorerScaleType} onChange={(event) => onExplorerScaleTypeChange(event.target.value)}
-              disabled={!explorerScaleLocked} aria-label="Scale type"
+              aria-label="Scale type"
               className="rounded-xl border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-100">
               <option value="major">Major</option>
               <option value="minor">Minor</option>
             </select>
             <select value={explorerScaleRoot} onChange={(event) => onExplorerScaleRootChange(event.target.value)}
-              disabled={!explorerScaleLocked} aria-label="Scale root"
+              aria-label="Scale root"
               className="rounded-xl border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-100">
               {['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'].map((note) => (
                 <option key={note} value={note}>{note}</option>
