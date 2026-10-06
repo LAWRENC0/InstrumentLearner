@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import HeaderSelector from './components/HeaderSelector';
 import GuitarTrainer from './components/GuitarTrainer';
 import TrumpetTrainer from './components/TrumpetTrainer';
+import PianoTrainer from './components/PianoTrainer';
 import ControlSidebar from './components/ControlSidebar';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
@@ -384,6 +385,7 @@ function useGuitarTrainerState() {
 function App() {
   const [instrument, setInstrument] = useState('guitar');
   const [trumpetMode, setTrumpetMode] = useState('Register & Intonation');
+  const [pianoMode, setPianoMode] = useState('Guess the Note');
   const [openMenu, setOpenMenu] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
@@ -392,6 +394,7 @@ function App() {
     trainer.setMode(nextMode);
     trainer.requestNewQuestion(nextMode);
     setOpenMenu(null);
+    setSidebarOpen(false);
   };
 
   return (
@@ -409,13 +412,19 @@ function App() {
             setOpenMenu(null);
           }}
           onMenuToggle={(menu) => setOpenMenu((current) => current === menu ? null : menu)}
-          onInstrumentChange={(next) => { setInstrument(next); setOpenMenu(null); }}
-          mode={instrument === 'guitar' ? trainer.mode : trumpetMode}
-          onModeChange={instrument === 'guitar' ? handleModeChange : (next) => { setTrumpetMode(next); setOpenMenu(null); }}
+          onInstrumentChange={(next) => { setInstrument(next); setOpenMenu(null); setSidebarOpen(false); }}
+          mode={instrument === 'guitar' ? trainer.mode : instrument === 'trumpet' ? trumpetMode : pianoMode}
+          onModeChange={instrument === 'guitar'
+            ? handleModeChange
+            : instrument === 'trumpet'
+              ? (next) => { setTrumpetMode(next); setOpenMenu(null); setSidebarOpen(false); }
+              : (next) => { setPianoMode(next); setOpenMenu(null); setSidebarOpen(false); }}
           onDifficultyChange={(next) => { trainer.changeDifficulty(next); setOpenMenu(null); }}
           onExerciseChange={(next) => { trainer.changeScaleTriadExercise(next); setOpenMenu(null); }}
         />
-        {instrument === 'trumpet' ? <TrumpetTrainer mode={trumpetMode} /> : (
+        {instrument === 'trumpet' ? <TrumpetTrainer mode={trumpetMode} /> : instrument === 'piano' ? (
+          <PianoTrainer mode={pianoMode} />
+        ) : (
           <GuitarTrainer
             {...trainer}
             onGuessAnswerChange={(value) => {

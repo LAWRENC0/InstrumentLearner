@@ -22,7 +22,11 @@ export default function HeaderSelector({
   instrument, mode, modes, difficulty, difficulties, exercise, exercises, openMenu, onMenuToggle,
   onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange, sidebarOpen, onToggleSidebar,
 }) {
-  const instrumentModes = instrument === 'guitar' ? modes : ['Register & Intonation', 'Register Graph'];
+  const instrumentModes = instrument === 'guitar'
+    ? modes
+    : instrument === 'trumpet'
+      ? ['Register & Intonation', 'Register Graph']
+      : ['Guess the Note', 'Build Scale', 'Guess the Scale'];
   return (
     <>
       <button
@@ -41,8 +45,8 @@ export default function HeaderSelector({
       <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Instrument Learner</p>
       <div className="mt-6 flex flex-col items-stretch gap-3">
         <Menu
-          value={instrument === 'guitar' ? 'Guitar' : 'Trumpet'}
-          items={['Guitar', 'Trumpet']}
+          value={instrument === 'guitar' ? 'Guitar' : instrument === 'trumpet' ? 'Trumpet' : 'Piano'}
+          items={['Guitar', 'Trumpet', 'Piano']}
           open={openMenu === 'instrument'}
           onToggle={() => onMenuToggle('instrument')}
           onSelect={(next) => onInstrumentChange(next.toLowerCase())}
