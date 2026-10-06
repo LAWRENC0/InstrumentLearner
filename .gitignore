@@ -2,7 +2,7 @@
 node_modules/
 
 # Production builds
-dist/
+# dist/
 
 # Local environment files
 .env
