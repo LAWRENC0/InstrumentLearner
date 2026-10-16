@@ -1,0 +1,20 @@
+GUITAR:
+
+PIANO:
+- recognize chords drawn by engine
+- draw chords requested by engine (aug,dim,7,9,11,/chords...)
+- recongize interval drawn by engine
+- draw interval requested by engine
+- from starting chord draw requested chord from engine (draw the 5 of this)
+- tritone subs, secondary dominants, other substitutions
+- prompt a chord, user has to select its 1/2/3 inversion (cluster, spread...)
+
+TRUMPET:
+- user asks for a specific scale to be printed out
+
+OTHERS:
+- EAR TRAINING: 
+    - system performs an interval, user has to guess it
+    - system gives a fundamental, plays a note / sequence of diatonic and user has to guess it
+    - system plays a chord, user has to recognize its quality
+    - system plays two chords, user has to recognize their relation
