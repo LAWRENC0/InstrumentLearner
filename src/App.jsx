@@ -3,17 +3,47 @@ import HeaderSelector from './components/HeaderSelector';
 import GuitarTrainer from './components/GuitarTrainer';
 import TrumpetTrainer from './components/TrumpetTrainer';
 import PianoTrainer from './components/PianoTrainer';
+import EarTraining from './components/EarTraining';
 import ControlSidebar from './components/ControlSidebar';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
 } from './utils/questionHelpers';
 import {
-  getNoteAtStringFret, getPitchClass, noteToMidi,
+  getNoteAtStringFret, getPitchClass, getPitchClassName, INTERVALS, INTERVAL_LABELS, noteToMidi,
 } from './utils/musicTheory';
 
 const MAX_FRET = 15; // frets 0..15
 const openStringMidi = (string) => noteToMidi(getNoteAtStringFret(string, 0));
 const midiToPitchClass = (midi) => ((midi % 12) + 12) % 12;
+const scaleIntervals = (type) => type === 'minor'
+  ? [0, 2, 3, 5, 7, 8, 10]
+  : [0, 2, 4, 5, 7, 9, 11];
+
+function formatPitchClasses(pitchClasses) {
+  return [...new Set(pitchClasses)].map(getPitchClassName).join(', ');
+}
+
+function describeNoteSelection(selectedNotes, targetPitchClasses, expectedStrings = null) {
+  const selectedPitchClasses = new Set(selectedNotes.map((note) => getPitchClass(note.note)));
+  const missing = [...targetPitchClasses].filter((pitch) => !selectedPitchClasses.has(pitch));
+  const extra = [...selectedPitchClasses].filter((pitch) => !targetPitchClasses.has(pitch));
+  const stringMessage = expectedStrings
+    ? ` Expected strings: ${[...expectedStrings].map((string) => string + 1).join(', ')}.`
+    : '';
+  const details = [];
+  if (missing.length) details.push(`Missing: ${formatPitchClasses(missing)}.`);
+  if (extra.length) details.push(`Extra: ${formatPitchClasses(extra)}.`);
+  return `${details.join(' ')}${stringMessage}`.trim();
+}
+
+function describeIntervalsFromRoot(selectedNotes, rootNote) {
+  return [...new Set(selectedNotes.map((note) =>
+    (getPitchClass(note.note) - getPitchClass(rootNote) + 12) % 12))]
+    .map((semitones) => {
+      const interval = Object.keys(INTERVALS).find((key) => INTERVALS[key] === semitones);
+      return INTERVAL_LABELS[interval] ?? `${semitones} semitones`;
+    }).join(', ');
+}
 
 // Snaps a whole shape to the scale while keeping the relations between notes
 // (intervals) as close to the original as possible.
@@ -303,21 +333,50 @@ function useGuitarTrainerState() {
       }
       setAnswerMessage(answerPitchClass === highlightedPitchClass
         ? 'Correct note.'
-        : `Not quite. The highlighted note is ${question.highlightedPosition.note.replace(/\d+$/, '')}.`);
+        : `Not quite. You entered ${normalizedGuess || 'nothing'}; the highlighted note is ${question.highlightedPosition.note.replace(/\d+$/, '')}.`);
       setAnswerState('submitted');
       setRevealNames(true);
       return;
     }
 
     if (mode === 'Pentatonics' && ['identify-degree', 'identify-fundamental'].includes(question.pentatonicExercise)) {
-      if (!selectedDegree) return;
+      if (!selectedDegree) {
+        setAnswerMessage('Choose a degree before submitting.');
+        return;
+      }
       const isCorrect = selectedDegree === question.pentatonicAnswer;
-      setAnswerMessage(isCorrect ? 'Correct degree.' : `Not quite. The highlighted note is the ${question.pentatonicAnswer}.`);
+      setAnswerMessage(isCorrect ? 'Correct degree.' : `Not quite. You chose ${selectedDegree}; the highlighted note is the ${question.pentatonicAnswer}.`);
       setAnswerState('submitted');
       setRevealNames(true);
       return;
     }
-    if (selectedNotes.length === 0) return;
+    if (selectedNotes.length === 0) {
+      setAnswerMessage('No notes selected. Select the note or notes requested by the question.');
+      setAnswerState('submitted');
+      setRevealNames(true);
+      return;
+    }
+    if (mode === 'Intervals') {
+      const targetSemitones = question.validPositions.length
+        ? (getPitchClass(question.validPositions[0].note) - getPitchClass(question.rootNote) + 12) % 12
+        : null;
+      const selectedIntervals = describeIntervalsFromRoot(selectedNotes, question.rootNote);
+      const isCorrect = selectedNotes.every((note) =>
+        getPitchClass(note.note) === getPitchClass(question.validPositions[0]?.note));
+      setAnswerMessage(isCorrect
+        ? 'Correct interval.'
+        : `Not quite. You selected: ${selectedIntervals || 'no recognizable interval'}. Expected: ${INTERVAL_LABELS[Object.keys(INTERVALS).find((key) => INTERVALS[key] === targetSemitones)] ?? 'the requested interval'}.`);
+    }
+    if (mode === 'Pentatonics' && question.pentatonicExercise === 'find-degree') {
+      const targetPitchClasses = new Set(question.validPositions.map((position) => getPitchClass(position.note)));
+      const selectedPitchClasses = new Set(selectedNotes.map((position) => getPitchClass(position.note)));
+      const isCorrect = selectedNotes.length > 0
+        && [...selectedPitchClasses].every((pitch) => targetPitchClasses.has(pitch))
+        && [...targetPitchClasses].every((pitch) => selectedPitchClasses.has(pitch));
+      setAnswerMessage(isCorrect
+        ? `Correct ${question.pentatonicAnswer}.`
+        : `Not quite. Find the ${question.pentatonicAnswer}; ${describeNoteSelection(selectedNotes, targetPitchClasses)}`);
+    }
     if (mode === 'Fill in the Chords') {
       const selectedPitchClasses = new Set(selectedNotes.map((p) => getPitchClass(p.note)));
       const targetPitchClasses = new Set(question.chordPitchClasses);
@@ -328,7 +387,7 @@ function useGuitarTrainerState() {
       const includesHighlightedNote = selectedKeys.has(highlightedKey);
       setAnswerMessage(hasCompleteChord && includesHighlightedNote
         ? 'Correct chord, including the highlighted note.'
-        : 'Select every chord tone, including the highlighted note, without extra notes.');
+        : `Not quite. ${describeNoteSelection(selectedNotes, targetPitchClasses)} The highlighted note must also be selected.`);
     }
     if (mode === 'Scale & Triads' && question.scaleTriadExercise === 'Highlight degree') {
       const expectedStrings = new Set(question.targetStrings);
@@ -342,7 +401,7 @@ function useGuitarTrainerState() {
         && [...selectedPitchClasses].every((pitchClass) => targetPitchClasses.has(pitchClass));
       setAnswerMessage(isCorrect
         ? 'Correct triad.'
-        : 'Select the complete triad on the requested degree and string set.');
+        : `Not quite. ${describeNoteSelection(selectedNotes, targetPitchClasses, expectedStrings)} Select one note on each requested string.`);
     }
     if (mode === 'Scale & Triads' && question.scaleTriadExercise !== 'Highlight degree') {
       const expectedStrings = new Set(question.targetStrings);
@@ -355,7 +414,8 @@ function useGuitarTrainerState() {
       const hasExpectedTriad = selectedPitchClasses.size === targetPitchClasses.size
         && [...selectedPitchClasses].every((pitchClass) => targetPitchClasses.has(pitchClass));
       setAnswerMessage(usesEachTargetStringOnce && hasExpectedTriad
-        ? 'Correct triad and string set.' : 'Check the three adjacent strings and the triad notes.');
+        ? 'Correct triad and string set.'
+        : `Not quite. ${describeNoteSelection(selectedNotes, targetPitchClasses, expectedStrings)} The three notes must form one playable shape.`);
     }
     setAnswerState('submitted');
     setRevealNames(true);
@@ -386,6 +446,7 @@ function App() {
   const [instrument, setInstrument] = useState('guitar');
   const [trumpetMode, setTrumpetMode] = useState('Register & Intonation');
   const [pianoMode, setPianoMode] = useState('Guess the Note');
+  const [earTrainingMode, setEarTrainingMode] = useState('Interval Recognition');
   const [openMenu, setOpenMenu] = useState(null);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
@@ -413,17 +474,27 @@ function App() {
           }}
           onMenuToggle={(menu) => setOpenMenu((current) => current === menu ? null : menu)}
           onInstrumentChange={(next) => { setInstrument(next); setOpenMenu(null); setSidebarOpen(false); }}
-          mode={instrument === 'guitar' ? trainer.mode : instrument === 'trumpet' ? trumpetMode : pianoMode}
+          mode={instrument === 'guitar'
+            ? trainer.mode
+            : instrument === 'trumpet'
+              ? trumpetMode
+              : instrument === 'piano'
+                ? pianoMode
+                : earTrainingMode}
           onModeChange={instrument === 'guitar'
             ? handleModeChange
             : instrument === 'trumpet'
               ? (next) => { setTrumpetMode(next); setOpenMenu(null); setSidebarOpen(false); }
-              : (next) => { setPianoMode(next); setOpenMenu(null); setSidebarOpen(false); }}
+              : instrument === 'piano'
+                ? (next) => { setPianoMode(next); setOpenMenu(null); setSidebarOpen(false); }
+                : (next) => { setEarTrainingMode(next); setOpenMenu(null); setSidebarOpen(false); }}
           onDifficultyChange={(next) => { trainer.changeDifficulty(next); setOpenMenu(null); }}
           onExerciseChange={(next) => { trainer.changeScaleTriadExercise(next); setOpenMenu(null); }}
         />
         {instrument === 'trumpet' ? <TrumpetTrainer mode={trumpetMode} /> : instrument === 'piano' ? (
           <PianoTrainer mode={pianoMode} />
+        ) : instrument === 'earTraining' ? (
+          <EarTraining mode={earTrainingMode} />
         ) : (
           <GuitarTrainer
             {...trainer}

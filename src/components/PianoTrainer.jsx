@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import ControlSidebar from './ControlSidebar';
 import {
-  getChordNotes, getPitchClass, midiToNote, NOTE_NAMES, noteToMidi,
+  getChordNotes, getPitchClass, getPitchClassName, midiToNote, NOTE_NAMES, noteToMidi,
 } from '../utils/musicTheory';
 
 const BLACK_PITCH_CLASSES = new Set([1, 3, 6, 8, 10]);
@@ -30,6 +30,26 @@ function randomItem(items) {
 function scalePitchClasses(root, type) {
   const rootPitch = getPitchClass(root);
   return SCALE_OFFSETS[type].map((offset) => (rootPitch + offset) % 12);
+}
+
+function findMatchingScale(pitches) {
+  const normalized = [...new Set(pitches)].sort((a, b) => a - b).join(',');
+  return NOTE_NAMES.flatMap((root) => ['major', 'minor']
+    .filter((type) => scalePitchClasses(root, type).sort((a, b) => a - b).join(',') === normalized)
+    .map((type) => `${root} ${type}`));
+}
+
+function describePitchDifference(selectedPitches, targetPitches) {
+  const missing = targetPitches.filter((pitch) => !selectedPitches.includes(pitch));
+  const extra = selectedPitches.filter((pitch) => !targetPitches.includes(pitch));
+  const details = [];
+  if (missing.length) details.push(`Missing: ${missing.map(getPitchClassName).join(', ')}.`);
+  if (extra.length) details.push(`Extra: ${extra.map(getPitchClassName).join(', ')}.`);
+  return details.join(' ');
+}
+
+function describeInterval(semitones) {
+  return INTERVALS.find(([number]) => number === semitones)?.[1] ?? `${semitones} semitones`;
 }
 
 function makeChordVoicing(root, quality, inversion = 0) {
@@ -171,8 +191,14 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
     } else if (mode === 'Guess the Scale') {
       const match = /^([A-Ga-g](?:#|b)?)(?:\s+(major|minor))?$/i.exec(answer.trim());
       const type = match?.[2]?.toLowerCase() === 'minor' ? 'minor' : 'major';
-      correct = Boolean(match) && scalePitchClasses(match[1], type).every((pitch) => targetScale.includes(pitch));
-      setMessage(correct ? 'Correct scale.' : `Not quite. The scale is ${question.root} ${question.type}.`);
+      const guessedPitches = match ? scalePitchClasses(match[1], type) : [];
+      correct = Boolean(match) && guessedPitches.length === targetScale.length
+        && guessedPitches.every((pitch) => targetScale.includes(pitch));
+      setMessage(correct
+        ? 'Correct scale.'
+        : match
+          ? `Not quite. You entered ${match[1]} ${type}; the target is ${question.root} ${question.type}.`
+          : 'Enter a scale as a note followed by major or minor, for example E major.');
     } else if (mode === 'Recognize Chord') {
       correct = answer === question.quality;
       setMessage(correct ? 'Correct chord quality.' : `Not quite. It is ${CHORDS.find(([key]) => key === question.quality)?.[1]}.`);
@@ -180,15 +206,41 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
       correct = Number(answer) === question.semitones;
       setMessage(correct ? 'Correct interval.' : `Not quite. It is ${INTERVALS.find(([n]) => n === question.semitones)?.[1]}.`);
     } else if (mode === 'Build Scale') {
+      const selectedPitches = [...selectedPitchClasses];
       correct = targetScale.every((pitch) => selectedPitchClasses.has(pitch));
-      setMessage(correct ? 'Correct scale.' : 'Select at least one octave of every scale note.');
+      const matchingScale = findMatchingScale(selectedPitches);
+      const difference = describePitchDifference(selectedPitches, targetScale);
+      setMessage(correct
+        ? 'Correct scale.'
+        : matchingScale.length
+          ? `Not quite. You selected ${matchingScale.join(' / ')}. ${difference}`
+          : `Not quite. ${difference || 'Select at least one octave of every scale note.'}`);
     } else {
       const sameNotes = selectedPitchClasses.size === targetPitchClasses.size
         && [...selectedPitchClasses].every((pitch) => targetPitchClasses.has(pitch));
       correct = sameNotes && selectedNotes.length === targetPitchClasses.size;
-      if (mode === 'Chord Inversions') correct = selectedNotes.length === question.voicing.length
-        && selectedNotes.every((note, index) => note.midi === question.voicing[index]);
-      setMessage(correct ? 'Correct.' : 'Select the requested notes with no extra tones.');
+      if (mode === 'Chord Inversions') {
+        const selectedMidis = selectedNotes.map((note) => note.midi).sort((a, b) => a - b);
+        const targetMidis = [...question.voicing].sort((a, b) => a - b);
+        correct = selectedMidis.length === targetMidis.length
+          && selectedMidis.every((midi, index) => midi === targetMidis[index]);
+        setMessage(correct
+          ? 'Correct inversion.'
+          : `Not quite. Expected: ${targetMidis.map((midi) => midiToNote(midi).replace(/-?\d+$/, '')).join(', ')}.`);
+      } else if (mode === 'Build Interval') {
+        const selectedMidis = selectedNotes.map((note) => note.midi).sort((a, b) => a - b);
+        const actual = selectedMidis.length === 2 ? selectedMidis[1] - selectedMidis[0] : null;
+        correct = actual === question.semitones;
+        setMessage(correct
+          ? 'Correct interval.'
+          : actual === null
+            ? `Select two notes. Expected a ${describeInterval(question.semitones)}.`
+            : `Not quite. You selected a ${describeInterval(actual)}; expected a ${describeInterval(question.semitones)}.`);
+      } else {
+        setMessage(correct
+          ? 'Correct chord.'
+          : `Not quite. ${describePitchDifference([...selectedPitchClasses], [...targetPitchClasses]) || 'Select the requested chord tones.'}`);
+      }
     }
     setAnswerState('submitted'); setRevealNames(true);
   };

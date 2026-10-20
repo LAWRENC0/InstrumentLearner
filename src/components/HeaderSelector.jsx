@@ -26,10 +26,12 @@ export default function HeaderSelector({
     ? modes
     : instrument === 'trumpet'
       ? ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart']
-    : [
+    : instrument === 'piano'
+      ? [
       'Guess the Note', 'Build Scale', 'Guess the Scale',
       'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
-    ];
+      ]
+      : ['Interval Recognition', 'Diatonic Note Recognition', 'Chord Quality Recognition', 'Chord Relation Recognition'];
   return (
     <>
       <button
@@ -48,11 +50,11 @@ export default function HeaderSelector({
       <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Instrument Learner</p>
       <div className="mt-6 flex flex-col items-stretch gap-3">
         <Menu
-          value={instrument === 'guitar' ? 'Guitar' : instrument === 'trumpet' ? 'Trumpet' : 'Piano'}
-          items={['Guitar', 'Trumpet', 'Piano']}
+          value={instrument === 'guitar' ? 'Guitar' : instrument === 'trumpet' ? 'Trumpet' : instrument === 'piano' ? 'Piano' : 'Ear Training'}
+          items={['Guitar', 'Trumpet', 'Piano', 'Ear Training']}
           open={openMenu === 'instrument'}
           onToggle={() => onMenuToggle('instrument')}
-          onSelect={(next) => onInstrumentChange(next.toLowerCase())}
+          onSelect={(next) => onInstrumentChange(next === 'Ear Training' ? 'earTraining' : next.toLowerCase())}
           className="min-w-40 rounded-xl border border-amber-300/70 bg-amber-300/15 px-4 py-2.5 text-sm font-semibold capitalize text-amber-200"
         />
         <Menu

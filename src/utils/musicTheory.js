@@ -129,6 +129,10 @@ export function getPitchClass(noteName) {
   return NOTE_NAMES.indexOf(normalized);
 }
 
+export function getPitchClassName(pitchClass) {
+  return NOTE_NAMES[((pitchClass % 12) + 12) % 12] ?? null;
+}
+
 export function getPositionByPitchClass(rootNote, semitoneOffset, requiredString = 'any', minFret = 0, maxFret = 15) {
   const rootPitchClass = getPitchClass(rootNote);
   const targetPitchClass = (rootPitchClass + semitoneOffset) % 12;

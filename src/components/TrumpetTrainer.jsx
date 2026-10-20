@@ -270,6 +270,18 @@ function valveNotation(valves) {
   return VALVES.map((valve) => (valves.includes(valve) ? '●' : '−')).join('');
 }
 
+function getTrumpetFeedback(result) {
+  if (result.quality === 'optimal') return 'Correct: centered pitch with no slide correction.';
+  const direction = result.exactMidi < result.targetMidi ? 'flat' : 'sharp';
+  const details = [
+    `Your configuration produces ${result.note}, ${Math.abs(result.distanceCents).toFixed(1)} cents ${direction} of ${result.targetNote}.`,
+  ];
+  if (!result.coherentPumps) details.push('A tuning slide is extended without its corresponding valve being pressed.');
+  if (result.quality === 'corrected') details.push('The note is in tune, but try the conventional fingering without slide correction.');
+  if (result.possibleSolution) details.push(`Try ${formatTrumpetConfiguration(result.possibleSolution.configuration)}.`);
+  return details.join(' ');
+}
+
 const ROMAN_DEGREES = ['I', 'bII', 'II', 'bIII', 'III', 'IV', 'bV', 'V', 'bVI', 'VI', 'bVII', 'VII'];
 
 function ScaleFingeringChart() {
@@ -433,6 +445,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
     const evaluation = evaluateTrumpetConfiguration({ partial, valves, pump1, pump3 }, question.targetMidi);
     setResult({
       ...evaluation,
+      configuration: { partial, valves, pump1, pump3 },
       possibleSolution: getBestTrumpetConfiguration(question.targetMidi),
     });
     setShowProducedNote(true);
@@ -600,9 +613,12 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
               result.quality === 'wrong' ? 'bg-red-500/15 text-red-200' : result.quality === 'optimal' ? 'bg-emerald-500/15 text-emerald-200' : 'bg-yellow-500/15 text-yellow-200',
             ].join(' ')}>
               <span className="block">
-                {formatTrumpetNote(
+                {getTrumpetFeedback(result)}
+              </span>
+              <span className="mt-1 block text-xs opacity-80">
+                Displayed in {notationLabel}; nearest note: {formatTrumpetNote(
                   bbNotation ? getWrittenBbTrumpetMidi(result.nearestMidi) : result.nearestMidi,
-                )} · {result.distanceCents.toFixed(1)} cents from target · {notationLabel}
+                )}.
               </span>
             </p>
           )}

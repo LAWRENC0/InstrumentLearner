@@ -127,6 +127,8 @@ function buildFillInChordsQuestion(difficulty = 'Easy') {
     rootPosition,
     highlightedPosition: rootPosition,
     chordPitchClasses: chordNotes.map(getPitchClass),
+    chordQuality: quality,
+    chordToneNames: chordNotes.map((note) => note.replace(/-?\d+$/, '')),
     validPositions: chordNotes.flatMap((noteName) => getPositionByPitchClass(noteName, 0, 'any')),
     requiredString: 'any',
     prompt: `The highlighted note is the ${['root', 'third', 'fifth', 'seventh'][highlightedIndex]} of a ${CHORD_QUALITY_LABELS[quality]} chord. Find all chord tones.`,
@@ -262,6 +264,7 @@ function buildPentatonicQuestion() {
       requiredString: 'any',
       pentatonicExercise: 'find-degree',
       pentatonicScaleType: scaleType,
+      pentatonicAnswer: answer.label,
       prompt: `Find the ${answer.label} of the ${rootNote} ${scaleType} pentatonic scale.`,
     };
   }
