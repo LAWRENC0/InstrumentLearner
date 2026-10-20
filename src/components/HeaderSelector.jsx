@@ -26,7 +26,10 @@ export default function HeaderSelector({
     ? modes
     : instrument === 'trumpet'
       ? ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart']
-      : ['Guess the Note', 'Build Scale', 'Guess the Scale'];
+    : [
+      'Guess the Note', 'Build Scale', 'Guess the Scale',
+      'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
+    ];
   return (
     <>
       <button

@@ -159,6 +159,8 @@ export function getTriadNotes(root, quality) {
 export function getChordNotes(root, quality) {
   const rootMidi = noteToMidi(root);
   const formulas = {
+    major: [0, 4, 7],
+    minor: [0, 3, 7],
     7: [0, 4, 7, 10],
     maj7: [0, 4, 7, 11],
     m7: [0, 3, 7, 10],
@@ -166,6 +168,11 @@ export function getChordNotes(root, quality) {
     sus4: [0, 5, 7],
     sus2: [0, 2, 7],
     add9: [0, 4, 7, 14],
+    9: [0, 4, 7, 10, 14],
+    maj9: [0, 4, 7, 11, 14],
+    m9: [0, 3, 7, 10, 14],
+    11: [0, 4, 7, 10, 14, 17],
+    13: [0, 4, 7, 10, 14, 21],
     aug: [0, 4, 8],
     dim: [0, 3, 6],
     dim7: [0, 3, 6, 9],
