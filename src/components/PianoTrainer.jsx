@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import ControlSidebar from './ControlSidebar';
+import BottomSheet from './BottomSheet';
+import ActionBar from './ActionBar';
 import {
   getChordNotes, getPitchClass, getPitchClassName, midiToNote, NOTE_NAMES, noteToMidi,
 } from '../utils/musicTheory';
@@ -83,10 +84,22 @@ function newQuestion(mode) {
   };
 }
 
-function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, revealNames, missedKeys }) {
+function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, revealNames, missedKeys, focusMidi, resetKey }) {
+  const scrollRef = useRef(null);
   const midiNotes = Array.from({ length: LAST_MIDI - FIRST_MIDI + 1 }, (_, index) => FIRST_MIDI + index);
   const whiteNotes = midiNotes.filter((midi) => !BLACK_PITCH_CLASSES.has(midi % 12));
   const whiteIndexByMidi = new Map(whiteNotes.map((midi, index) => [midi, index]));
+
+  // The keyboard is wider than most phones: bring the key being asked about into view.
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container || focusMidi === null || focusMidi === undefined) return;
+    const whiteIndex = whiteIndexByMidi.get(focusMidi) ?? whiteIndexByMidi.get(focusMidi - 1) ?? 0;
+    const target = whiteIndex * WHITE_KEY_WIDTH + WHITE_KEY_WIDTH / 2;
+    container.scrollTo({ left: Math.max(0, target - container.clientWidth / 2), behavior: 'smooth' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [focusMidi, resetKey]);
+
   const keyClass = (midi, black = false) => [
     black ? 'border-slate-950' : 'relative border-slate-950',
     black ? 'absolute top-0 z-10 h-24 w-5 -translate-x-1/2 rounded-b border bg-slate-900' : 'h-full w-8 shrink-0 border-r bg-slate-100 text-slate-700',
@@ -95,7 +108,7 @@ function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, r
     selectedKeys.has(String(midi)) ? (answerState === 'submitted' ? '!bg-emerald-300' : '!bg-cyan-300') : '',
   ].join(' ');
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-700 bg-slate-950/70 p-4">
+    <div ref={scrollRef} className="overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-700 bg-slate-950/70 p-3 md:p-4">
       <div className="relative mx-auto h-44 min-w-fit" style={{ width: `${whiteNotes.length * WHITE_KEY_WIDTH}px` }}>
         <div className="absolute inset-x-0 bottom-0 flex h-36">
           {whiteNotes.map((midi) => (
@@ -117,6 +130,8 @@ function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, r
   );
 }
 
+const CHOICE_BASE = 'rounded-xl border px-3 py-2.5 text-sm transition';
+
 export default function PianoTrainer({ mode = 'Guess the Note' }) {
   const [question, setQuestion] = useState(() => newQuestion(mode));
   const [selectedNotes, setSelectedNotes] = useState([]);
@@ -130,15 +145,6 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
   const isChord = mode.includes('Chord');
   const isInterval = mode.includes('Interval');
   const targetScale = useMemo(() => question.type ? scalePitchClasses(question.root, question.type) : [], [question]);
-
-  useEffect(() => {
-    setQuestion(newQuestion(mode));
-    setSelectedNotes([]);
-    setAnswer('');
-    setAnswerState('idle');
-    setMessage('');
-    setRevealNames(false);
-  }, [mode]);
 
   const playNote = (midi) => {
     if (!audioEnabled || typeof window === 'undefined') return;
@@ -182,7 +188,15 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
   };
   const selectedPitchClasses = new Set(selectedNotes.map((note) => getPitchClass(note.note)));
   const targetPitchClasses = new Set((question.voicing ?? []).map((midi) => getPitchClass(midiToNote(midi))));
+
   const submit = () => {
+    // An empty answer is not a wrong answer: ask for one instead of grading it.
+    if (mode === 'Guess the Note' || mode === 'Guess the Scale') {
+      if (!answer.trim()) { setMessage('Type an answer first.'); return; }
+    }
+    if (mode === 'Recognize Chord' || mode === 'Recognize Interval') {
+      if (answer === '') { setMessage('Choose an answer first.'); return; }
+    }
     let correct = false;
     if (mode === 'Guess the Note') {
       const guess = getPitchClass(answer.trim());
@@ -255,35 +269,49 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
                 : `Play the ${['root position', '1st inversion', '2nd inversion'][question.inversion]} of a ${question.root} ${question.quality} triad.`;
   const choices = mode === 'Recognize Chord' ? CHORDS.map(([key, label]) => [key, label])
     : mode === 'Recognize Interval' ? INTERVALS.map(([n, label]) => [String(n), label]) : null;
+  const focusMidi = question.highlightedMidi ?? question.voicing?.[0] ?? null;
 
   return (
-    <div className="relative space-y-4">
+    <div className="space-y-4">
       <div className="rounded-2xl border border-slate-700 bg-slate-900/80 p-4 text-center">
         <p className="text-lg font-medium text-white">{prompt}</p>
         {message && <p className="mt-2 text-sm text-cyan-200">{message}</p>}
       </div>
       <PianoKeyboard highlightedKeys={highlightedKeys} selectedKeys={selectedKeys} missedKeys={missedKeys}
-        answerState={answerState} onToggle={toggleNote} revealNames={revealNames} />
+        answerState={answerState} onToggle={toggleNote} revealNames={revealNames}
+        focusMidi={focusMidi} resetKey={question} />
       {choices && <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{choices.map(([value, label]) => (
-        <button key={value} type="button" onClick={() => { setAnswer(value); setAnswerState('idle'); }}
-          className={`rounded-xl border px-3 py-2 text-sm ${answer === value ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100' : 'border-slate-600 bg-slate-800 text-slate-200'}`}>
+        <button key={value} type="button" onClick={() => { setAnswer(value); setAnswerState('idle'); setMessage(''); }}
+          className={`${CHOICE_BASE} ${answer === value ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100' : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400'}`}>
           {label}
         </button>
       ))}</div>}
       {['Guess the Note', 'Guess the Scale'].includes(mode) && (
         <input value={answer} onChange={(event) => { setAnswer(event.target.value); setAnswerState('idle'); }}
           onKeyDown={(event) => { if (event.key === 'Enter') submit(); }}
+          aria-label="Your answer"
           placeholder={mode === 'Guess the Note' ? 'Type a note (e.g. C#, Db)' : 'Type a scale (e.g. E major)'}
-          className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-center text-slate-100 placeholder:text-slate-400" />
+          className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-center text-base text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none" />
       )}
-      <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((value) => !value)} label="Piano controls">
-        <button type="button" onClick={() => setRevealNames((value) => !value)} className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">{revealNames ? 'Hide notes' : 'Show notes'}</button>
-        <button type="button" onClick={() => setAudioEnabled((value) => !value)} className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">Audio {audioEnabled ? 'ON' : 'OFF'}</button>
-      </ControlSidebar>
-      <div className="flex gap-3">
-        <button type="button" onClick={submit} className="flex-1 rounded-xl border border-emerald-500/60 bg-emerald-500/15 px-4 py-2.5 font-semibold text-emerald-200">Submit</button>
-        <button type="button" onClick={newQuestionForMode} className="flex-1 rounded-xl bg-cyan-500 px-4 py-2.5 font-semibold text-slate-950">New Question</button>
-      </div>
+
+      <ActionBar
+        onControls={() => setControlsOpen(true)}
+        onSubmit={submit}
+        onNew={newQuestionForMode}
+      />
+
+      <BottomSheet open={controlsOpen} onClose={() => setControlsOpen(false)} title="Controls">
+        <div className="flex flex-col gap-3">
+          <button type="button" onClick={() => setRevealNames((value) => !value)}
+            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            {revealNames ? 'Hide notes' : 'Show notes'}
+          </button>
+          <button type="button" onClick={() => setAudioEnabled((value) => !value)}
+            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            Audio {audioEnabled ? 'ON' : 'OFF'}
+          </button>
+        </div>
+      </BottomSheet>
     </div>
   );
 }

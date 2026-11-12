@@ -4,7 +4,7 @@ import GuitarTrainer from './components/GuitarTrainer';
 import TrumpetTrainer from './components/TrumpetTrainer';
 import PianoTrainer from './components/PianoTrainer';
 import EarTraining from './components/EarTraining';
-import ControlSidebar from './components/ControlSidebar';
+import BottomSheet from './components/BottomSheet';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
 } from './utils/questionHelpers';
@@ -210,7 +210,6 @@ function useGuitarTrainerState() {
     if (audioEnabled) playNote(position.note);
   };
 
-  const wrappedFret = (fret, shift) => ((fret + shift) % 16 + 16) % 16;
   const scaleMidiAt = (rootMidi, offsets, degreeIndex) => {
     const octave = Math.floor(degreeIndex / offsets.length);
     const offsetIndex = ((degreeIndex % offsets.length) + offsets.length) % offsets.length;
@@ -244,15 +243,31 @@ function useGuitarTrainerState() {
   const applyExplorerShift = (shift, preserveShape = false) => {
     if (!Number.isInteger(shift) || selectedNotes.length === 0) return;
     const scalePitches = explorerScalePitches();
-    setSelectedNotes((current) => current.map((position) => {
-      const semitoneShift = shift;
-      if (explorerScaleLocked && !preserveShape) {
-        const snapped = getScaleLockedPosition(position, scalePitches, shift);
-        return snapped ?? position;
-      }
-      const fret = wrappedFret(position.fret, semitoneShift);
-      return { ...position, fret, note: getNoteAtStringFret(position.string, fret) };
-    }));
+    if (explorerScaleLocked && !preserveShape) {
+      setSelectedNotes((current) => current.map((position) =>
+        getScaleLockedPosition(position, scalePitches, shift) ?? position));
+      return;
+    }
+    // Move every note by the same number of semitones on its own string, so the
+    // shape keeps its intervals. If the shape would run off the neck, move it by an
+    // octave instead; if no octave fits, leave the shape unchanged (no silent wrap).
+    setSelectedNotes((current) => {
+      const shifted = current.map((position) => ({ ...position, fret: position.fret + shift }));
+      const octave = [0, -12, 12].find((offset) =>
+        shifted.every((p) => p.fret + offset >= 0 && p.fret + offset <= MAX_FRET));
+      if (octave === undefined) return current;
+      return shifted.map((position) => {
+        const fret = position.fret + octave;
+        return { ...position, fret, note: getNoteAtStringFret(position.string, fret) };
+      });
+    });
+  };
+
+  const clearSelection = () => {
+    setSelectedNotes([]);
+    setAnswerState('idle');
+    setAnswerMessage('');
+    setRevealNames(false);
   };
 
   // Shared by the live drag preview and the final drop, so they always agree.
@@ -318,10 +333,7 @@ function useGuitarTrainerState() {
   };
 
   const handleSubmit = () => {
-    const expectedKeys = new Set(question.validPositions.map((p) => `${p.string}-${p.fret}`));
     const selectedKeys = new Set(selectedNotes.map((p) => `${p.string}-${p.fret}`));
-    const correctCount = [...selectedKeys].filter((key) => expectedKeys.has(key)).length;
-    const wrongCount = [...selectedKeys].filter((key) => !expectedKeys.has(key)).length;
 
     if (mode === 'Guess the Note') {
       const normalizedGuess = guessAnswer.trim().replace(/^([a-g])/, (_, note) => note.toUpperCase());
@@ -419,7 +431,6 @@ function useGuitarTrainerState() {
     }
     setAnswerState('submitted');
     setRevealNames(true);
-    if (correctCount >= wrongCount) console.log('Nice work.');
   };
 
   return {
@@ -428,7 +439,7 @@ function useGuitarTrainerState() {
     question, selectedNotes, revealNames, answerState, answerMessage,
     guessAnswer, setGuessAnswer,
     selectedDegree, setSelectedDegree, audioEnabled, setAudioEnabled, requestNewQuestion,
-    handleToggleNote, handleSubmit, setRevealNames, setAnswerState, setAnswerMessage,
+    handleToggleNote, handleSubmit, clearSelection, setRevealNames, setAnswerState, setAnswerMessage,
     explorerScaleLocked, setExplorerScaleLocked, explorerScaleType, setExplorerScaleType,
     explorerScaleRoot, setExplorerScaleRoot, explorerShift, setExplorerShift,
     explorerShowAll, setExplorerShowAll, applyExplorerShift, handleExplorerDrag,
@@ -447,54 +458,63 @@ function App() {
   const [trumpetMode, setTrumpetMode] = useState('Register & Intonation');
   const [pianoMode, setPianoMode] = useState('Guess the Note');
   const [earTrainingMode, setEarTrainingMode] = useState('Interval Recognition');
-  const [openMenu, setOpenMenu] = useState(null);
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [controlsOpen, setControlsOpen] = useState(false);
   const trainer = useGuitarTrainerState();
-  const handleModeChange = (nextMode) => {
-    trainer.setMode(nextMode);
-    trainer.requestNewQuestion(nextMode);
-    setOpenMenu(null);
-    setSidebarOpen(false);
+
+  const modeSetters = {
+    guitar: (next) => { trainer.setMode(next); trainer.requestNewQuestion(next); },
+    trumpet: setTrumpetMode,
+    piano: setPianoMode,
+    earTraining: setEarTrainingMode,
+  };
+  const currentMode = {
+    guitar: trainer.mode,
+    trumpet: trumpetMode,
+    piano: pianoMode,
+    earTraining: earTrainingMode,
+  }[instrument];
+
+  const closeMenu = () => setMenuOpen(false);
+  const closeControls = () => setControlsOpen(false);
+  // Keep the menu open so the user can pick a mode for the new instrument straight away.
+  const changeInstrument = (next) => {
+    setInstrument(next);
+    setControlsOpen(false);
+  };
+  const changeMode = (next) => {
+    modeSetters[instrument](next);
+    setMenuOpen(false);
   };
 
+  const isGuitar = instrument === 'guitar';
+
   return (
-    <div className="min-h-screen bg-slate-950 px-4 py-8 text-slate-100 md:px-8">
-      <div className="mx-auto max-w-7xl">
-        <HeaderSelector
-          instrument={instrument} modes={MODES} openMenu={openMenu}
-          difficulty={trainer.difficulty}
-          difficulties={instrument === 'guitar' && trainer.mode === 'Fill in the Chords' ? CHORD_DIFFICULTIES : []}
-          exercises={instrument === 'guitar' && trainer.mode === 'Scale & Triads' ? SCALE_TRIAD_EXERCISES : []}
-          exercise={trainer.scaleTriadExercise}
-          sidebarOpen={sidebarOpen}
-          onToggleSidebar={() => {
-            setSidebarOpen((open) => !open);
-            setOpenMenu(null);
-          }}
-          onMenuToggle={(menu) => setOpenMenu((current) => current === menu ? null : menu)}
-          onInstrumentChange={(next) => { setInstrument(next); setOpenMenu(null); setSidebarOpen(false); }}
-          mode={instrument === 'guitar'
-            ? trainer.mode
-            : instrument === 'trumpet'
-              ? trumpetMode
-              : instrument === 'piano'
-                ? pianoMode
-                : earTrainingMode}
-          onModeChange={instrument === 'guitar'
-            ? handleModeChange
-            : instrument === 'trumpet'
-              ? (next) => { setTrumpetMode(next); setOpenMenu(null); setSidebarOpen(false); }
-              : instrument === 'piano'
-                ? (next) => { setPianoMode(next); setOpenMenu(null); setSidebarOpen(false); }
-                : (next) => { setEarTrainingMode(next); setOpenMenu(null); setSidebarOpen(false); }}
-          onDifficultyChange={(next) => { trainer.changeDifficulty(next); setOpenMenu(null); }}
-          onExerciseChange={(next) => { trainer.changeScaleTriadExercise(next); setOpenMenu(null); }}
-        />
-        {instrument === 'trumpet' ? <TrumpetTrainer mode={trumpetMode} /> : instrument === 'piano' ? (
-          <PianoTrainer mode={pianoMode} />
+    <div className="min-h-screen bg-slate-950 text-slate-100">
+      <HeaderSelector
+        instrument={instrument}
+        mode={currentMode}
+        guitarModes={MODES}
+        difficulty={trainer.difficulty}
+        difficulties={isGuitar && trainer.mode === 'Fill in the Chords' ? CHORD_DIFFICULTIES : []}
+        exercise={trainer.scaleTriadExercise}
+        exercises={isGuitar && trainer.mode === 'Scale & Triads' ? SCALE_TRIAD_EXERCISES : []}
+        menuOpen={menuOpen}
+        onOpenMenu={() => setMenuOpen(true)}
+        onCloseMenu={closeMenu}
+        onInstrumentChange={changeInstrument}
+        onModeChange={changeMode}
+        onDifficultyChange={(next) => { trainer.changeDifficulty(next); setMenuOpen(false); }}
+        onExerciseChange={(next) => { trainer.changeScaleTriadExercise(next); setMenuOpen(false); }}
+      />
+
+      <div className="mx-auto max-w-7xl px-4 py-6 md:px-8">
+        {instrument === 'trumpet' ? (
+          <TrumpetTrainer mode={trumpetMode} />
+        ) : instrument === 'piano' ? (
+          <PianoTrainer key={pianoMode} mode={pianoMode} />
         ) : instrument === 'earTraining' ? (
-          <EarTraining mode={earTrainingMode} />
+          <EarTraining key={earTrainingMode} mode={earTrainingMode} />
         ) : (
           <GuitarTrainer
             {...trainer}
@@ -505,7 +525,6 @@ function App() {
             }}
             onToggleNote={trainer.handleToggleNote}
             onToggleReveal={() => trainer.setRevealNames((current) => !current)}
-            onToggleAudio={() => trainer.setAudioEnabled((value) => !value)}
             onSelectDegree={(degree) => {
               trainer.setSelectedDegree(degree);
               trainer.setAnswerState('idle');
@@ -514,6 +533,8 @@ function App() {
             onSubmit={trainer.handleSubmit}
             onNewQuestion={() => trainer.requestNewQuestion(trainer.mode)}
             onNewScale={trainer.requestNewScale}
+            onClearSelection={trainer.clearSelection}
+            onOpenControls={() => setControlsOpen(true)}
             explorerScaleLocked={trainer.explorerScaleLocked}
             onExplorerScaleLock={trainer.toggleExplorerScaleLock}
             explorerScaleType={trainer.explorerScaleType}
@@ -536,25 +557,28 @@ function App() {
             displayScaleType={trainer.displayScaleType}
           />
         )}
-        {instrument === 'guitar' && (
-          <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Controls">
+      </div>
+
+      {isGuitar && (
+        <BottomSheet open={controlsOpen} onClose={closeControls} title="Controls">
+          <div className="flex flex-col gap-3">
             <button type="button" onClick={() => trainer.setRevealNames((value) => !value)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
               {trainer.revealNames ? 'Hide notes' : 'Show notes'}
             </button>
             {trainer.revealNames && (
               <button type="button" onClick={() => trainer.setDisplayScaleDegrees((value) => !value)}
-                className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+                className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
                 {trainer.displayScaleDegrees ? 'Show notes' : 'Show degrees'} ({trainer.displayScaleRoot} {trainer.displayScaleType === 'minor' ? 'min' : 'maj'})
               </button>
             )}
             <button type="button" onClick={() => trainer.setAudioEnabled((value) => !value)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
               Audio {trainer.audioEnabled ? 'ON' : 'OFF'}
             </button>
-          </ControlSidebar>
-        )}
-      </div>
+          </div>
+        </BottomSheet>
+      )}
     </div>
   );
 }

@@ -162,10 +162,11 @@ function Fretboard({
   }
 
   return (
-    <div className="overflow-x-auto rounded-2xl border border-slate-800 bg-slate-900/80 p-4 shadow-2xl shadow-black/40">
-      <div className="min-w-[820px]">
+    // Phones pan the neck sideways instead of the whole page getting stuck on it.
+    <div className="overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-800 bg-slate-900/80 p-2 shadow-2xl shadow-black/40 md:p-4">
+      <div className="min-w-[600px] md:min-w-[820px]">
         <div
-          className="relative overflow-hidden rounded-md border border-black/70 touch-none"
+          className="relative overflow-hidden rounded-md border border-black/70"
           style={woodStyle}
           onPointerMove={(event) => updateDragTarget(event.target)}
           onPointerUp={() => {
@@ -274,7 +275,12 @@ function Fretboard({
                         'group relative flex h-full w-full items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-cyan-300',
                         isOpen ? 'bg-[#2a170d]' : '',
                       ].join(' ')}
-                      style={isOpen ? undefined : fretWireStyle}
+                      // Only a selected note that can be dragged needs to block scrolling;
+                      // everywhere else the finger can still pan the page or the neck.
+                      style={{
+                        ...(isOpen ? {} : fretWireStyle),
+                        touchAction: onDragTranspose && selectedKeys.has(key) ? 'none' : 'manipulation',
+                      }}
                     >
                       <span className="pointer-events-none absolute z-20 h-6 w-6 rounded-full bg-white/0 transition-colors group-hover:bg-white/20" />
                       {marker && (

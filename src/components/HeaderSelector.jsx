@@ -1,92 +1,113 @@
-function Menu({ label, items, value, open, onToggle, onSelect, className }) {
+import BottomSheet from './BottomSheet';
+
+const INSTRUMENTS = [
+  { id: 'guitar', label: 'Guitar' },
+  { id: 'trumpet', label: 'Trumpet' },
+  { id: 'piano', label: 'Piano' },
+  { id: 'earTraining', label: 'Ear Training' },
+];
+
+const TRUMPET_MODES = ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart'];
+const PIANO_MODES = [
+  'Guess the Note', 'Build Scale', 'Guess the Scale',
+  'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
+];
+const EAR_MODES = ['Interval Recognition', 'Diatonic Note Recognition', 'Chord Quality Recognition', 'Chord Relation Recognition'];
+
+export function modesFor(instrument, guitarModes) {
+  if (instrument === 'guitar') return guitarModes;
+  if (instrument === 'trumpet') return TRUMPET_MODES;
+  if (instrument === 'piano') return PIANO_MODES;
+  return EAR_MODES;
+}
+
+function Choice({ active, onClick, children, className = '' }) {
   return (
-    <div className="relative">
-      <button type="button" onClick={onToggle} aria-expanded={open} className={className}>
-        {value} <span className="ml-2 text-xs">▾</span>
-      </button>
-      {open && (
-        <div className="absolute left-0 z-50 mt-2 max-h-[60vh] min-w-40 overflow-y-auto overscroll-contain rounded-xl border border-slate-600 bg-slate-900 p-1 text-left shadow-xl">
-          {items.map((item) => (
-            <button key={item} type="button" onClick={() => onSelect(item)}
-              className="block w-full rounded-lg px-3 py-2 text-left text-sm text-slate-200 hover:bg-slate-800">
-              {item}
-            </button>
-          ))}
-        </div>
-      )}
+    <button type="button" onClick={onClick} aria-pressed={active}
+      className={[
+        'rounded-xl border px-4 py-3 text-left text-sm font-semibold transition',
+        active
+          ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100'
+          : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400',
+        className,
+      ].join(' ')}>
+      {children}
+    </button>
+  );
+}
+
+function Section({ title, children }) {
+  return (
+    <div className="mb-6 last:mb-0">
+      <p className="mb-2 text-xs uppercase tracking-[0.2em] text-slate-400">{title}</p>
+      {children}
     </div>
   );
 }
 
 export default function HeaderSelector({
-  instrument, mode, modes, difficulty, difficulties, exercise, exercises, openMenu, onMenuToggle,
-  onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange, sidebarOpen, onToggleSidebar,
+  instrument, mode, guitarModes, difficulty, difficulties, exercise, exercises,
+  menuOpen, onOpenMenu, onCloseMenu,
+  onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange,
 }) {
-  const instrumentModes = instrument === 'guitar'
-    ? modes
-    : instrument === 'trumpet'
-      ? ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart']
-    : instrument === 'piano'
-      ? [
-      'Guess the Note', 'Build Scale', 'Guess the Scale',
-      'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
-      ]
-      : ['Interval Recognition', 'Diatonic Note Recognition', 'Chord Quality Recognition', 'Chord Relation Recognition'];
+  const instrumentLabel = INSTRUMENTS.find((item) => item.id === instrument)?.label ?? 'Guitar';
+  const instrumentModes = modesFor(instrument, guitarModes);
+  const showDifficulty = instrument === 'guitar' && difficulties?.length > 0;
+  const showExercise = instrument === 'guitar' && exercises?.length > 0;
+
   return (
     <>
-      <button
-        type="button"
-        onClick={onToggleSidebar}
-        aria-expanded={sidebarOpen}
-        aria-label={sidebarOpen ? 'Close navigation' : 'Open navigation'}
-        className="fixed left-0 top-1/2 z-[60] -translate-y-1/2 rounded-r-xl border border-l-0 border-cyan-400/70 bg-slate-900/95 px-2 py-4 text-cyan-200 shadow-xl backdrop-blur-md"
-      >
-        <span className="text-lg">{sidebarOpen ? '‹' : '›'}</span>
-      </button>
-      <header className={[
-        'fixed inset-y-3 left-0 z-50 w-72 rounded-r-2xl border border-l-0 border-slate-700 bg-slate-900/95 p-4 text-center shadow-2xl shadow-black/50 backdrop-blur-md transition-transform duration-200',
-        sidebarOpen ? 'translate-x-0' : '-translate-x-full',
-      ].join(' ')}>
-      <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Instrument Learner</p>
-      <div className="mt-6 flex flex-col items-stretch gap-3">
-        <Menu
-          value={instrument === 'guitar' ? 'Guitar' : instrument === 'trumpet' ? 'Trumpet' : instrument === 'piano' ? 'Piano' : 'Ear Training'}
-          items={['Guitar', 'Trumpet', 'Piano', 'Ear Training']}
-          open={openMenu === 'instrument'}
-          onToggle={() => onMenuToggle('instrument')}
-          onSelect={(next) => onInstrumentChange(next === 'Ear Training' ? 'earTraining' : next.toLowerCase())}
-          className="min-w-40 rounded-xl border border-amber-300/70 bg-amber-300/15 px-4 py-2.5 text-sm font-semibold capitalize text-amber-200"
-        />
-        <Menu
-          value={instrument === 'guitar' ? mode : mode}
-          items={instrumentModes}
-          open={openMenu === 'mode'}
-          onToggle={() => onMenuToggle('mode')}
-          onSelect={onModeChange}
-          className="min-w-52 rounded-xl border border-cyan-400/70 bg-cyan-500/15 px-4 py-2.5 text-sm font-semibold text-cyan-200"
-        />
-        {instrument === 'guitar' && difficulties?.length > 0 && (
-          <Menu
-            value={`Difficulty: ${difficulty}`}
-            items={difficulties}
-            open={openMenu === 'difficulty'}
-            onToggle={() => onMenuToggle('difficulty')}
-            onSelect={onDifficultyChange}
-            className="min-w-44 rounded-xl border border-violet-400/70 bg-violet-500/15 px-4 py-2.5 text-sm font-semibold text-violet-200"
-          />
-        )}
-        {instrument === 'guitar' && exercises?.length > 0 && (
-          <Menu
-            value={exercise}
-            items={exercises}
-            open={openMenu === 'exercise'}
-            onToggle={() => onMenuToggle('exercise')}
-            onSelect={onExerciseChange}
-            className="min-w-48 rounded-xl border border-violet-400/70 bg-violet-500/15 px-4 py-2.5 text-sm font-semibold text-violet-200"
-          />
-        )}
-      </div>
+      <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-slate-800 bg-slate-950/90 px-4 py-3 backdrop-blur-md md:px-8">
+        <button type="button" onClick={onOpenMenu} aria-haspopup="dialog" aria-expanded={menuOpen}
+          className="shrink-0 rounded-xl border border-cyan-400/70 bg-cyan-500/15 px-4 py-2.5 text-sm font-semibold text-cyan-200">
+          Menu
+        </button>
+        <div className="min-w-0 flex-1">
+          <p className="truncate text-xs uppercase tracking-[0.2em] text-cyan-300">{instrumentLabel}</p>
+          <p className="truncate text-base font-semibold text-white">
+            {mode}
+            {showDifficulty && <span className="text-slate-400"> · {difficulty}</span>}
+            {showExercise && <span className="text-slate-400"> · {exercise}</span>}
+          </p>
+        </div>
       </header>
+
+      <BottomSheet open={menuOpen} onClose={onCloseMenu} title="Instrument Learner">
+        <Section title="Instrument">
+          <div className="grid grid-cols-2 gap-2">
+            {INSTRUMENTS.map((item) => (
+              <Choice key={item.id} active={instrument === item.id} onClick={() => onInstrumentChange(item.id)}>
+                {item.label}
+              </Choice>
+            ))}
+          </div>
+        </Section>
+        <Section title="Mode">
+          <div className="flex flex-col gap-2">
+            {instrumentModes.map((item) => (
+              <Choice key={item} active={mode === item} onClick={() => onModeChange(item)}>{item}</Choice>
+            ))}
+          </div>
+        </Section>
+        {showDifficulty && (
+          <Section title="Difficulty">
+            <div className="grid grid-cols-2 gap-2">
+              {difficulties.map((item) => (
+                <Choice key={item} active={difficulty === item} onClick={() => onDifficultyChange(item)}>{item}</Choice>
+              ))}
+            </div>
+          </Section>
+        )}
+        {showExercise && (
+          <Section title="Exercise">
+            <div className="flex flex-col gap-2">
+              {exercises.map((item) => (
+                <Choice key={item} active={exercise === item} onClick={() => onExerciseChange(item)}>{item}</Choice>
+              ))}
+            </div>
+          </Section>
+        )}
+      </BottomSheet>
     </>
   );
 }

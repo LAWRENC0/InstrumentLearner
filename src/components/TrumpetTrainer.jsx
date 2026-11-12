@@ -1,5 +1,6 @@
-import { useMemo, useState } from 'react';
-import ControlSidebar from './ControlSidebar';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import BottomSheet from './BottomSheet';
+import ActionBar from './ActionBar';
 import {
   evaluateTrumpetConfiguration,
   calculateTrumpetPitch,
@@ -22,6 +23,7 @@ const VALVES = [1, 2, 3];
 const BLACK_PITCH_CLASSES = new Set([1, 3, 6, 8, 10]);
 
 function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation, result }) {
+  const scrollRef = useRef(null);
   const notationOffset = bbNotation ? 2 : 0;
   const firstMidi = TRUMPET_LOW_MIDI + notationOffset - 1;
   const lastMidi = TRUMPET_HIGH_MIDI + notationOffset + 1;
@@ -29,6 +31,15 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
   const whiteNotes = midiNotes.filter((midi) => !BLACK_PITCH_CLASSES.has(midi % 12));
   const targetDisplayMidi = targetMidi + notationOffset;
   const targetIsInRange = targetDisplayMidi >= firstMidi && targetDisplayMidi <= lastMidi;
+
+  // Keep the target key on screen when a new question appears on a narrow display.
+  useEffect(() => {
+    const container = scrollRef.current;
+    if (!container) return;
+    const whiteIndex = whiteNotes.filter((midi) => midi < targetDisplayMidi).length;
+    container.scrollTo({ left: Math.max(0, whiteIndex * 32 - container.clientWidth / 2), behavior: 'smooth' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetDisplayMidi]);
 
   const getPitchPosition = (midi) => {
     const lowerWhiteIndex = whiteNotes.reduce((index, whiteMidi, whiteIndex) =>
@@ -40,7 +51,7 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
   };
 
   return (
-    <div className="mb-5 overflow-x-auto rounded-xl border border-slate-700 bg-slate-950/70 p-3">
+    <div ref={scrollRef} className="mb-5 overflow-x-auto overscroll-x-contain rounded-xl border border-slate-700 bg-slate-950/70 p-3">
       <div className="relative mx-auto h-24 min-w-fit" style={{ width: `${whiteNotes.length * 32}px` }}>
         <div className="absolute inset-x-0 bottom-0 flex h-20">
           {whiteNotes.map((midi) => (
@@ -154,7 +165,7 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
         </div>
       </div>
       <div className="overflow-x-auto">
-        <svg viewBox={`0 0 ${width} ${height}`} className="mx-auto min-w-[620px] w-full" role="img" aria-label="Trumpet register graph">
+        <svg viewBox={`0 0 ${width} ${height}`} className="mx-auto min-w-[560px] w-full md:min-w-[620px]" role="img" aria-label="Trumpet register graph">
           <rect x={pad.left} y={pad.top} width={width - pad.left - pad.right} height={height - pad.top - pad.bottom} fill="rgba(15,23,42,.7)" rx="12" />
           {scale === 'keyboard' ? (
             <g aria-label="Chromatic keyboard">
@@ -177,7 +188,7 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
                     y={top + keyHeight * 0.72}
                     textAnchor="end"
                     fill={blackKey ? '#e2e8f0' : '#334155'}
-                    fontSize="9"
+                    fontSize="14"
                   >
                     {formatTrumpetNote(midi)}
                   </text>
@@ -197,7 +208,7 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
                     stroke={tick === 0 ? '#f8fafc' : 'rgba(148,163,184,.3)'}
                     strokeWidth={tick === 0 ? 2 : 1}
                   />
-                  <text x={pad.left - 12} y={y(tick) + 4} textAnchor="end" fill="#cbd5e1" fontSize="12">
+                  <text x={pad.left - 12} y={y(tick) + 4} textAnchor="end" fill="#cbd5e1" fontSize="18">
                     {tick > 0 ? `+${tick}` : tick}¢
                   </text>
                 </g>
@@ -232,12 +243,12 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
                 y={Math.max(pad.top + 12, y(scale === 'keyboard' ? point.exactMidi : point.centsFromTarget) - 15)}
                 textAnchor="middle"
                 fill={point.partial === partial ? '#ecfeff' : '#a5f3fc'}
-                fontSize="11"
+                fontSize="17"
                 style={motionStyle}
               >
                 {getPointLabel(point)}
               </text>
-              <text x={x(point.partial)} y={height - pad.bottom + 25} textAnchor="middle" fill="#cbd5e1" fontSize="13">
+              <text x={x(point.partial)} y={height - pad.bottom + 25} textAnchor="middle" fill="#cbd5e1" fontSize="19">
                 {point.partial}
               </text>
             </g>
@@ -359,7 +370,7 @@ function ScaleFingeringChart() {
         </button>
         <button type="button" onClick={() => setBbNotation((value) => !value)}
           className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
-          {bbNotation ? 'Trumpet tuning' : 'Real tuning'}
+          {bbNotation ? 'Pitch: Bb trumpet' : 'Pitch: concert'}
         </button>
       </div>
       <div className="flex flex-wrap items-center justify-center gap-3 text-xs text-slate-300">
@@ -377,7 +388,7 @@ function ScaleFingeringChart() {
                   const next = new Set(current);
                   if (next.has(note.midi)) next.delete(note.midi); else next.add(note.midi);
                   return next;
-                })} className="absolute left-1 top-1 rounded border border-slate-600 px-2 py-1 text-sm font-semibold text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
+                })} className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-600 bg-slate-900 text-base font-semibold text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
                   {alternativeNotes.has(note.midi) ? 'A' : '+'}
                 </button>
               )}
@@ -492,6 +503,25 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
             bbNotation={bbNotation}
             result={result}
           />
+          {result && (
+            <div className={[
+              'mt-4 rounded-xl px-4 py-3 text-center text-sm',
+              result.quality === 'wrong' ? 'bg-red-500/15 text-red-200' : result.quality === 'optimal' ? 'bg-emerald-500/15 text-emerald-200' : 'bg-yellow-500/15 text-yellow-200',
+            ].join(' ')}>
+              <p>{getTrumpetFeedback(result)}</p>
+              <p className="mt-1 text-xs opacity-80">
+                Displayed in {notationLabel}; nearest note: {formatTrumpetNote(
+                  bbNotation ? getWrittenBbTrumpetMidi(result.nearestMidi) : result.nearestMidi,
+                )}.
+              </p>
+            </div>
+          )}
+          {result?.possibleSolution && (
+            <p className="mt-3 text-center text-sm text-amber-200">
+              Possible: {formatTrumpetConfiguration(result.possibleSolution.configuration)}
+              {' '}· {result.possibleSolution.distanceCents.toFixed(1)} cents
+            </p>
+          )}
         </div>
       </section>}
 
@@ -580,50 +610,26 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
         </div>
       </section>}
 
-      {!chartMode && <ControlSidebar open={controlsOpen} onToggle={() => setControlsOpen((open) => !open)} label="Trumpet controls">
-        <button type="button" onClick={() => setBbNotation((current) => !current)}
-          className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
-          Intonation: {bbNotation ? 'trumpet' : 'real'}
-        </button>
-        {!graphMode && (
-          <button type="button" onClick={() => setShowProducedNote((current) => !current)}
-            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-2.5 text-sm font-semibold text-slate-100">
-            {showProducedNote ? 'Hide note' : 'Show note'}
-          </button>
-        )}
-      </ControlSidebar>}
+      {!chartMode && <ActionBar
+        onControls={() => setControlsOpen(true)}
+        onSubmit={graphMode ? null : submit}
+        onNew={graphMode ? null : newQuestion}
+      />}
 
-      {!graphMode && !chartMode && <section>
-        <div className="flex flex-col gap-3 rounded-2xl border border-slate-700 bg-slate-900/80 p-5">
-          {result?.possibleSolution && (
-            <p className="rounded-xl bg-amber-500/10 px-4 py-3 text-center text-sm text-amber-200">
-              Possible: {formatTrumpetConfiguration(result.possibleSolution.configuration)}
-              {' '}· {result.possibleSolution.distanceCents.toFixed(1)} cents
-            </p>
-          )}
-          <button type="button" onClick={submit} className="rounded-xl border border-emerald-500/60 bg-emerald-500/15 px-4 py-2.5 font-semibold text-emerald-200 hover:bg-emerald-500/25">
-            Submit
+      {!chartMode && <BottomSheet open={controlsOpen} onClose={() => setControlsOpen(false)} title="Controls">
+        <div className="flex flex-col gap-3">
+          <button type="button" onClick={() => setBbNotation((current) => !current)}
+            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            Pitch: {bbNotation ? 'Bb trumpet' : 'concert'}
           </button>
-          <button type="button" onClick={newQuestion} className="rounded-xl bg-amber-300 px-4 py-2.5 font-semibold text-amber-950 hover:bg-amber-200">
-            New Question
-          </button>
-          {result && (
-            <p className={[
-              'rounded-xl px-4 py-3 text-sm',
-              result.quality === 'wrong' ? 'bg-red-500/15 text-red-200' : result.quality === 'optimal' ? 'bg-emerald-500/15 text-emerald-200' : 'bg-yellow-500/15 text-yellow-200',
-            ].join(' ')}>
-              <span className="block">
-                {getTrumpetFeedback(result)}
-              </span>
-              <span className="mt-1 block text-xs opacity-80">
-                Displayed in {notationLabel}; nearest note: {formatTrumpetNote(
-                  bbNotation ? getWrittenBbTrumpetMidi(result.nearestMidi) : result.nearestMidi,
-                )}.
-              </span>
-            </p>
+          {!graphMode && (
+            <button type="button" onClick={() => setShowProducedNote((current) => !current)}
+              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+              {showProducedNote ? 'Hide note' : 'Show note'}
+            </button>
           )}
         </div>
-      </section>}
+      </BottomSheet>}
 
     </div>
   );
