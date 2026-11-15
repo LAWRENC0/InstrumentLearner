@@ -7,7 +7,7 @@ const INSTRUMENTS = [
   { id: 'earTraining', label: 'Ear Training' },
 ];
 
-const TRUMPET_MODES = ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart'];
+const TRUMPET_MODES = ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart', 'Interval Shift'];
 const PIANO_MODES = [
   'Guess the Note', 'Build Scale', 'Guess the Scale',
   'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
@@ -24,13 +24,7 @@ export function modesFor(instrument, guitarModes) {
 function Choice({ active, onClick, children, className = '' }) {
   return (
     <button type="button" onClick={onClick} aria-pressed={active}
-      className={[
-        'rounded-xl border px-4 py-3 text-left text-sm font-semibold transition',
-        active
-          ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100'
-          : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400',
-        className,
-      ].join(' ')}>
+      className={`glass-btn rounded-2xl px-4 py-3 text-left text-sm font-semibold text-slate-100 ${className}`}>
       {children}
     </button>
   );
@@ -39,9 +33,17 @@ function Choice({ active, onClick, children, className = '' }) {
 function Section({ title, children }) {
   return (
     <div className="mb-6 last:mb-0">
-      <p className="mb-2 text-xs uppercase tracking-[0.2em] text-slate-400">{title}</p>
+      <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-slate-400">{title}</p>
       {children}
     </div>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+    </svg>
   );
 }
 
@@ -54,21 +56,23 @@ export default function HeaderSelector({
   const instrumentModes = modesFor(instrument, guitarModes);
   const showDifficulty = instrument === 'guitar' && difficulties?.length > 0;
   const showExercise = instrument === 'guitar' && exercises?.length > 0;
+  const subtitle = [mode, showDifficulty ? difficulty : null, showExercise ? exercise : null]
+    .filter(Boolean).join(' · ');
 
   return (
     <>
-      <header className="sticky top-0 z-40 flex items-center gap-3 border-b border-slate-800 bg-slate-950/90 px-4 py-3 backdrop-blur-md md:px-8">
-        <button type="button" onClick={onOpenMenu} aria-haspopup="dialog" aria-expanded={menuOpen}
-          className="shrink-0 rounded-xl border border-cyan-400/70 bg-cyan-500/15 px-4 py-2.5 text-sm font-semibold text-cyan-200">
-          Menu
-        </button>
-        <div className="min-w-0 flex-1">
-          <p className="truncate text-xs uppercase tracking-[0.2em] text-cyan-300">{instrumentLabel}</p>
-          <p className="truncate text-base font-semibold text-white">
-            {mode}
-            {showDifficulty && <span className="text-slate-400"> · {difficulty}</span>}
-            {showExercise && <span className="text-slate-400"> · {exercise}</span>}
-          </p>
+      <header className="sticky top-0 z-40 px-3 pt-3 md:px-6">
+        <div className="glass-strong mx-auto flex max-w-7xl items-center gap-3 rounded-[1.5rem] px-3 py-2.5">
+          <button type="button" onClick={onOpenMenu} aria-haspopup="dialog" aria-expanded={menuOpen}
+            className="btn-accent flex shrink-0 items-center gap-2 px-4 py-2.5 text-sm">
+            <span className="relative z-10 flex items-center gap-2"><MenuIcon />Menu</span>
+          </button>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-[11px] font-semibold uppercase tracking-[0.25em] text-[var(--accent)]">
+              {instrumentLabel}
+            </p>
+            <p className="truncate text-base font-semibold text-white">{subtitle}</p>
+          </div>
         </div>
       </header>
 

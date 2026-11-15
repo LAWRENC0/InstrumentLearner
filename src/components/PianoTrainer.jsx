@@ -108,7 +108,7 @@ function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, r
     selectedKeys.has(String(midi)) ? (answerState === 'submitted' ? '!bg-emerald-300' : '!bg-cyan-300') : '',
   ].join(' ');
   return (
-    <div ref={scrollRef} className="overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-700 bg-slate-950/70 p-3 md:p-4">
+    <div ref={scrollRef} className="overflow-x-auto overscroll-x-contain glass p-3 md:p-4">
       <div className="relative mx-auto h-44 min-w-fit" style={{ width: `${whiteNotes.length * WHITE_KEY_WIDTH}px` }}>
         <div className="absolute inset-x-0 bottom-0 flex h-36">
           {whiteNotes.map((midi) => (
@@ -273,7 +273,7 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
 
   return (
     <div className="space-y-4">
-      <div className="rounded-2xl border border-slate-700 bg-slate-900/80 p-4 text-center">
+      <div className="glass p-4 text-center">
         <p className="text-lg font-medium text-white">{prompt}</p>
         {message && <p className="mt-2 text-sm text-cyan-200">{message}</p>}
       </div>
@@ -282,7 +282,7 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
         focusMidi={focusMidi} resetKey={question} />
       {choices && <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{choices.map(([value, label]) => (
         <button key={value} type="button" onClick={() => { setAnswer(value); setAnswerState('idle'); setMessage(''); }}
-          className={`${CHOICE_BASE} ${answer === value ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100' : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400'}`}>
+          className={`${CHOICE_BASE} ${answer === value ? 'glass-btn is-on text-white' : 'glass-btn text-slate-200'}`}>
           {label}
         </button>
       ))}</div>}
@@ -291,7 +291,7 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
           onKeyDown={(event) => { if (event.key === 'Enter') submit(); }}
           aria-label="Your answer"
           placeholder={mode === 'Guess the Note' ? 'Type a note (e.g. C#, Db)' : 'Type a scale (e.g. E major)'}
-          className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-center text-base text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none" />
+          className="w-full glass-btn px-4 py-3 text-center text-base text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none" />
       )}
 
       <ActionBar
@@ -303,11 +303,11 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
       <BottomSheet open={controlsOpen} onClose={() => setControlsOpen(false)} title="Controls">
         <div className="flex flex-col gap-3">
           <button type="button" onClick={() => setRevealNames((value) => !value)}
-            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
             {revealNames ? 'Hide notes' : 'Show notes'}
           </button>
           <button type="button" onClick={() => setAudioEnabled((value) => !value)}
-            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
             Audio {audioEnabled ? 'ON' : 'OFF'}
           </button>
         </div>

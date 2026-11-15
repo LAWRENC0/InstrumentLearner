@@ -163,7 +163,7 @@ function Fretboard({
 
   return (
     // Phones pan the neck sideways instead of the whole page getting stuck on it.
-    <div className="overflow-x-auto overscroll-x-contain rounded-2xl border border-slate-800 bg-slate-900/80 p-2 shadow-2xl shadow-black/40 md:p-4">
+    <div className="overflow-x-auto overscroll-x-contain glass p-2 shadow-2xl shadow-black/40 md:p-4">
       <div className="min-w-[600px] md:min-w-[820px]">
         <div
           className="relative overflow-hidden rounded-md border border-black/70"

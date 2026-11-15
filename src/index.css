@@ -1,8 +1,31 @@
 @import "tailwindcss";
 
+/* ---------- Design tokens ---------- */
+/* Each instrument sets its own accent pair on the app root (see data-instrument). */
+:root,
+[data-instrument="guitar"] {
+  --accent: #22d3ee;
+  --accent-2: #818cf8;
+}
+[data-instrument="trumpet"] {
+  --accent: #fbbf24;
+  --accent-2: #fb7185;
+}
+[data-instrument="piano"] {
+  --accent: #c4b5fd;
+  --accent-2: #f0abfc;
+}
+[data-instrument="earTraining"] {
+  --accent: #34d399;
+  --accent-2: #2dd4bf;
+}
+
 :root {
   color-scheme: dark;
-  font-family: Inter, "Segoe UI", sans-serif;
+  font-family: Inter, "Segoe UI Variable", "Segoe UI", system-ui, sans-serif;
+  --glass-edge: rgba(255, 255, 255, 0.16);
+  --glass-top: rgba(255, 255, 255, 0.13);
+  --glass-bottom: rgba(255, 255, 255, 0.03);
 }
 
 html,
@@ -10,17 +33,217 @@ body,
 #root {
   margin: 0;
   min-height: 100%;
-  min-width: 100%;
-  background:
-    radial-gradient(circle at top, rgba(34, 211, 238, 0.18), transparent 35%),
-    linear-gradient(180deg, #020617 0%, #0f172a 100%);
+  background: #050816;
   color: #e2e8f0;
 }
 
 body {
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
 }
 
 button {
   cursor: pointer;
+}
+
+/* ---------- Liquid background ---------- */
+/* Slow-moving colour blobs behind everything, so the glass has something to refract. */
+.app-root {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.app-root::before,
+.app-root::after {
+  content: "";
+  position: fixed;
+  z-index: -1;
+  width: 60vmax;
+  height: 60vmax;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.app-root::before {
+  top: -20vmax;
+  left: -15vmax;
+  background: radial-gradient(circle, var(--accent), transparent 65%);
+  animation: blob-a 26s ease-in-out infinite alternate;
+}
+
+.app-root::after {
+  bottom: -25vmax;
+  right: -15vmax;
+  background: radial-gradient(circle, var(--accent-2), transparent 65%);
+  animation: blob-b 32s ease-in-out infinite alternate;
+}
+
+@keyframes blob-a {
+  to { transform: translate3d(12vmax, 8vmax, 0) scale(1.15); }
+}
+
+@keyframes blob-b {
+  to { transform: translate3d(-10vmax, -6vmax, 0) scale(1.1); }
+}
+
+@keyframes glass-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.99); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@layer components {
+  /* Base glass surface: translucent gradient, blur, bright top edge. */
+  .glass {
+    position: relative;
+    border-radius: 1.5rem;
+    border: 1px solid var(--glass-edge);
+    background: linear-gradient(160deg, var(--glass-top), var(--glass-bottom));
+    backdrop-filter: blur(24px) saturate(170%);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    box-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.7);
+    animation: glass-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  /* Heavier glass for floating chrome (top bar, dock, sheets). */
+  .glass-strong {
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(160deg, rgba(30, 41, 59, 0.62), rgba(8, 12, 28, 0.55));
+    backdrop-filter: blur(36px) saturate(190%);
+    -webkit-backdrop-filter: blur(36px) saturate(190%);
+    box-shadow: 0 20px 50px -20px rgba(0, 0, 0, 0.8);
+  }
+
+  /* Recessed glass for panels nested inside a card (keyboards, valves, chart tiles). */
+  .glass-inset {
+    border-radius: 1.25rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(2, 6, 23, 0.42);
+    box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Tappable glass button. */
+  .glass-btn {
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 8px 20px -12px rgba(0, 0, 0, 0.6);
+    transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .glass-btn:hover:not(:disabled) {
+    background: linear-gradient(160deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.07));
+    border-color: rgba(255, 255, 255, 0.26);
+  }
+
+  .glass-btn:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .glass-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Selected state for chips and toggles. */
+  .glass-btn[aria-pressed="true"],
+  .glass-btn.is-on {
+    background: linear-gradient(160deg,
+      color-mix(in srgb, var(--accent) 34%, transparent),
+      color-mix(in srgb, var(--accent-2) 16%, transparent));
+    border-color: color-mix(in srgb, var(--accent) 75%, transparent);
+    box-shadow: none;
+  }
+
+  /* Primary action: accent gradient with a liquid sheen. */
+  .btn-accent {
+    position: relative;
+    overflow: hidden;
+    border-radius: 1rem;
+    font-weight: 700;
+    color: #020617;
+    background: linear-gradient(160deg, var(--accent), var(--accent-2));
+    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+    transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .btn-accent:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .btn-accent:disabled {
+    opacity: 0.4;
+  }
+
+  /* Confirm action (Submit): mint glass. */
+  .btn-success {
+    border-radius: 1rem;
+    border: 1px solid rgba(52, 211, 153, 0.55);
+    background: linear-gradient(160deg, rgba(52, 211, 153, 0.32), rgba(16, 185, 129, 0.1));
+    color: #d1fae5;
+    font-weight: 700;
+    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(14px);
+    transition: transform 0.15s ease, filter 0.2s ease;
+  }
+
+  .btn-success:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+
+  .btn-success:disabled {
+    opacity: 0.4;
+  }
+
+  /* Text fields. */
+  .field {
+    border-radius: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    background: rgba(2, 6, 23, 0.45);
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.35);
+    color: #f1f5f9;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .field::placeholder {
+    color: rgba(148, 163, 184, 0.8);
+  }
+
+  .field:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+
+  /* Dragging grip shown at the top of sheets. */
+  .sheet-grip {
+    width: 2.75rem;
+    height: 0.3rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.25);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-root::before,
+  .app-root::after,
+  .glass,
+  .sheet-anim {
+    animation: none !important;
+  }
 }

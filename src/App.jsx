@@ -490,7 +490,7 @@ function App() {
   const isGuitar = instrument === 'guitar';
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="app-root min-h-screen text-slate-100" data-instrument={instrument}>
       <HeaderSelector
         instrument={instrument}
         mode={currentMode}
@@ -563,17 +563,17 @@ function App() {
         <BottomSheet open={controlsOpen} onClose={closeControls} title="Controls">
           <div className="flex flex-col gap-3">
             <button type="button" onClick={() => trainer.setRevealNames((value) => !value)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+              className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
               {trainer.revealNames ? 'Hide notes' : 'Show notes'}
             </button>
             {trainer.revealNames && (
               <button type="button" onClick={() => trainer.setDisplayScaleDegrees((value) => !value)}
-                className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+                className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
                 {trainer.displayScaleDegrees ? 'Show notes' : 'Show degrees'} ({trainer.displayScaleRoot} {trainer.displayScaleType === 'minor' ? 'min' : 'maj'})
               </button>
             )}
             <button type="button" onClick={() => trainer.setAudioEnabled((value) => !value)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+              className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
               Audio {trainer.audioEnabled ? 'ON' : 'OFF'}
             </button>
           </div>

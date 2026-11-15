@@ -136,14 +136,14 @@ export default function EarTraining({ mode = 'Interval Recognition' }) {
 
   return (
     <div className="space-y-4">
-      <section className="rounded-2xl border border-slate-700 bg-slate-900/80 p-5 text-center">
+      <section className="glass p-5 text-center">
         <p className="text-lg font-medium text-white">{prompt}</p>
         {message && <p className="mt-2 text-sm text-cyan-200">{message}</p>}
       </section>
-      <section className="rounded-2xl border border-cyan-700/60 bg-slate-950/70 p-5 text-center">
+      <section className="glass p-5 text-center">
         <p className="text-sm text-slate-300">Listen, then choose your answer.</p>
         <button type="button" onClick={playQuestion}
-          className="mt-4 rounded-xl bg-cyan-500 px-6 py-3 font-semibold text-slate-950 hover:bg-cyan-400">
+          className="mt-4 btn-accent px-6 py-3">
           Play exercise
         </button>
       </section>
@@ -151,8 +151,8 @@ export default function EarTraining({ mode = 'Interval Recognition' }) {
         {choices.map(([value, label]) => (
           <button key={value} type="button" onClick={() => { setAnswer(value); setAnswerState('idle'); setMessage(''); }}
             className={`rounded-xl border px-3 py-3 text-sm transition ${answer === value
-              ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100'
-              : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400'}`}>
+              ? 'glass-btn is-on text-white'
+              : 'glass-btn text-slate-200'}`}>
             {label}
           </button>
         ))}
@@ -166,7 +166,7 @@ export default function EarTraining({ mode = 'Interval Recognition' }) {
 
       <BottomSheet open={controlsOpen} onClose={() => setControlsOpen(false)} title="Controls">
         <button type="button" onClick={() => setAudioEnabled((enabled) => !enabled)}
-          className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+          className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
           Audio {audioEnabled ? 'ON' : 'OFF'}
         </button>
       </BottomSheet>

@@ -1,33 +1,30 @@
-// Bottom action row shared by every trainer, so Submit / New sit in the same place on every screen.
-// It stays pinned to the bottom of the viewport while the content scrolls above it.
+// Floating glass dock shared by every trainer: Controls, Submit and New Question
+// sit in the same place on every screen and stay reachable while the content scrolls.
 export default function ActionBar({
   onSubmit, onNew, newLabel = 'New Question', onExtra, extraLabel, onControls,
 }) {
-  const button = 'min-w-0 flex-1 whitespace-nowrap rounded-xl px-3 py-3 text-sm font-semibold transition disabled:opacity-40';
+  const button = 'min-w-0 flex-1 rounded-2xl px-2 py-3 text-center text-sm font-semibold leading-tight transition';
   return (
-    <div className="sticky bottom-0 z-30 -mx-4 mt-6 border-t border-slate-800 bg-slate-950/95 px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))] pt-3 backdrop-blur-md md:-mx-8 md:px-8">
-      <div className="mx-auto flex max-w-7xl gap-2">
+    <div className="sticky bottom-3 z-30 mt-8 px-1 pb-[env(safe-area-inset-bottom)]">
+      <div className="glass-strong mx-auto flex max-w-2xl gap-2 rounded-[1.75rem] p-2">
         {onControls && (
           <button type="button" onClick={onControls}
-            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-sm font-semibold text-slate-100">
+            className={`${button} glass-btn text-slate-100`}>
             Controls
           </button>
         )}
         {onSubmit && (
-          <button type="button" onClick={onSubmit}
-            className={`${button} border border-emerald-500/60 bg-emerald-500/15 text-emerald-200 hover:bg-emerald-500/25`}>
+          <button type="button" onClick={onSubmit} className={`${button} btn-success`}>
             Submit
           </button>
         )}
         {onExtra && (
-          <button type="button" onClick={onExtra}
-            className={`${button} border border-violet-400/60 bg-violet-500/15 text-violet-200 hover:bg-violet-500/25`}>
+          <button type="button" onClick={onExtra} className={`${button} glass-btn text-slate-100`}>
             {extraLabel}
           </button>
         )}
         {onNew && (
-          <button type="button" onClick={onNew}
-            className={`${button} bg-cyan-500 text-slate-950 hover:bg-cyan-400`}>
+          <button type="button" onClick={onNew} className={`${button} btn-accent`}>
             {newLabel}
           </button>
         )}

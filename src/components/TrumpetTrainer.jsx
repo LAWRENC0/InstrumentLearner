@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import BottomSheet from './BottomSheet';
 import ActionBar from './ActionBar';
+import IntervalShiftTrainer from './IntervalShiftTrainer';
+import { FingeringInput, getTrumpetFeedback, valveNotation } from './trumpetShared';
 import {
   evaluateTrumpetConfiguration,
   calculateTrumpetPitch,
@@ -12,14 +14,11 @@ import {
   getTrumpetQuestionText,
   getWrittenBbTrumpetMidi,
   MAX_TRUMPET_PARTIAL,
-  PUMP_LEVELS,
   TRUMPET_HIGH_MIDI,
   TRUMPET_LOW_MIDI,
 } from '../utils/trumpetTheory';
 import { noteToMidi, NOTE_NAMES } from '../utils/musicTheory';
 
-// Player's view: valve 1, valve 2, and valve 3 from left to right.
-const VALVES = [1, 2, 3];
 const BLACK_PITCH_CLASSES = new Set([1, 3, 6, 8, 10]);
 
 function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation, result }) {
@@ -51,7 +50,7 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
   };
 
   return (
-    <div ref={scrollRef} className="mb-5 overflow-x-auto overscroll-x-contain rounded-xl border border-slate-700 bg-slate-950/70 p-3">
+    <div ref={scrollRef} className="mb-5 overflow-x-auto overscroll-x-contain glass p-3">
       <div className="relative mx-auto h-24 min-w-fit" style={{ width: `${whiteNotes.length * 32}px` }}>
         <div className="absolute inset-x-0 bottom-0 flex h-20">
           {whiteNotes.map((midi) => (
@@ -100,7 +99,6 @@ function PianoKeyboard({ targetMidi, producedMidi, showProducedNote, bbNotation,
     </div>
   );
 }
-const VALVE_SEMITONES = { 1: -2, 2: -1, 3: -3 };
 
 function createQuestion(previousMidi = null, previousOffset = null, bbNotation = false) {
   const useOffsetQuestion = previousMidi !== null && Math.random() < 0.5;
@@ -151,14 +149,14 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
   };
 
   return (
-    <section className="rounded-2xl border border-cyan-700/60 bg-slate-900/85 p-5 shadow-xl">
+    <section className="glass p-5 shadow-xl">
       <div className="mb-3 flex flex-wrap items-baseline justify-end gap-2">
         <div className="flex flex-wrap items-center justify-end">
           <button
             type="button"
             onClick={() => onScaleChange(scale === 'keyboard' ? 'cents' : 'keyboard')}
             aria-pressed={scale === 'cents'}
-            className="rounded-lg border border-cyan-300/50 bg-cyan-400/10 px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200 hover:bg-cyan-300/20"
+            className="glass-btn px-3 py-1.5 text-xs font-semibold text-cyan-100 transition hover:border-cyan-200 hover:bg-cyan-300/20"
           >
             Y axis: {scale === 'keyboard' ? 'keyboard' : 'cents'}
           </button>
@@ -277,22 +275,6 @@ const SCALE_INTERVALS = {
   minor: [0, 2, 3, 5, 7, 8, 10],
 };
 
-function valveNotation(valves) {
-  return VALVES.map((valve) => (valves.includes(valve) ? '●' : '−')).join('');
-}
-
-function getTrumpetFeedback(result) {
-  if (result.quality === 'optimal') return 'Correct: centered pitch with no slide correction.';
-  const direction = result.exactMidi < result.targetMidi ? 'flat' : 'sharp';
-  const details = [
-    `Your configuration produces ${result.note}, ${Math.abs(result.distanceCents).toFixed(1)} cents ${direction} of ${result.targetNote}.`,
-  ];
-  if (!result.coherentPumps) details.push('A tuning slide is extended without its corresponding valve being pressed.');
-  if (result.quality === 'corrected') details.push('The note is in tune, but try the conventional fingering without slide correction.');
-  if (result.possibleSolution) details.push(`Try ${formatTrumpetConfiguration(result.possibleSolution.configuration)}.`);
-  return details.join(' ');
-}
-
 const ROMAN_DEGREES = ['I', 'bII', 'II', 'bIII', 'III', 'IV', 'bV', 'V', 'bVI', 'VI', 'bVII', 'VII'];
 
 function ScaleFingeringChart() {
@@ -349,27 +331,27 @@ function ScaleFingeringChart() {
   };
 
   return (
-    <section className="space-y-3 rounded-2xl border border-cyan-700/60 bg-slate-900/85 p-3 shadow-xl">
+    <section className="space-y-3 glass p-3 shadow-xl">
       <div className="flex flex-wrap items-center justify-center gap-2">
         <select value={root} onChange={(event) => setRoot(event.target.value)}
-          className="rounded-lg border border-cyan-400/60 bg-slate-800 px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale fundamental">
+          className="glass-btn px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale fundamental">
           {NOTE_NAMES.map((note) => <option key={note}>{note}</option>)}
         </select>
         <select value={quality} onChange={(event) => setQuality(event.target.value)}
-          className="rounded-lg border border-cyan-400/60 bg-slate-800 px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale quality">
+          className="glass-btn px-2 py-1.5 text-sm text-cyan-100" aria-label="Scale quality">
           <option value="major">Major</option>
           <option value="minor">Minor</option>
         </select>
         <button type="button" onClick={() => setShowDegrees((value) => !value)}
-          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          className="glass-btn px-2 py-1.5 text-xs text-cyan-100">
           {showDegrees ? 'Show notes' : 'Show degrees'}
         </button>
         <button type="button" onClick={() => setShowSlides((value) => !value)}
-          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          className="glass-btn px-2 py-1.5 text-xs text-cyan-100">
           Slides {showSlides ? 'ON' : 'OFF'}
         </button>
         <button type="button" onClick={() => setBbNotation((value) => !value)}
-          className="rounded-lg border border-cyan-400/60 bg-cyan-400/10 px-2 py-1.5 text-xs text-cyan-100">
+          className="glass-btn px-2 py-1.5 text-xs text-cyan-100">
           {bbNotation ? 'Pitch: Bb trumpet' : 'Pitch: concert'}
         </button>
       </div>
@@ -382,13 +364,13 @@ function ScaleFingeringChart() {
           const entry = alternativeNotes.has(note.midi) && note.alternative ? note.alternative : note.primary;
           const displayMidi = note.midi + (bbNotation ? 2 : 0);
           return (
-            <div key={note.midi} className="relative min-h-[104px] rounded-lg border border-slate-700 bg-slate-950/80 p-3 text-sm text-slate-200">
+            <div key={note.midi} className="relative min-h-[104px] glass-inset p-3 text-sm text-slate-200">
               {note.alternative && (
                 <button type="button" onClick={() => setAlternativeNotes((current) => {
                   const next = new Set(current);
                   if (next.has(note.midi)) next.delete(note.midi); else next.add(note.midi);
                   return next;
-                })} className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center rounded-lg border border-slate-600 bg-slate-900 text-base font-semibold text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
+                })} className="absolute right-1 top-1 flex h-9 w-9 items-center justify-center glass-btn text-base font-semibold text-cyan-200" aria-label={`Toggle alternative for ${formatTrumpetNote(displayMidi)}`}>
                   {alternativeNotes.has(note.midi) ? 'A' : '+'}
                 </button>
               )}
@@ -432,11 +414,6 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
     bbNotation ? getWrittenBbTrumpetMidi(producedPreview.nearestMidi) : producedPreview.nearestMidi,
   );
   const notationLabel = bbNotation ? 'written for Bb trumpet' : 'concert pitch';
-  const getPartialShift = (nextPartial) => {
-    const exactSemitones = 12 * Math.log2(nextPartial / partial);
-    return `${exactSemitones >= 0 ? '+' : ''}${exactSemitones.toFixed(2)}`;
-  };
-
   const newQuestion = () => {
     setQuestion(createQuestion(question.targetMidi, null, bbNotation));
     setResult(null);
@@ -462,6 +439,9 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
     setShowProducedNote(true);
   };
 
+  // The interval game has its own state, so it renders on its own.
+  if (mode === 'Interval Shift') return <IntervalShiftTrainer />;
+
   return (
     <div className="space-y-6">
       {chartMode ? (
@@ -477,7 +457,7 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
           scale={graphScale}
           onScaleChange={setGraphScale}
         />
-      ) : <section className="rounded-2xl border border-amber-700/50 bg-slate-900/80 p-5">
+      ) : <section className="glass p-5">
         <div>
           <div className="mb-3 flex flex-wrap items-center justify-center gap-6">
             <p className="text-center text-3xl font-bold text-white">
@@ -525,90 +505,12 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
         </div>
       </section>}
 
-      {!chartMode && <section className="rounded-2xl border border-amber-900/70 bg-gradient-to-br from-[#4a2a18] to-[#17100c] p-5 shadow-2xl">
-        <div className="grid gap-3 md:grid-cols-[1fr_1.1fr_1fr] md:items-stretch">
-          <label className="flex flex-col gap-3 rounded-2xl border border-amber-200/20 bg-black/20 p-4">
-            <span className="text-xs uppercase tracking-[0.2em] text-amber-200">Partial</span>
-            <input
-              type="range"
-              min="1"
-              max={MAX_TRUMPET_PARTIAL}
-              value={partial}
-              onChange={(event) => setPartial(Number(event.target.value))}
-              className="accent-amber-300"
-            />
-            <div className="flex items-center justify-center gap-4">
-              <div className="flex w-16 flex-col items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => setPartial((current) => Math.max(1, current - 1))}
-                  disabled={partial === 1}
-                  aria-label="Decrease partial"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-amber-200/40 text-amber-100 transition enabled:hover:border-amber-100 enabled:hover:bg-amber-200/10 disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
-                    <path d="M15 5 8 12l7 7" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
-                  </svg>
-                </button>
-                <span className="text-center text-xs text-amber-100/70">
-                  {partial > 1 ? getPartialShift(partial - 1) : '—'}
-                </span>
-              </div>
-              <span className="min-w-12 text-center text-3xl font-bold text-white">{partial}</span>
-              <div className="flex w-16 flex-col items-center gap-1">
-                <button
-                  type="button"
-                  onClick={() => setPartial((current) => Math.min(MAX_TRUMPET_PARTIAL, current + 1))}
-                  disabled={partial === MAX_TRUMPET_PARTIAL}
-                  aria-label="Increase partial"
-                  className="flex h-11 w-11 items-center justify-center rounded-lg border border-amber-200/40 text-amber-100 transition enabled:hover:border-amber-100 enabled:hover:bg-amber-200/10 disabled:cursor-not-allowed disabled:opacity-30"
-                >
-                  <svg viewBox="0 0 24 24" className="h-7 w-7" aria-hidden="true">
-                    <path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" />
-                  </svg>
-                </button>
-                <span className="text-center text-xs text-amber-100/70">
-                  {partial < MAX_TRUMPET_PARTIAL ? getPartialShift(partial + 1) : '—'}
-                </span>
-              </div>
-            </div>
-          </label>
-
-          <div className="rounded-2xl border border-amber-200/20 bg-black/20 p-3">
-            <p className="mb-2 text-center text-xs uppercase tracking-[0.2em] text-amber-200">Valves</p>
-            <div className="flex justify-center gap-3">
-              {VALVES.map((valve) => (
-                <button
-                  key={valve}
-                  type="button"
-                  onClick={() => toggleValve(valve)}
-                  className={[
-                    'flex h-16 w-16 flex-col items-center justify-center rounded-full border-4 font-bold transition',
-                    valves.includes(valve)
-                      ? 'border-amber-200 bg-amber-300 text-amber-950 shadow-[0_0_24px_rgba(252,211,77,0.45)]'
-                      : 'border-slate-400 bg-slate-800 text-slate-100 hover:border-amber-200',
-                  ].join(' ')}
-                >
-                  <span className="text-2xl">{valve}</span>
-                  <span className="text-[10px] uppercase">{VALVE_SEMITONES[valve]} st</span>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="space-y-3 rounded-2xl border border-amber-200/20 bg-black/20 p-4">
-            <p className="text-xs uppercase tracking-[0.2em] text-amber-200">Tuning slides</p>
-            <label className="flex flex-col gap-1 text-sm text-slate-200">
-              1st slide: {pump1}%
-              <input type="range" min="0" max="4" step="1" value={PUMP_LEVELS.indexOf(pump1)} onChange={(event) => setPump1(PUMP_LEVELS[Number(event.target.value)])} className="accent-amber-300" />
-            </label>
-            <label className="flex flex-col gap-1 text-sm text-slate-200">
-              3rd slide: {pump3}%
-              <input type="range" min="0" max="4" step="1" value={PUMP_LEVELS.indexOf(pump3)} onChange={(event) => setPump3(PUMP_LEVELS[Number(event.target.value)])} className="accent-amber-300" />
-            </label>
-          </div>
-        </div>
-      </section>}
+      {!chartMode && <FingeringInput
+        partial={partial} setPartial={setPartial}
+        valves={valves} onToggleValve={toggleValve}
+        pump1={pump1} setPump1={setPump1}
+        pump3={pump3} setPump3={setPump3}
+      />}
 
       {!chartMode && <ActionBar
         onControls={() => setControlsOpen(true)}
@@ -619,12 +521,12 @@ function TrumpetTrainer({ mode = 'Register & Intonation' }) {
       {!chartMode && <BottomSheet open={controlsOpen} onClose={() => setControlsOpen(false)} title="Controls">
         <div className="flex flex-col gap-3">
           <button type="button" onClick={() => setBbNotation((current) => !current)}
-            className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
             Pitch: {bbNotation ? 'Bb trumpet' : 'concert'}
           </button>
           {!graphMode && (
             <button type="button" onClick={() => setShowProducedNote((current) => !current)}
-              className="rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-left text-sm font-semibold text-slate-100">
+              className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
               {showProducedNote ? 'Hide note' : 'Show note'}
             </button>
           )}

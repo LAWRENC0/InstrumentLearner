@@ -4,8 +4,8 @@ import ActionBar from './ActionBar';
 const IDENTIFY_EXERCISES = ['identify-degree', 'identify-fundamental'];
 const ROOT_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
 
-const TOOL_BUTTON = 'rounded-xl border px-3 py-2.5 text-sm font-semibold transition';
-const TOOL_SELECT = 'rounded-xl border border-slate-600 bg-slate-800 px-3 py-2.5 text-sm text-slate-100';
+const TOOL_BUTTON = 'px-3 py-2.5 text-sm font-semibold transition';
+const TOOL_SELECT = 'field px-3 py-2.5 text-sm';
 
 function DegreeSelector({ question, selectedDegree, answerState, onSelect }) {
   if (!IDENTIFY_EXERCISES.includes(question.pentatonicExercise)) return null;
@@ -14,7 +14,7 @@ function DegreeSelector({ question, selectedDegree, answerState, onSelect }) {
     : ['tonic', 'minor 3rd', '4th', '5th', 'minor 7th'];
 
   return (
-    <div className="rounded-2xl border border-cyan-400/30 bg-cyan-500/5 p-3">
+    <div className="glass p-3">
       <p className="mb-2 text-xs uppercase tracking-[0.2em] text-cyan-200">Degree</p>
       <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
         {degrees.map((degree) => (
@@ -27,7 +27,7 @@ function DegreeSelector({ question, selectedDegree, answerState, onSelect }) {
                   ? 'border-red-200 bg-red-400 text-slate-950'
                   : selectedDegree === degree
                     ? 'border-cyan-300 bg-cyan-400/20 text-cyan-100'
-                    : 'border-slate-600 bg-slate-800 text-slate-200 hover:border-slate-400',
+                    : 'glass-btn text-slate-200',
             ].join(' ')}
             aria-pressed={selectedDegree === degree}>
             {degree}
@@ -60,7 +60,7 @@ export default function GuitarTrainer({
       ].join(' ')}>
         <section className="space-y-4">
           {(question.prompt || answerMessage) && (
-            <div className="rounded-2xl border border-slate-700 bg-slate-900/80 p-4 text-center">
+            <div className="glass p-4 text-center">
               {question.prompt && <p className="text-lg font-medium text-white">{question.prompt}</p>}
               {answerMessage && (
                 <p className="mt-2 text-sm text-cyan-200">{answerMessage}</p>
@@ -82,10 +82,10 @@ export default function GuitarTrainer({
             scaleType={displayScaleType}
           />
           {isExplorer && (
-            <div className="space-y-3 rounded-2xl border border-slate-700 bg-slate-900/80 p-3">
+            <div className="space-y-3 glass p-3">
               <div className="grid grid-cols-2 gap-2 sm:flex sm:flex-wrap sm:justify-center">
                 <button type="button" onClick={onExplorerScaleLock} aria-pressed={explorerScaleLocked}
-                  className={`${TOOL_BUTTON} border-violet-400/70 bg-violet-500/15 text-violet-200`}>
+                  className={`${TOOL_BUTTON} glass-btn text-violet-200`}>
                   Scale lock: {explorerScaleLocked ? 'ON' : 'OFF'}
                 </button>
                 <select value={explorerScaleType} onChange={(event) => onExplorerScaleTypeChange(event.target.value)}
@@ -98,11 +98,11 @@ export default function GuitarTrainer({
                   {ROOT_NOTES.map((note) => <option key={note} value={note}>{note}</option>)}
                 </select>
                 <button type="button" onClick={onExplorerShowAll} aria-pressed={explorerShowAll}
-                  className={`${TOOL_BUTTON} border-amber-300/70 bg-amber-300/15 text-amber-200`}>
+                  className={`${TOOL_BUTTON} glass-btn text-amber-200`}>
                   Matching notes: {explorerShowAll ? 'ON' : 'OFF'}
                 </button>
                 <button type="button" onClick={onExplorerShowScale} aria-pressed={explorerShowScale}
-                  className={`${TOOL_BUTTON} border-sky-300/70 bg-sky-300/15 text-sky-200`}>
+                  className={`${TOOL_BUTTON} glass-btn text-sky-200`}>
                   Scale notes: {explorerShowScale ? 'ON' : 'OFF'}
                 </button>
               </div>
@@ -112,7 +112,7 @@ export default function GuitarTrainer({
                   aria-label="Semitone or scale-step shift"
                   className={`${TOOL_SELECT} min-w-0 flex-1 placeholder:text-slate-400`} />
                 <button type="submit"
-                  className={`${TOOL_BUTTON} border-cyan-400/70 bg-cyan-500/15 text-cyan-200`}>
+                  className={`${TOOL_BUTTON} glass-btn text-cyan-200`}>
                   Apply shift
                 </button>
               </form>
@@ -127,7 +127,7 @@ export default function GuitarTrainer({
               disabled={answerState === 'submitted'}
               placeholder="Type the note (e.g. E, C#, Db)"
               aria-label="Note answer"
-              className="w-full rounded-xl border border-slate-600 bg-slate-800 px-4 py-3 text-center text-base text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none"
+              className="w-full glass-btn px-4 py-3 text-center text-base text-slate-100 placeholder:text-slate-400 focus:border-cyan-300 focus:outline-none"
             />
           )}
         </section>
