@@ -270,6 +270,12 @@ function RegisterGraph({ valves, pump1, pump3, partial, bbNotation, producedPrev
   );
 }
 
+// Pentatonic degrees as semitones above the root (a subset of the matching scale).
+const PENTATONIC_STEPS = {
+  major: [0, 2, 4, 7, 9],
+  minor: [0, 3, 5, 7, 10],
+};
+
 const SCALE_INTERVALS = {
   major: [0, 2, 4, 5, 7, 9, 11],
   minor: [0, 2, 3, 5, 7, 8, 10],
@@ -284,6 +290,7 @@ function ScaleFingeringChart() {
   const [maxPartial, setMaxPartial] = useState(MAX_TRUMPET_PARTIAL);
   const [showDegrees, setShowDegrees] = useState(false);
   const [showSlides, setShowSlides] = useState(true);
+  const [showPentatonic, setShowPentatonic] = useState(false);
   const [bbNotation, setBbNotation] = useState(false);
   const [alternativeNotes, setAlternativeNotes] = useState(new Set());
 
@@ -350,6 +357,10 @@ function ScaleFingeringChart() {
           className="glass-btn px-2 py-1.5 text-xs text-cyan-100">
           Slides {showSlides ? 'ON' : 'OFF'}
         </button>
+        <button type="button" onClick={() => setShowPentatonic((value) => !value)} aria-pressed={showPentatonic}
+          className="glass-btn px-2 py-1.5 text-xs text-amber-100">
+          Pentatonic {showPentatonic ? 'ON' : 'OFF'}
+        </button>
         <button type="button" onClick={() => setBbNotation((value) => !value)}
           className="glass-btn px-2 py-1.5 text-xs text-cyan-100">
           {bbNotation ? 'Pitch: Bb trumpet' : 'Pitch: concert'}
@@ -362,9 +373,11 @@ function ScaleFingeringChart() {
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
         {chartNotes.map((note) => {
           const entry = alternativeNotes.has(note.midi) && note.alternative ? note.alternative : note.primary;
+          const isPentatonic = PENTATONIC_STEPS[quality].includes(((note.midi - noteToMidi(`${root}4`)) % 12 + 12) % 12);
           const displayMidi = note.midi + (bbNotation ? 2 : 0);
           return (
-            <div key={note.midi} className="relative min-h-[104px] glass-inset p-3 text-sm text-slate-200">
+            <div key={note.midi}
+              className={`relative min-h-[104px] glass-inset p-3 text-sm text-slate-200 ${showPentatonic && isPentatonic ? 'outline outline-2 -outline-offset-4 outline-dashed outline-amber-300' : ''}`}>
               {note.alternative && (
                 <button type="button" onClick={() => setAlternativeNotes((current) => {
                   const next = new Set(current);

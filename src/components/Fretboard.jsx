@@ -100,6 +100,7 @@ function Fretboard({
   displayScaleDegrees = false,
   scaleRoot = null,
   scaleType = 'major',
+  showFretNumbers = true,
 }) {
   const dragStartRef = useRef(null);
   const suppressClickRef = useRef(false);
@@ -318,21 +319,23 @@ function Fretboard({
           })}
         </div>
 
-        {/* Fret numbers */}
-        <div className="mt-1.5 grid text-xs text-slate-500" style={{ gridTemplateColumns: GRID_TEMPLATE }} aria-hidden="true">
-          <span />
-          <span className="text-center">open</span>
-          <span />
-          {Array.from({ length: FRET_COUNT }, (_, i) => {
-            const fret = i + 1;
-            const isInlay = SINGLE_INLAYS.includes(fret) || DOUBLE_INLAYS.includes(fret);
-            return (
-              <span key={`fret-num-${fret}`} className={['text-center', isInlay ? 'font-semibold text-slate-300' : ''].join(' ')}>
-                {fret}
-              </span>
-            );
-          })}
-        </div>
+        {/* Fret numbers (can be hidden from the Controls sheet) */}
+        {showFretNumbers && (
+          <div className="mt-1.5 grid text-xs text-slate-500" style={{ gridTemplateColumns: GRID_TEMPLATE }} aria-hidden="true">
+            <span />
+            <span className="text-center">open</span>
+            <span />
+            {Array.from({ length: FRET_COUNT }, (_, i) => {
+              const fret = i + 1;
+              const isInlay = SINGLE_INLAYS.includes(fret) || DOUBLE_INLAYS.includes(fret);
+              return (
+                <span key={`fret-num-${fret}`} className={['text-center', isInlay ? 'font-semibold text-slate-300' : ''].join(' ')}>
+                  {fret}
+                </span>
+              );
+            })}
+          </div>
+        )}
       </div>
     </div>
   );

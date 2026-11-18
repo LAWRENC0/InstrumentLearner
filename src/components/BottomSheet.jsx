@@ -14,7 +14,7 @@ export default function BottomSheet({ open, onClose, title, children }) {
   return (
     <div className="fixed inset-0 z-50" style={{ animation: 'fade-in 0.2s ease both' }}>
       <button type="button" aria-label={`Close ${title}`} onClick={onClose}
-        className="absolute inset-0 bg-slate-950/50 backdrop-blur-sm" />
+        className="absolute inset-0 bg-slate-950/85 backdrop-blur-xl" />
       <section role="dialog" aria-modal="true" aria-label={title}
         style={{ animation: 'sheet-up 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) both' }}
         className="glass-strong absolute inset-x-2 bottom-2 flex max-h-[85vh] flex-col rounded-[2rem] md:inset-x-auto md:bottom-6 md:left-1/2 md:w-[28rem] md:max-h-[80vh] md:-translate-x-1/2">

@@ -14,7 +14,7 @@ import {
   noteToMidi,
 } from './musicTheory';
 
-export const MODES = ['Intervals', 'Fill in the Chords', 'Guess the Note', 'Scale & Triads', 'Fretboard Explorer', 'Pentatonics'];
+export const MODES = ['Intervals', 'Fill in the Chords', 'Guess the Note', 'Scale & Triads', 'Fretboard Explorer', 'Pentatonics', 'Chord Builder'];
 export const CHORD_DIFFICULTIES = ['Easy', 'Hard'];
 export const SCALE_TRIAD_EXERCISES = ['Find triad', 'Highlight degree'];
 
@@ -337,9 +337,15 @@ export function buildQuestion(
         rootPosition,
         validPositions,
         requiredString,
-        prompt: requiredString === 'any'
-          ? `Find the ${getIntervalDisplay(intervalKey)} (${INTERVALS[intervalKey]}) of the highlighted note.`
-          : `Find the ${getIntervalDisplay(intervalKey)} (${INTERVALS[intervalKey]}) of the highlighted note on string ${requiredString}.`,
+        // Kept on the question so the screen can show the interval as a name, a
+        // semitone count or both, without generating a new question.
+        intervalLabel: getIntervalDisplay(intervalKey),
+        semitones: INTERVALS[intervalKey],
+        prompt: formatIntervalPrompt({
+          intervalLabel: getIntervalDisplay(intervalKey),
+          semitones: INTERVALS[intervalKey],
+          requiredString,
+        }, 'both'),
         boxPositions: [],
       };
     }
@@ -371,4 +377,17 @@ export function buildQuestion(
     default:
       return buildQuestion('Intervals', difficulty);
   }
+}
+
+// Interval prompt text. display: 'name' (P5), 'semitones' (7 semitones) or 'both' (P5 (7)).
+export const INTERVAL_DISPLAY_OPTIONS = ['both', 'name', 'semitones'];
+
+export function formatIntervalPrompt({ intervalLabel, semitones, requiredString = 'any' }, display = 'both') {
+  const interval = display === 'name'
+    ? intervalLabel
+    : display === 'semitones'
+      ? `${semitones} semitone${semitones === 1 ? '' : 's'}`
+      : `${intervalLabel} (${semitones})`;
+  const where = requiredString === 'any' ? '' : ` on string ${requiredString}`;
+  return `Find the ${interval} of the highlighted note${where}.`;
 }

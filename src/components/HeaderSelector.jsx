@@ -5,19 +5,23 @@ const INSTRUMENTS = [
   { id: 'trumpet', label: 'Trumpet' },
   { id: 'piano', label: 'Piano' },
   { id: 'earTraining', label: 'Ear Training' },
+  { id: 'theory', label: 'Theory' },
 ];
 
 const TRUMPET_MODES = ['Register & Intonation', 'Register Graph', 'Scale Fingering Chart', 'Interval Shift'];
 const PIANO_MODES = [
   'Guess the Note', 'Build Scale', 'Guess the Scale',
   'Recognize Chord', 'Build Chord', 'Recognize Interval', 'Build Interval', 'Chord Inversions',
+  'Chord Builder',
 ];
-const EAR_MODES = ['Interval Recognition', 'Diatonic Note Recognition', 'Chord Quality Recognition', 'Chord Relation Recognition'];
+const EAR_MODES = ['Interval Recognition', 'Diatonic Note Recognition', 'Chord Quality Recognition', 'Chord Inversion Recognition', 'Chord Relation Recognition'];
 
 export function modesFor(instrument, guitarModes) {
+  if (instrument === null) return [];
   if (instrument === 'guitar') return guitarModes;
   if (instrument === 'trumpet') return TRUMPET_MODES;
   if (instrument === 'piano') return PIANO_MODES;
+  if (instrument === 'theory') return ['Browse topics'];
   return EAR_MODES;
 }
 
@@ -52,7 +56,9 @@ export default function HeaderSelector({
   menuOpen, onOpenMenu, onCloseMenu,
   onInstrumentChange, onModeChange, onDifficultyChange, onExerciseChange,
 }) {
-  const instrumentLabel = INSTRUMENTS.find((item) => item.id === instrument)?.label ?? 'Guitar';
+  const instrumentLabel = instrument === null
+    ? 'Instrument Learner'
+    : INSTRUMENTS.find((item) => item.id === instrument)?.label ?? 'Guitar';
   const instrumentModes = modesFor(instrument, guitarModes);
   const showDifficulty = instrument === 'guitar' && difficulties?.length > 0;
   const showExercise = instrument === 'guitar' && exercises?.length > 0;
@@ -86,13 +92,15 @@ export default function HeaderSelector({
             ))}
           </div>
         </Section>
-        <Section title="Mode">
-          <div className="flex flex-col gap-2">
-            {instrumentModes.map((item) => (
-              <Choice key={item} active={mode === item} onClick={() => onModeChange(item)}>{item}</Choice>
-            ))}
-          </div>
-        </Section>
+        {instrument !== null && (
+          <Section title="Mode">
+            <div className="flex flex-col gap-2">
+              {instrumentModes.map((item) => (
+                <Choice key={item} active={mode === item} onClick={() => onModeChange(item)}>{item}</Choice>
+              ))}
+            </div>
+          </Section>
+        )}
         {showDifficulty && (
           <Section title="Difficulty">
             <div className="grid grid-cols-2 gap-2">

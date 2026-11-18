@@ -4,7 +4,10 @@ import GuitarTrainer from './components/GuitarTrainer';
 import TrumpetTrainer from './components/TrumpetTrainer';
 import PianoTrainer from './components/PianoTrainer';
 import EarTraining from './components/EarTraining';
+import TheoryBrowser from './components/TheoryBrowser';
+import ChordBuilder from './components/ChordBuilder';
 import BottomSheet from './components/BottomSheet';
+import { parseNoteName } from './utils/noteInput';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
 } from './utils/questionHelpers';
@@ -336,16 +339,15 @@ function useGuitarTrainerState() {
     const selectedKeys = new Set(selectedNotes.map((p) => `${p.string}-${p.fret}`));
 
     if (mode === 'Guess the Note') {
-      const normalizedGuess = guessAnswer.trim().replace(/^([a-g])/, (_, note) => note.toUpperCase());
-      const answerPitchClass = getPitchClass(normalizedGuess);
+      const answerPitchClass = parseNoteName(guessAnswer);
       const highlightedPitchClass = getPitchClass(question.highlightedPosition.note);
-      if (answerPitchClass === null || answerPitchClass === -1) {
-        setAnswerMessage('Enter a note name such as E, C#, or Db.');
+      if (answerPitchClass === null) {
+        setAnswerMessage('Enter a note name such as E, C#, Db, or g sharp.');
         return;
       }
       setAnswerMessage(answerPitchClass === highlightedPitchClass
         ? 'Correct note.'
-        : `Not quite. You entered ${normalizedGuess || 'nothing'}; the highlighted note is ${question.highlightedPosition.note.replace(/\d+$/, '')}.`);
+        : `Not quite. You entered ${guessAnswer.trim()}; the highlighted note is ${question.highlightedPosition.note.replace(/\d+$/, '')}.`);
       setAnswerState('submitted');
       setRevealNames(true);
       return;
@@ -454,12 +456,15 @@ function useGuitarTrainerState() {
 }
 
 function App() {
-  const [instrument, setInstrument] = useState('guitar');
+  // Nothing is selected on load: the menu opens so the user chooses an instrument first.
+  const [instrument, setInstrument] = useState(null);
   const [trumpetMode, setTrumpetMode] = useState('Register & Intonation');
   const [pianoMode, setPianoMode] = useState('Guess the Note');
   const [earTrainingMode, setEarTrainingMode] = useState('Interval Recognition');
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(true);
   const [controlsOpen, setControlsOpen] = useState(false);
+  const [intervalDisplay, setIntervalDisplay] = useState('both');
+  const [showFretNumbers, setShowFretNumbers] = useState(true);
   const trainer = useGuitarTrainerState();
 
   const modeSetters = {
@@ -467,12 +472,14 @@ function App() {
     trumpet: setTrumpetMode,
     piano: setPianoMode,
     earTraining: setEarTrainingMode,
+    theory: () => {},
   };
-  const currentMode = {
+  const currentMode = instrument === null ? null : {
     guitar: trainer.mode,
     trumpet: trumpetMode,
     piano: pianoMode,
     earTraining: earTrainingMode,
+    theory: 'Browse topics',
   }[instrument];
 
   const closeMenu = () => setMenuOpen(false);
@@ -483,7 +490,7 @@ function App() {
     setControlsOpen(false);
   };
   const changeMode = (next) => {
-    modeSetters[instrument](next);
+    modeSetters[instrument]?.(next);
     setMenuOpen(false);
   };
 
@@ -509,12 +516,26 @@ function App() {
       />
 
       <div className="mx-auto max-w-7xl px-4 py-6 md:px-8">
-        {instrument === 'trumpet' ? (
+        {instrument === null ? (
+          <section className="glass mx-auto max-w-md p-8 text-center">
+            <p className="text-lg font-semibold text-white">Choose an instrument to begin</p>
+            <p className="mt-2 text-sm text-slate-400">Open the menu and pick an instrument, then a mode.</p>
+            <button type="button" onClick={() => setMenuOpen(true)} className="btn-accent mt-5 px-6 py-3 text-sm">
+              Open menu
+            </button>
+          </section>
+        ) : instrument === 'trumpet' ? (
           <TrumpetTrainer mode={trumpetMode} />
+        ) : instrument === 'piano' && pianoMode === 'Chord Builder' ? (
+          <ChordBuilder key="piano-builder" instrument="piano" />
         ) : instrument === 'piano' ? (
           <PianoTrainer key={pianoMode} mode={pianoMode} />
         ) : instrument === 'earTraining' ? (
           <EarTraining key={earTrainingMode} mode={earTrainingMode} />
+        ) : instrument === 'theory' ? (
+          <TheoryBrowser />
+        ) : trainer.mode === 'Chord Builder' ? (
+          <ChordBuilder key="guitar-builder" instrument="guitar" />
         ) : (
           <GuitarTrainer
             {...trainer}
@@ -555,6 +576,8 @@ function App() {
             onToggleDisplayScaleDegrees={() => trainer.setDisplayScaleDegrees((value) => !value)}
             displayScaleRoot={trainer.displayScaleRoot}
             displayScaleType={trainer.displayScaleType}
+            intervalDisplay={intervalDisplay}
+            showFretNumbers={showFretNumbers}
           />
         )}
       </div>
@@ -572,6 +595,25 @@ function App() {
                 {trainer.displayScaleDegrees ? 'Show notes' : 'Show degrees'} ({trainer.displayScaleRoot} {trainer.displayScaleType === 'minor' ? 'min' : 'maj'})
               </button>
             )}
+            {trainer.mode === 'Intervals' && (
+              <div>
+                <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">Interval shown as</p>
+                <div className="grid grid-cols-3 gap-2">
+                  {[['both', 'Both'], ['name', 'Name'], ['semitones', 'Semitones']].map(([value, label]) => (
+                    <button key={value} type="button" onClick={() => setIntervalDisplay(value)}
+                      aria-pressed={intervalDisplay === value}
+                      className="glass-btn px-2 py-3 text-sm font-semibold text-slate-100">
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+            <button type="button" onClick={() => setShowFretNumbers((value) => !value)}
+              aria-pressed={showFretNumbers}
+              className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
+              Fret numbers: {showFretNumbers ? 'ON' : 'OFF'}
+            </button>
             <button type="button" onClick={() => trainer.setAudioEnabled((value) => !value)}
               className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
               Audio {trainer.audioEnabled ? 'ON' : 'OFF'}

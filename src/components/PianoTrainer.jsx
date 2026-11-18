@@ -4,6 +4,8 @@ import ActionBar from './ActionBar';
 import {
   getChordNotes, getPitchClass, getPitchClassName, midiToNote, NOTE_NAMES, noteToMidi,
 } from '../utils/musicTheory';
+import { parseNoteName, parseScaleName, pitchClassToName } from '../utils/noteInput';
+import { guessIntendedScale, scaleSet } from '../utils/scaleGuess';
 
 const BLACK_PITCH_CLASSES = new Set([1, 3, 6, 8, 10]);
 const SCALE_OFFSETS = {
@@ -33,12 +35,6 @@ function scalePitchClasses(root, type) {
   return SCALE_OFFSETS[type].map((offset) => (rootPitch + offset) % 12);
 }
 
-function findMatchingScale(pitches) {
-  const normalized = [...new Set(pitches)].sort((a, b) => a - b).join(',');
-  return NOTE_NAMES.flatMap((root) => ['major', 'minor']
-    .filter((type) => scalePitchClasses(root, type).sort((a, b) => a - b).join(',') === normalized)
-    .map((type) => `${root} ${type}`));
-}
 
 function describePitchDifference(selectedPitches, targetPitches) {
   const missing = targetPitches.filter((pitch) => !selectedPitches.includes(pitch));
@@ -84,7 +80,10 @@ function newQuestion(mode) {
   };
 }
 
-function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, revealNames, missedKeys, focusMidi, resetKey }) {
+export function PianoKeyboard({
+  highlightedKeys, selectedKeys, answerState, onToggle, revealNames, missedKeys, focusMidi, resetKey,
+  scaleCheck = null,
+}) {
   const scrollRef = useRef(null);
   const midiNotes = Array.from({ length: LAST_MIDI - FIRST_MIDI + 1 }, (_, index) => FIRST_MIDI + index);
   const whiteNotes = midiNotes.filter((midi) => !BLACK_PITCH_CLASSES.has(midi % 12));
@@ -100,12 +99,17 @@ function PianoKeyboard({ highlightedKeys, selectedKeys, answerState, onToggle, r
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [focusMidi, resetKey]);
 
+  const selectedKeyColor = (midi) => {
+    if (answerState !== 'submitted') return '!bg-cyan-300';
+    if (scaleCheck) return scaleCheck.has(midi % 12) ? '!bg-sky-400' : '!bg-red-400';
+    return '!bg-emerald-300';
+  };
   const keyClass = (midi, black = false) => [
     black ? 'border-slate-950' : 'relative border-slate-950',
     black ? 'absolute top-0 z-10 h-24 w-5 -translate-x-1/2 rounded-b border bg-slate-900' : 'h-full w-8 shrink-0 border-r bg-slate-100 text-slate-700',
     highlightedKeys.has(String(midi)) ? '!bg-cyan-300' : '',
     missedKeys.has(String(midi)) ? '!bg-yellow-300' : '',
-    selectedKeys.has(String(midi)) ? (answerState === 'submitted' ? '!bg-emerald-300' : '!bg-cyan-300') : '',
+    selectedKeys.has(String(midi)) ? selectedKeyColor(midi) : '',
   ].join(' ');
   return (
     <div ref={scrollRef} className="overflow-x-auto overscroll-x-contain glass p-3 md:p-4">
@@ -173,7 +177,11 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
   );
   const selectedKeys = new Set(selectedNotes.map((note) => String(note.midi)));
   const missedKeys = answerState === 'submitted'
-    ? new Set((question.voicing ?? []).filter((midi) => !selectedKeys.has(String(midi))).map(String))
+    ? new Set(mode === 'Build Scale'
+      ? Array.from({ length: LAST_MIDI - FIRST_MIDI + 1 }, (_, index) => FIRST_MIDI + index)
+        .filter((midi) => targetScale.includes(midi % 12) && !selectedKeys.has(String(midi)))
+        .map(String)
+      : (question.voicing ?? []).filter((midi) => !selectedKeys.has(String(midi))).map(String))
     : new Set();
 
   const newQuestionForMode = () => {
@@ -199,20 +207,20 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
     }
     let correct = false;
     if (mode === 'Guess the Note') {
-      const guess = getPitchClass(answer.trim());
-      correct = guess === getPitchClass(midiToNote(question.highlightedMidi));
-      setMessage(correct ? 'Correct note.' : `Not quite. The note is ${midiToNote(question.highlightedMidi).replace(/-?\d+$/, '')}.`);
+      const guess = parseNoteName(answer);
+      correct = guess !== null && guess === getPitchClass(midiToNote(question.highlightedMidi));
+      setMessage(guess === null
+        ? 'Enter a note such as E, C#, Db, or g sharp.'
+        : correct ? 'Correct note.' : `Not quite. The note is ${midiToNote(question.highlightedMidi).replace(/-?d+$/, '')}.`);
     } else if (mode === 'Guess the Scale') {
-      const match = /^([A-Ga-g](?:#|b)?)(?:\s+(major|minor))?$/i.exec(answer.trim());
-      const type = match?.[2]?.toLowerCase() === 'minor' ? 'minor' : 'major';
-      const guessedPitches = match ? scalePitchClasses(match[1], type) : [];
-      correct = Boolean(match) && guessedPitches.length === targetScale.length
-        && guessedPitches.every((pitch) => targetScale.includes(pitch));
+      const parsed = parseScaleName(answer);
+      const guessed = parsed ? scaleSet(parsed.pitchClass, parsed.type) : [];
+      correct = guessed.length === targetScale.length && guessed.every((pitch) => targetScale.includes(pitch));
       setMessage(correct
         ? 'Correct scale.'
-        : match
-          ? `Not quite. You entered ${match[1]} ${type}; the target is ${question.root} ${question.type}.`
-          : 'Enter a scale as a note followed by major or minor, for example E major.');
+        : parsed
+          ? `Not quite. You entered ${pitchClassToName(parsed.pitchClass)} ${parsed.type}; the target is ${question.root} ${question.type}.`
+          : 'Enter a scale as a note followed by major or minor, for example E major or g sharp minor.');
     } else if (mode === 'Recognize Chord') {
       correct = answer === question.quality;
       setMessage(correct ? 'Correct chord quality.' : `Not quite. It is ${CHORDS.find(([key]) => key === question.quality)?.[1]}.`);
@@ -221,14 +229,15 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
       setMessage(correct ? 'Correct interval.' : `Not quite. It is ${INTERVALS.find(([n]) => n === question.semitones)?.[1]}.`);
     } else if (mode === 'Build Scale') {
       const selectedPitches = [...selectedPitchClasses];
-      correct = targetScale.every((pitch) => selectedPitchClasses.has(pitch));
-      const matchingScale = findMatchingScale(selectedPitches);
+      const extras = selectedPitches.filter((pitch) => !targetScale.includes(pitch));
+      const missing = targetScale.filter((pitch) => !selectedPitchClasses.has(pitch));
+      // Exact match: every scale note selected and nothing else.
+      correct = missing.length === 0 && extras.length === 0;
+      const guess = guessIntendedScale(selectedPitches);
       const difference = describePitchDifference(selectedPitches, targetScale);
       setMessage(correct
         ? 'Correct scale.'
-        : matchingScale.length
-          ? `Not quite. You selected ${matchingScale.join(' / ')}. ${difference}`
-          : `Not quite. ${difference || 'Select at least one octave of every scale note.'}`);
+        : `Not quite. ${guess ? `Maybe you were thinking of ${guess.name}? ` : ''}${difference || 'Select at least one octave of every scale note.'}`);
     } else {
       const sameNotes = selectedPitchClasses.size === targetPitchClasses.size
         && [...selectedPitchClasses].every((pitch) => targetPitchClasses.has(pitch));
@@ -278,6 +287,7 @@ export default function PianoTrainer({ mode = 'Guess the Note' }) {
         {message && <p className="mt-2 text-sm text-cyan-200">{message}</p>}
       </div>
       <PianoKeyboard highlightedKeys={highlightedKeys} selectedKeys={selectedKeys} missedKeys={missedKeys}
+        scaleCheck={mode === 'Build Scale' ? new Set(targetScale) : null}
         answerState={answerState} onToggle={toggleNote} revealNames={revealNames}
         focusMidi={focusMidi} resetKey={question} />
       {choices && <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">{choices.map(([value, label]) => (

@@ -1,5 +1,6 @@
 import Fretboard from './Fretboard';
 import ActionBar from './ActionBar';
+import { formatIntervalPrompt } from '../utils/questionHelpers';
 
 const IDENTIFY_EXERCISES = ['identify-degree', 'identify-fundamental'];
 const ROOT_NOTES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
@@ -47,10 +48,14 @@ export default function GuitarTrainer({
   onExplorerShiftApply, explorerShowAll, onExplorerShowAll, explorerShowScale, onExplorerShowScale,
   explorerScalePitchClasses, onExplorerDrag, getExplorerDragPreview,
   displayScaleDegrees, displayScaleRoot, displayScaleType,
+  intervalDisplay = 'both', showFretNumbers = true,
 }) {
   const isExplorer = mode === 'Fretboard Explorer';
   const showDegreeSelector = IDENTIFY_EXERCISES.includes(question.pentatonicExercise);
   const isHighlightDegree = mode === 'Scale & Triads' && question.scaleTriadExercise === 'Highlight degree';
+  const prompt = mode === 'Intervals' && question.semitones !== undefined
+    ? formatIntervalPrompt(question, intervalDisplay)
+    : question.prompt;
 
   return (
     <div className="space-y-4">
@@ -59,9 +64,9 @@ export default function GuitarTrainer({
         showDegreeSelector ? 'lg:grid-cols-[1.2fr_0.8fr]' : '',
       ].join(' ')}>
         <section className="space-y-4">
-          {(question.prompt || answerMessage) && (
+          {(prompt || answerMessage) && (
             <div className="glass p-4 text-center">
-              {question.prompt && <p className="text-lg font-medium text-white">{question.prompt}</p>}
+              {prompt && <p className="text-lg font-medium text-white">{prompt}</p>}
               {answerMessage && (
                 <p className="mt-2 text-sm text-cyan-200">{answerMessage}</p>
               )}
@@ -80,6 +85,7 @@ export default function GuitarTrainer({
             displayScaleDegrees={displayScaleDegrees}
             scaleRoot={displayScaleRoot}
             scaleType={displayScaleType}
+            showFretNumbers={showFretNumbers}
           />
           {isExplorer && (
             <div className="space-y-3 glass p-3">
