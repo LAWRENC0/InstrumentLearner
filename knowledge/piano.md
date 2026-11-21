@@ -9,9 +9,7 @@ A note on sources: where experienced teachers disagree, both views are given and
 ## Keyboard layout
 @group Basics
 
-{{scale: C major | piano}}
-{{notes: C E G | piano}}
-
+{{scale: C major | piano | The white keys are exactly the C major scale.}}
 
 - A piano has 88 keys, from A0 to C8. The app's keyboard shows three octaves at a time for exercises.
 - An octave is 12 keys: seven white and five black. Black keys come in groups of two and three.
@@ -22,9 +20,6 @@ Exercise: find every C on the keyboard by sight, then play them from the lowest 
 
 ## Hand position and posture
 @group Basics
-
-{{chords: C | piano}}
-
 
 - Sit with the bench at a height where the forearms are roughly level with the keys. Feet flat on the floor, the back upright but relaxed.
 - Curve the fingers as if holding a ball. The fingertips touch the keys, not the flat pads.
@@ -37,9 +32,6 @@ Exercise: play a five-finger pattern (C D E F G) with the hand held still and on
 ## Finger independence
 @group Basics
 
-{{notes: C D E F G | piano}}
-
-
 - Independence means one finger can move while the others stay still. It is the basis of all piano technique.
 - Exercise: press one key with each finger in turn, while the other fingers rest on their keys. Then play two fingers at once, and vary which ones move.
 - Traditional drill books (Hanon's *The Virtuoso Pianist* is the best known) use patterns that build independence through repetition.
@@ -48,9 +40,6 @@ Exercise: play a five-finger pattern on C with the fingers 1-2-3-4-5, then 5-4-3
 
 ## Touch and tone
 @group Basics
-
-{{scale: C major | piano}}
-
 
 - Tone depends on how the key is pressed, not how hard. Weight comes from the arm, which rests on the keys; the finger shapes the sound.
 - **Legato**: each note sounds until the next begins. Use finger-to-finger overlap: the next finger lands before the previous one lifts.
@@ -65,9 +54,8 @@ Exercise: play a C major scale in legato, then in staccato, then in portato. Lis
 ## Scales and fingering
 @group Scales and chords
 
-{{scale: C major | piano}}
+{{scale: C major | piano | C major (white keys only) and B major (five black keys), whose fingering is different.}}
 {{scale: B major | piano}}
-
 
 - C major: right hand 1 2 3 1 2 3 4 5 going up, and 5 4 3 2 1 3 2 1 for the left hand going up.
 - The thumb tucks under the hand (or the hand crosses over) at the point where the fingers reach the 3rd or 4th note. Keep the wrist quiet and move the arm so the thumb is ready.
@@ -80,8 +68,7 @@ Exercise: play the C major scale hands separately, then together, at a steady te
 ## Arpeggios and broken chords
 @group Scales and chords
 
-{{chords: C Dm G7 | piano}}
-
+{{chords: C Dm G7 | piano | Three chords to practise as arpeggios in both hands.}}
 
 - An **arpeggio** plays the notes of a chord one after another. A **broken chord** plays them in a fixed pattern.
 - Common fingering for an arpeggio of C major (right hand): 1 3 5 1 3 5 going up, then reversed going down.
@@ -93,8 +80,7 @@ Exercise: play the C major, D minor and G7 arpeggios in both hands, right hand g
 ## Chord voicings
 @group Scales and chords
 
-{{chords: Cmaj7 Dm7 G7 | piano}}
-
+{{chords: Cmaj7 Dm7 G7 | piano | Three seventh chords to voice: use Next inversion to compare their positions.}}
 
 - **Close voicing**: all notes packed within an octave. Bright and dense.
 - **Open voicing**: notes spread across more than an octave. Clearer, more resonant.
@@ -102,18 +88,14 @@ Exercise: play the C major, D minor and G7 arpeggios in both hands, right hand g
 - **Spread voicing**: a wide interval in the bass with close notes above. Full and warm in the low register.
 - **Doubling**: double the root in both hands for a fuller sound. Double the third only when needed.
 
-Voicings of Cmaj7, shown in close position, then in drop-2 position:
-
-{{chords: Cmaj7 Dm7 G7 C | piano}}
 
 Exercise: voice the progression ii–V–I (Dm7 – G7 – Cmaj7) in close position, then in drop-2. Keep the common notes in the same hand and finger.
 
 ## Inversions
 @group Scales and chords
 
-{{chords: C C/E C/G | piano}}
+{{chords: C C/E C/G | piano | C and F in root position, first and second inversion.}}
 {{chords: F F/A F/C | piano}}
-
 
 - **Root position**: the root is the lowest note. Figured bass: no figure, or 5/3.
 - **First inversion**: the third is the lowest note. Figured bass: 6. A C major triad in first inversion is E – G – C (E in the bass).
@@ -122,13 +104,10 @@ Exercise: voice the progression ii–V–I (Dm7 – G7 – Cmaj7) in close posit
 
 Exercise: play each triad (C, F, G, Am) in root, first and second inversion, naming the bass note aloud before each chord.
 
-{{chords: C C/E C/G | piano}}
-
 ## Pedalling
 @group Pedalling and ornaments
 
-{{chords: C F G C | piano}}
-
+{{chords: C F G C | piano | I – IV – V – I, for practising a pedal change on every chord.}}
 
 - **Sustain pedal** (right pedal): lifts the dampers so the strings ring. It is the most used pedal. Change it with each new harmony to keep the sound clear.
 - **Half pedalling**: pressing the pedal partway, so the dampers lightly touch the strings. Used to blend chords while keeping some clarity. Good for a smoothing effect.
@@ -140,11 +119,6 @@ Exercise: play a slow I–IV–V–I progression. Change the sustain pedal with 
 
 ## Ornaments
 @group Pedalling and ornaments
-
-{{notes: D E D E D | piano}}
-{{notes: C B C | piano}}
-{{notes: G A G F# G | piano}}
-
 
 - **Trill**: rapid alternation between a note and the note above, with an even rhythm. Use strong fingers (2-3 or 3-4), with the forearm rotating to drive the trill.
 - **Mordent**: a single quick alternation with the note below (or above) the main note, then back. Short and crisp.
@@ -158,11 +132,6 @@ Exercise: play a trill on D and E for eight beats, then a mordent on C, then a t
 ## Accompaniment patterns
 @group Accompaniment and jazz
 
-{{notes: C G E G | piano}}
-{{notes: C A Bb A | piano}}
-{{chords: C | piano}}
-
-
 - **Alberti bass**: a repeating broken-chord figure in the left hand, root–fifth–third–fifth (for example C–G–E–G). Common in classical music.
 - **Stride**: a bass note on the first and third beats (root or fifth), with a chord on the second and fourth. Used in ragtime and jazz.
 - **Boogie-woogie**: a walking left-hand pattern, root–sixth–flat seventh–sixth. Fast, rhythmic and repetitive.
@@ -175,9 +144,7 @@ Exercise: play a C major chord with each pattern above, in turn. Hold the chord 
 ## Comping and jazz voicings
 @group Accompaniment and jazz
 
-{{chords: G7 | piano}}
-{{chords: Dm7 G7 Cmaj7 | piano}}
-
+{{chords: Dm7 G7 Cmaj7 | piano | The ii–V–I to comp with shells and rootless voicings.}}
 
 - **Comping** is accompanying: playing chords in rhythm while leaving space for other players.
 - **Shell voicings**: only the third and seventh of the chord, sometimes with the root. Clear and light, used with a bassist. For a G7, the shell is B and F.
@@ -189,13 +156,10 @@ For the history of these voicings (stride, locked hands, Bud Powell, Bill Evans)
 
 Exercise: comp a ii–V–I (Dm7 – G7 – Cmaj7) with shell voicings in the left hand and rootless voicings in the right. Keep the chords moving smoothly.
 
-{{chords: Dm7 G7 Cmaj7 | piano}}
-
 ## Voice leading at the keyboard
 @group Accompaniment and jazz
 
-{{chords: C Am F G C | piano}}
-
+{{chords: C Am F G C | piano | I – vi – IV – V – I, to voice-lead with the smallest moves.}}
 
 - Keep common tones in the same voice when moving between chords. A I–IV move often keeps the C in place.
 - Move the other voices by step where possible. Whole and half steps are smoother than leaps.
@@ -210,7 +174,7 @@ Exercise: write a four-part version of I–vi–IV–V–I in C, where each voic
 - A tritone substitution changes the dominant chord to the one a tritone away, with the same two inner notes swapped. G7 (G B D F) and D♭7 (D♭ F A♭ B) share the B and F.
 - A borrowed chord uses notes from the parallel minor. Fm in C is F A♭ C, the iv chord.
 
-{{chords: G7 Db7 Fm | piano}}
+{{chords: G7 Db7 Fm | piano | A secondary dominant, a tritone substitute and a borrowed chord, as keyboard shapes.}}
 
 Exercise: play G7 and D♭7 one after the other, with the same hand position, and listen for the half step to C.
 
@@ -231,7 +195,7 @@ The music theory file lists the standard progressions of each style (group **Pro
 - In any chain of roots falling by fifths (ii – V – I, the ragtime progression, "Autumn Leaves"), the seventh of one chord falls a half step to the third of the next. Practise just those two notes in the right hand while the left plays roots.
 - In C: Dm7 – G7 – Cmaj7 gives the lines C – B – B (seventh, third, seventh) and F – F – E (third, seventh, third).
 
-{{chords: Dm7 G7 Cmaj7 | piano}}
+{{chords: Dm7 G7 Cmaj7 | piano | The ii–V–I whose guide-tone lines are described above.}}
 
 ### Classical schemas at the keyboard
 
@@ -241,9 +205,9 @@ The music theory file lists the standard progressions of each style (group **Pro
   - **Romanesca:** bass C – B – A – E, chords C – G/B – Am – C/E.
   - **Lament bass:** A – G – F – E in the left hand, chords Am – Em/G – Dm/F – E.
 
-{{chords: F C/E Bdim/D C | piano}}
+{{chords: F C/E Bdim/D C | piano | The Prinner at the keyboard.}}
 
-{{chords: Am Em/G Dm/F E | piano}}
+{{chords: Am Em/G Dm/F E | piano | The lament bass at the keyboard.}}
 
 Exercise: play I – vi – ii – V – I in all twelve keys with the left hand on roots and the right hand on three-note voicings that move by step.
 
@@ -263,15 +227,11 @@ The jazz piano trio study traces how the pianist's left hand moved from playing 
 - Swing-era pianists turned the tenth into a pattern of its own: tenth – chord – tenth – chord, or **streams of tenths** moving in parallel (diatonic or chromatic), sometimes played with the thumb's upper note first ("backward tenths").
 - Boogie-woogie, from the blues, uses a repeating walking bass figure in the left hand.
 
-{{notes: C E | piano}}
-
 ### Locked hands (block chords)
 
 - The melody note is doubled an octave lower, and the notes of the chord are packed between the two, so the whole texture moves in parallel with the melody.
 - Pianist **Milt Buckner** created the style around 1942 (with Lionel Hampton). George Shearing made it famous and credited Buckner. Nat King Cole, Bud Powell and Bill Evans all used it.
 - Example: for a Cmaj7 under melody note B, play C E G B with B doubled.
-
-{{notes: B C E G B | piano}}
 
 ### Shells and rootless voicings
 
@@ -283,11 +243,11 @@ The jazz piano trio study traces how the pianist's left hand moved from playing 
   - Alternating the two sets keeps every voice within a step.
 - Opening up these voicings as "drop 2" gives a wider, shimmering sound.
 
-{{notes: F A C E | piano}}
+{{notes: F A C E | piano | The notes of the third-on-bottom Dm9 voicing (F A C E); play them as one close group above middle C.}}
 
-{{notes: F A B E | piano}}
+{{notes: F A B E | piano | G13 in the same set (F A B E): only C has moved, down to B.}}
 
-{{notes: E G B D | piano}}
+{{notes: E G B D | piano | Cmaj9 (E G B D): every voice moves by a step or less.}}
 
 Example: the "Autumn Leaves" cycle (Cm7 – F7 – B♭maj7 – E♭maj7 – Am7♭5 – D7♭9 – Gm) with left-hand rootless voicings alternating third-on-bottom and seventh-on-bottom, right hand playing the melody.
 
@@ -312,7 +272,7 @@ Sources: Muscarella, *The Twentieth Century Jazz Piano Trio* (thesis, University
 - **Brazilian tango:** a duple-metre dance built on the **habanera rhythm** (in 2/4: dotted eighth, sixteenth, two eighths). It is a cousin of the maxixe, not of the Argentine tango.
 - **Choro-samba:** samba rhythm patterns, diminished passing chords and melodic anticipations.
 
-{{chords: C C#o7 Dm7 G7 | piano}}
+{{chords: C C#o7 Dm7 G7 | piano | The choro-samba move with a diminished passing chord.}}
 
 ### Keyboard habits
 
@@ -336,9 +296,9 @@ Sources: Farinha, *Choro piano* dissertation (York University), on Nazareth, Gon
 - Common montuno harmonies: I – IV – V – IV (C – F – G – F), ii – V (Dm7 – G7), minor i – iv – V7 (Am – Dm – E7). Pianists often play montunos in octaves in the right hand with chord notes filled in.
 - Tango piano (Argentine) is mostly common-practice minor-key harmony; see **Latin progressions** in the theory file.
 
-{{chords: C F G F | piano}}
+{{chords: C F G F | piano | The montuno vamp I – IV – V – IV.}}
 
-{{chords: Am Dm E7 | piano}}
+{{chords: Am Dm E7 | piano | A minor montuno vamp.}}
 
 Example: in 2-3 clave, start the montuno on the bar with two clave notes. Play broken C and F chords on the off-beats of bar one, then G and F in bar two, so a chord change falls just before each downbeat.
 
@@ -357,11 +317,11 @@ Sources: Bin Md Tarip, *Theoretical Perspectives on Clave in Salsa Music* (Unive
 - **Right-hand triads over left-hand bass:** many gospel and R&B colours are a simple triad over a different bass note (an upper structure). D major over C gives C with ♯11 colour; B♭ over C gives C9sus.
 - **R&B and neo-soul:** IVmaj7 – iv6 – I (Cmaj7 – Cm6 – G in G), and ii9 – V13 – Imaj9 with rootless voicings.
 
-{{chords: Dm7 C/E F F#o7 C/G | piano}}
+{{chords: Dm7 C/E F F#o7 C/G | piano | The gospel walk-up from 2 to 5.}}
 
-{{chords: Bø E7alt Am7 | piano}}
+{{chords: Bø E7alt Am7 | piano | The 7–3–6.}}
 
-{{chords: Cmaj7 Cm6 G | piano}}
+{{chords: Cmaj7 Cm6 G | piano | The minor plagal R&B move (in G).}}
 
 Exercise: play a 3–6–2–5–1 (Em7 – A7 – Dm7 – G7 – C) with right-hand triads over left-hand roots, then insert a 7–3–6 before it and finish with an amen ending.
 
@@ -381,7 +341,7 @@ The same chords sound like a different style with a different left- and right-ha
 - **Boogie-woogie:** a walking left-hand ostinato on the blues progression.
 - **Gospel and pop ballad:** sustained block chords, with octaves in the left hand and the melody on top.
 
-{{chords: G C D C | piano}}
+{{chords: G C D C | piano | The progression to play in each texture.}}
 
 Exercise: play G – C – D – C in each texture above. Keep the tempo the same and decide which texture suits which progression from the theory file.
 
@@ -421,9 +381,6 @@ Exercise: play a short passage that causes trouble, first very slowly, then at s
 
 ## Ear training for piano
 @group Practice
-
-{{chords: C Em G | piano}}
-
 
 - Learn to hear the bass note of a chord before the rest. In an inversion, the bass note is the one the ear picks out first.
 - Play a short phrase and identify the interval by hand distance before naming it, then check by ear.

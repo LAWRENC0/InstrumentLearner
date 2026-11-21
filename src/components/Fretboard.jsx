@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { getNoteAtStringFret, getPitchClass, STRING_TUNINGS } from '../utils/musicTheory';
+import { useShowFretNumbers } from '../utils/preferences';
 
 const FRET_COUNT = 15;
 const SINGLE_INLAYS = [3, 5, 7, 9, 15];
@@ -100,8 +101,13 @@ function Fretboard({
   displayScaleDegrees = false,
   scaleRoot = null,
   scaleType = 'major',
-  showFretNumbers = true,
+  // Leave undefined to follow the app-wide setting from the Controls sheet.
+  showFretNumbers,
+  // Optional Map "string-fret" -> { label, className }: fixed markers drawn as given (theory diagrams).
+  customMarkers = null,
 }) {
+  const [globalFretNumbers] = useShowFretNumbers();
+  const fretNumbersVisible = showFretNumbers ?? globalFretNumbers;
   const dragStartRef = useRef(null);
   const suppressClickRef = useRef(false);
   const [dragPreview, setDragPreview] = useState(null);
@@ -148,6 +154,7 @@ function Fretboard({
   }, [dragPreview, getExplorerDragPreview]);
 
   function getMarker(key, note) {
+    if (customMarkers?.has(key)) return 'custom';
     const isSelected = selectedKeys.has(key);
     const isValid = validKeys.has(key);
     if (submitted && isSelected) return isValid ? 'correct' : 'wrong';
@@ -243,6 +250,7 @@ function Fretboard({
                   const isRoot = key === rootKey;
                   const note = getNoteAtStringFret(stringIndex, fret);
                   const marker = getMarker(key, note);
+                  const custom = marker === 'custom' ? customMarkers.get(key) : null;
                   const showName = revealNames && marker && marker !== 'box';
                   const isOpen = fret === 0;
 
@@ -288,14 +296,14 @@ function Fretboard({
                         <span
                           className={[
                             'pointer-events-none absolute z-20 flex h-6 w-6 items-center justify-center rounded-full text-[10px] font-bold shadow-md shadow-black/50',
-                            MARKER_STYLES[marker],
+                            custom ? custom.className : MARKER_STYLES[marker],
                             boxKeys.has(key) && marker !== 'box' ? 'ring-2 ring-cyan-200/70' : '',
                             isRoot && marker !== 'root' && marker !== 'box'
                               ? 'ring-2 ring-cyan-300 ring-offset-1 ring-offset-black/50'
                               : '',
                           ].join(' ')}
                         >
-                          {showName ? getDisplayLabel(note) : ''}
+                          {custom ? custom.label : showName ? getDisplayLabel(note) : ''}
                         </span>
                       )}
                     </button>
@@ -320,7 +328,7 @@ function Fretboard({
         </div>
 
         {/* Fret numbers (can be hidden from the Controls sheet) */}
-        {showFretNumbers && (
+        {fretNumbersVisible && (
           <div className="mt-1.5 grid text-xs text-slate-500" style={{ gridTemplateColumns: GRID_TEMPLATE }} aria-hidden="true">
             <span />
             <span className="text-center">open</span>

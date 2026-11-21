@@ -15,7 +15,7 @@ The theory shared by every instrument in the app. Each topic gives the idea, a w
 
 Example: E♯ is the same pitch as F, and B♯ is the same as C. These come up in keys with many sharps or flats.
 
-{{scale: C chromatic | piano}}
+{{scale: C chromatic | piano | All twelve notes of the octave: each black key is one note with two names (C♯ = D♭ and so on).}}
 
 Exercise: write the enharmonic spelling of every note in the A♭ major scale, then in G♯ major. Compare the two.
 
@@ -36,7 +36,7 @@ Exercise: write the enharmonic spelling of every note in the A♭ major scale, t
 
 Example: C to G is a perfect 5th (7 semitones). Inverted, G to C is a perfect 4th (5 semitones). 7 + 5 = 12.
 
-{{notes: C G | guitar piano}}
+{{notes: C G | guitar piano | Every C and G: on the keyboard count the 7 semitones; on the fretboard each G sits two frets above a C on the next string up (three frets when crossing from G to B).}}
 
 Exercise: name the interval between each pair of adjacent notes in C major. Then invert each one and name the result.
 
@@ -47,8 +47,6 @@ Exercise: name the interval between each pair of adjacent notes in C major. Then
 - A reliable reference for the perfect 5th: the first leap in "Twinkle, Twinkle, Little Star", from C to G.
 - Sing the top note, then the bottom, then fill the gap.
 - The tritone is the hardest to place, because it sits between two stable intervals.
-
-{{notes: C G | piano}}
 
 Exercise: each day, practise one interval. Listen to ten songs and write down each example you find.
 
@@ -61,7 +59,7 @@ Exercise: each day, practise one interval. Listen to ten songs and write down ea
 - **Harmonic minor:** 0 2 3 5 7 8 11. The raised seventh gives a leading tone and a major dominant chord.
 - **Melodic minor:** 0 2 3 5 7 9 11 going up.
 
-{{scale: C major | guitar piano}}
+{{scale: C major | guitar piano | C major: the half steps fall between E–F and B–C, the white keys with no black key between them.}}
 
 - **Pentatonic scales** have five notes.
   - Major pentatonic: 0 2 4 7 9.
@@ -70,7 +68,7 @@ Exercise: each day, practise one interval. Listen to ten songs and write down ea
 - **Whole-tone scale:** six equal steps (0 2 4 6 8 10). It sounds unresolved.
 - **Diminished scale:** alternating whole and half steps (0 2 3 5 6 8 9 11).
 
-{{scale: A minor pentatonic | guitar piano}}
+{{scale: A minor pentatonic | guitar piano | A minor pentatonic: five notes and no half steps, which is why it is so hard to hit a clashing note with it.}}
 
 Exercise: play each scale from C, then from A. Sing its tonic chord after each one.
 
@@ -91,7 +89,7 @@ Exercise: play each scale from C, then from A. Sing its tonic chord after each o
 
 Example: D Dorian uses exactly the notes of C major, but D is the centre. Its characteristic note is B♮, the major sixth.
 
-{{scale: D dorian | guitar piano}}
+{{scale: D dorian | guitar piano | D Dorian uses the same notes as C major (all white keys) with D as the centre. Listen for B♮, its characteristic note.}}
 
 Practical use:
 - A minor chord with a major sixth suggests Dorian.
@@ -119,9 +117,9 @@ The **melodic minor** here means the ascending form (A B C D E F♯ G♯), used 
 6. **Locrian ♮2** (0 2 3 5 6 8 10). Chord: m7♭5 (half-diminished). The usual jazz choice for the iiø7 of a minor ii–V.
 7. **Altered**, or super-Locrian (0 1 3 4 6 8 10). Chord: 7alt (♭9, ♯9, ♯11, ♭13). The standard sound of a dominant resolving to a minor or major tonic with maximum tension.
 
-{{scale: G lydian dominant | guitar piano}}
+{{scale: G lydian dominant | guitar piano | G Lydian dominant: G Mixolydian with a raised fourth (C♯). The scale for G7♯11 and for tritone substitutes.}}
 
-{{scale: G altered | guitar piano}}
+{{scale: G altered | guitar piano | G altered: every tension a dominant can carry (♭9, ♯9, ♯11, ♭13) around the guide tones B and F.}}
 
 Example: in C, the melodic minor of A♭ (A♭ B♭ C♭ D♭ E♭ F G) contains G altered. One parent scale gives the altered dominant (on G), the Lydian dominant (on D♭, the tritone substitute) and the half-diminished (on F). That is why these three chords share notes so easily.
 
@@ -137,7 +135,7 @@ The **harmonic minor** (A B C D E F G♯) has an augmented second between its si
 6. **Lydian ♯2** (0 3 4 6 7 9 11). Chord: maj7♯11 with a ♯9 colour.
 7. **Ultralocrian**, or altered ♭♭7 (0 1 3 4 6 8 9). Chord: diminished seventh.
 
-{{scale: E phrygian dominant | guitar piano}}
+{{scale: E phrygian dominant | guitar piano | E Phrygian dominant, the fifth mode of A harmonic minor: the V-chord scale in A minor and the home scale of flamenco.}}
 
 Example: over G7♭9 resolving to Cm, play G Phrygian dominant (the fifth mode of C harmonic minor). Over G7 with a raised eleventh that does not resolve, play G Lydian dominant (the fourth mode of D melodic minor).
 
@@ -155,7 +153,7 @@ Sources: Open Music Theory v2, "Chord-Scale Theory"; Novik, Lydian Chromatic Con
 - The **relative minor** is three semitones below its major. C major and A minor share a key signature.
 - The **parallel minor** shares the tonic. C major and C minor are parallel.
 
-{{scale: G major | guitar piano}}
+{{scale: G major | guitar piano | G major: one sharp (F♯). This is the key signature written out as notes.}}
 
 Exercise: write every key signature from zero to seven sharps and from zero to seven flats, then check them against the circle.
 
@@ -171,7 +169,7 @@ The circle of fifths puts the twelve keys in a ring, so that neighbours are a pe
 - The two directions meet at the bottom, where F♯ and G♭ (and C♯ and D♭) are the same pitches written two ways.
 - Each major key has a relative minor on the inside of the ring, three semitones below it.
 
-{{circle: fifths}}
+{{circle: fifths | Each step clockwise adds a sharp; each step anticlockwise adds a flat. The inner ring shows each key's relative minor.}}
 
 Exercise: starting at C, walk clockwise and name each key. Then walk counterclockwise. Each key differs from its neighbour by one note.
 
@@ -267,7 +265,7 @@ Exercise: for one week, practise a different key each day, in ring order. Each d
 - The third sets the brightness or darkness. The fifth sets stability or tension.
 - A **suspended** chord replaces the third: sus2 is 0 2 7 and sus4 is 0 5 7. It is neither major nor minor.
 
-{{chords: C Cm Caug Cdim Csus4 | guitar piano}}
+{{chords: C Cm Caug Cdim Csus4 | guitar piano | The four triad qualities and sus4 on one root: only the third and the fifth change between them.}}
 
 Exercise: play the four triads on C. Then move each one up a semitone and say what changed.
 
@@ -287,7 +285,7 @@ Exercise: play the four triads on C. Then move each one up a semitone and say wh
 - **Extensions** are notes above the octave: ninth (2nd), eleventh (4th), thirteenth (6th).
 - **Alterations** change a note of a dominant: ♭9, ♯9, ♯11, ♭13.
 
-{{notes: C Eb G B | piano}}
+{{notes: C Eb G B | piano | The minor-major seventh, C–E♭–G–B: a minor triad under a major seventh.}}
 
 Chord symbols:
 - Cmaj7 is major seventh.
@@ -296,7 +294,7 @@ Chord symbols:
 - Cø is half-diminished.
 - Cdim7 is fully diminished.
 
-{{chords: Cmaj7 C7 Cm7 Cø Cdim7 | guitar piano}}
+{{chords: Cmaj7 C7 Cm7 Cø Cdim7 | guitar piano | The five common seventh chords on C. Compare neighbours to see which single note changes.}}
 
 Exercise: for each chord of C major's diatonic set, write its seventh, ninth, eleventh and thirteenth.
 
@@ -318,9 +316,9 @@ Exercise: for each chord of C major's diatonic set, write its seventh, ninth, el
   - Dominant (V, vii°).
   - The usual motion is tonic, subdominant, dominant, tonic.
 
-{{chords: C Dm Em F G Am Bdim | guitar piano}}
+{{chords: C Dm Em F G Am Bdim | guitar piano | The seven diatonic chords of C major, I to vii°.}}
 
-{{chords: Am Bdim E Am | guitar piano}}
+{{chords: Am Bdim E Am | guitar piano | ii° – V – i in A minor: the E major chord borrows G♯ from harmonic minor to make the cadence pull.}}
 
 Example: in A minor, Am – Dm – E7 – Am uses the natural-minor i and iv but the harmonic-minor V (E major, with G♯).
 
@@ -337,7 +335,7 @@ Exercise: harmonise the melody of "Ode to Joy" (E E F G G F E D C C D E E D D) w
 - **Deceptive cadence:** V to vi. The bass resolves as expected; the harmony moves on.
 - **Phrygian half cadence:** iv6 to V, in minor only. The bass falls a half step from the lowered sixth degree to the fifth (in A minor, F to E). Common in baroque music.
 
-{{chords: G C | guitar piano}}
+{{chords: G C | guitar piano | V – I, the authentic cadence: listen to B rising to C.}}
 
 Exercise: harmonise a four-bar phrase that ends on each cadence type, in C major.
 
@@ -371,9 +369,9 @@ A second-inversion triad sounds unstable, so classical harmony uses it in three 
 - **Passing six-four:** a six-four on a bass that passes by step, as in I – V6/4 – I6 (bass C – D – E).
 - **Pedal (neighbour) six-four:** I – IV6/4 – I over a held bass (C – F/C – C).
 
-{{chords: C C/E C/G | guitar piano}}
+{{chords: C C/E C/G | guitar piano | C in root position, first and second inversion: the bass changes, the chord does not.}}
 
-{{chords: G7 G7/B G7/D G7/F | guitar piano}}
+{{chords: G7 G7/B G7/D G7/F | guitar piano | G7 in all four positions (7, 6/5, 4/3, 4/2). The figure names the intervals above each bass.}}
 
 Example: the bass line C – G – G – C, with the chords C, C/G, G and C. The C/G is a cadential six-four, which expects the V to follow.
 
@@ -430,7 +428,7 @@ Sources: Open Music Theory v2, "Jazz Voicings".
 
 Example: G7 (G B D F) to C (C E G). B rises to C, F falls to E, D falls to C, and G stays as a common tone.
 
-{{chords: G7 C | guitar piano}}
+{{chords: G7 C | guitar piano | G7 to C: follow each voice. B rises to C, F falls to E, G stays.}}
 
 Exercise: write a four-part version of C – Am – F – G – C, where each voice moves the smallest possible distance.
 
@@ -438,7 +436,7 @@ Exercise: write a four-part version of C – Am – F – G – C, where each vo
 @group Harmonic movement
 
 - A secondary dominant is the V chord of a chord other than the tonic. It is written V/x.
-- In C major: A7 (V/ii), B7 (V/iii), C7 (V/IV), D7 (V/V), E7 (V/vi), F♯7 (V/vii).
+- In C major: A7 (V/ii), B7 (V/iii), C7 (V/IV), D7 (V/V) and E7 (V/vi).
 - It briefly tonicises its target. It is not a modulation unless the new key lasts.
 - Secondary dominants and **secondary leading-tone chords** (vii°/x or vii°7/x) together are called **applied chords**. Read V/ii as "five of two".
 - Another way to see them: an applied chord is a diatonic chord with a raised note. ii (Dm) becomes II♯ (D major), which is V/V.
@@ -456,9 +454,9 @@ Exercise: write a four-part version of C – Am – F – G – C, where each vo
 - **Chains of dominants:** each dominant resolves to another dominant, round the circle of fifths: E7 – A7 – D7 – G7 – C. This is the bridge of rhythm changes and the "ragtime progression".
 - **Deceptive resolution:** an applied V can move somewhere other than its target. E7 (V/vi) going to F instead of Am is the applied version of V – vi.
 
-{{chords: A7 B7 C7 D7 E7 F#7 | guitar piano}}
+{{chords: A7 B7 C7 D7 E7 | guitar piano | Every secondary dominant in C: the V7 of ii, iii, IV, V and vi.}}
 
-{{chords: Em7 A7 Dm7 G7 C | guitar piano}}
+{{chords: Em7 A7 Dm7 G7 C | guitar piano | A secondary ii–V (Em7 – A7) into Dm7, then the main ii–V home to C.}}
 
 Example: C – E7 – Am – A7 – Dm – D7 – G7 – C. E7, A7 and D7 are all secondary dominants.
 
@@ -484,7 +482,7 @@ Common uses:
 - Rock colour: C – B♭ – C. A plagal sound with no leading tone.
 - Pop cadence: A♭ – B♭ – C. The ♭VI and ♭VII lead into the tonic.
 
-{{chords: C Fm C | guitar piano}}
+{{chords: C Fm C | guitar piano | C – Fm – C: the borrowed minor iv. Only one note changes, A to A♭.}}
 
 Exercise: write four-bar progressions in C, one for each borrowed chord in the list. Circle the borrowed chord.
 
@@ -503,7 +501,7 @@ Two chromatic chords that do the job of a predominant (ii or IV) with more drama
 - In voice leading, the lowered second (D♭) falls to the leading tone (B) as the music moves to V.
 - It is used in major and minor keys, but more often in minor.
 
-{{chords: Db/F G7 C | guitar piano}}
+{{chords: Db/F G7 C | guitar piano | The Neapolitan in first inversion, then V7 and I: listen to D♭ falling to B.}}
 
 Exercise: in A minor, play B♭/D (the Neapolitan), then E7, then A minor. Listen for B♭ falling to G♯.
 
@@ -518,7 +516,7 @@ Exercise: in A minor, play B♭/D (the Neapolitan), then E7, then A minor. Liste
 - They are more common in minor keys.
 - The German sixth sounds exactly like a dominant seventh (A♭7) but is spelled and resolved differently. That double identity is a classic way to change key.
 
-{{notes: Ab C F# | piano}}
+{{notes: Ab C F# | piano | The Italian sixth in C: A♭ and F♯ move outward by half step to the two Gs of the V chord.}}
 
 Example: in C minor, play A♭ C E♭ F♯ (German sixth), then a C minor six-four, then G7, then C minor.
 
@@ -541,9 +539,9 @@ Sources: Open Music Theory v2, "Neapolitan 6th (♭II6)" and "Augmented Sixth Ch
 - **Diminished for dominant:** any diminished seventh a half step above a dominant's root contains that dominant's 3, 5, 7 and ♭9 (B°7 = G7♭9 without G).
 - Keep the function. A tonic substitute should sound like a tonic, a dominant substitute like a dominant.
 
-{{chords: G7 Db7 | guitar piano}}
+{{chords: G7 Db7 | guitar piano | G7 and its tritone substitute D♭7 share the same tritone (B–F, spelled C♭–F in D♭7).}}
 
-{{chords: Abm7 Db7 C | guitar piano}}
+{{chords: Abm7 Db7 C | guitar piano | The tritone substitute with its own ii: A♭m7 – D♭7 – C, a bass line falling by half steps to C.}}
 
 Example: the turnaround C – A7 – Dm7 – G7, tritone-substituted on the second and fourth chords, becomes C – E♭7 – Dm7 – D♭7 – C: a chromatic bass line C – E♭ – D – D♭ – C.
 
@@ -571,7 +569,9 @@ Sources: Open Music Theory v2, "Substitutions".
 
 Example: over Dm7 – G7 – Cmaj7 in C, play D Dorian, G Mixolydian and C Ionian. All three use the same seven notes, so the job is to aim at each chord's own tones on the strong beats. If Dm7 has a raised eleventh (G♯), that note is outside the key: the fitting scale is D Dorian ♯4 (the fourth mode of A harmonic minor), which keeps the minor third F and adds G♯.
 
-{{chords: Dm7 G7 Cmaj7 | guitar piano}}
+{{scalemap: D dorian m7 | Over Dm7, D Dorian: the coloured notes are the chord tones to aim for on strong beats.}}
+{{scalemap: G mixolydian 7 | Over G7, G Mixolydian: the same seven notes, but now B and F (the guide tones) are the targets.}}
+{{scalemap: C major maj7 | Over Cmaj7, C Ionian: again the same notes, with the Cmaj7 tones coloured.}}
 
 Exercise: for each diatonic chord in C major, name two scales that fit it.
 
@@ -596,8 +596,6 @@ A quick index: one signature progression per style. Each style has a full topic 
 - **Salsa:** I – IV – V – IV montuno. **Tango:** i – V7 in minor. → Latin progressions
 - **Flamenco:** Am – G – F – E landing on E as home. → Flamenco harmony
 - **Brazilian:** I – VI7 – ii – V; Cmaj7 – D7 – Dm7 – D♭7. → Brazilian standard progressions
-
-{{chords: C G Am F | guitar piano}}
 
 Exercise: pick three styles from the list and write an eight-bar phrase on each signature progression. Play them in C, then in A minor, and describe what makes each one sound like its style.
 
@@ -633,8 +631,6 @@ Exercise: pick three styles from the list and write an eight-bar phrase on each 
   - **12-bar blues:** a harmonic form, repeated as a chorus. See **The blues**.
 
 Example: "Twinkle, Twinkle, Little Star" opens with a four-bar phrase that ends on the tonic. The first eight bars are made of two-bar ideas.
-
-{{notes: C C G G A A G | piano}}
 
 Example: the opening of "Ode to Joy" is a parallel period. Phrase one ends E – D – D (a half cadence on V), phrase two starts the same and ends D – C – C (an authentic cadence on I).
 
@@ -686,7 +682,7 @@ Sources: Open Music Theory v2, "Swing Rhythms".
 - Read repeats, endings and D.C./D.S. instructions in full before playing.
 - To transpose a sheet, move every root by the same interval. Keep the Roman numerals, then rebuild the chords.
 
-{{chords: C Cm7 C7 Cmaj7 Cadd9 Csus4 C/G | guitar piano}}
+{{chords: C Cm7 C7 Cmaj7 Cadd9 Csus4 C/G | guitar piano | One root, seven chord symbols: hear what each suffix adds or changes.}}
 
 Exercise: write the chord symbols for a twelve-bar blues in F with dominant sevenths. Then transpose them up a major third.
 
@@ -726,8 +722,6 @@ Each species adds one new rhythmic possibility:
 4. **Fourth species:** the line is syncopated, tied over each barline. This creates **suspensions**: a note held over the change, made dissonant, then resolved down by step (7–6, 4–3, and 9–8 or 2–3 against the bass).
 5. **Fifth species (florid):** a free mix of all the above, closest to real music.
 
-{{notes: C D F E D C | piano}}
-
 Example: against the cantus firmus C D F E D C, the line C B A C B C works in first species. The intervals are octave, sixth, third, sixth, sixth, octave. Most moves are contrary, the two sixths in a row are allowed (imperfect consonances), and B rises to C at the end as a leading tone. A line like G A … would fail at once: C–G then D–A are parallel fifths.
 
 Exercise: write a first-species line above the cantus firmus C D F E D C. Label every interval and check for parallel fifths and octaves.
@@ -748,7 +742,7 @@ Sources: Open Music Theory v2 (counterpoint unit); Prout, Counterpoint: Strict a
 - Inversions are heard in the bass: the lowest note is the one that sounds like the chord's base.
 - Method: play a chord, sing the bass, sing the top note, then name the quality.
 
-{{chords: C Cm Caug Cdim | guitar piano}}
+{{chords: C Cm Caug Cdim | guitar piano | The four qualities on C for ear practice: play each one, sing its bass and top note, then name it.}}
 
 Exercise: play random triads and identify quality and inversion without looking. Repeat with twenty chords.
 
@@ -779,8 +773,6 @@ The seven strands:
 - These exist natively in the key. They are the home base.
 - Every other strand returns to them.
 
-{{chords: C Dm Em F G Am Bdim | guitar piano}}
-
 Exercise: write a four-chord progression in C that ends on C. Play it in G, D and F.
 
 ### Strand 2: secondary dominants
@@ -789,7 +781,7 @@ Exercise: write a four-chord progression in C that ends on C. Play it in G, D an
 - Each one sits a fifth above its target, so it pulls to it.
 - The tonic is the exception: its dominant is already diatonic.
 
-{{chords: C E7 Am7 A7 Dm7 D7 G7 C | guitar piano}}
+{{chords: C E7 Am7 A7 Dm7 D7 G7 C | guitar piano | The chain C – E7 – Am7 – A7 – Dm7 – D7 – G7 – C: each dominant falls a fifth to its target.}}
 
 Exercise: replace each secondary dominant in the example with its target chord. Listen to what is lost.
 
@@ -811,7 +803,7 @@ The most used options, and the mode each one comes from:
 
 In C major these are D♭maj7, Dø, E♭maj7, Fm7, Gm7, Gø, A♭maj7 and B♭7.
 
-{{chords: Dbmaj7 Dø Ebmaj7 Fm7 Gm7 Gø Abmaj7 Bb7 | guitar piano}}
+{{chords: Dbmaj7 Dø Ebmaj7 Fm7 Gm7 Gø Abmaj7 Bb7 | guitar piano | The borrowed chords available in C major, from C minor and the other modes on C.}}
 
 Some of these overlap with diatonic chords, so the list is a set of colours rather than new chords.
 
@@ -822,11 +814,11 @@ Exercise: write a four-bar progression in C with one chord from this list per ba
 - Any secondary dominant can be preceded by the ii chord of its target. That pair is a ii–V.
 - Major ii–V: in C, heading to F, use Gm7 (the ii of F), then C7 (the V of F).
 
-{{chords: Gm7 C7 F | guitar piano}}
+{{chords: Gm7 C7 F | guitar piano | A ii–V aimed at F (IV) instead of the tonic.}}
 
 - Minor ii–V: when the target is minor, the ii is half-diminished and the V is altered. In C heading to Am: Bø, then E7alt.
 
-{{chords: Bø E7alt Am | guitar piano}}
+{{chords: Bø E7alt Am | guitar piano | A minor ii–V aimed at Am (vi).}}
 
 The author also uses these ii–Vs, named by their relation to each other:
 - Backdoor: Fm7 – B♭7 – C. Borrowed from E♭ major.
@@ -834,7 +826,7 @@ The author also uses these ii–Vs, named by their relation to each other:
 - Am7 – D7 – F.
 - Bm7 – E7 – F.
 
-{{chords: Fm7 Bb7 C | guitar piano}}
+{{chords: Fm7 Bb7 C | guitar piano | The backdoor ii–V: Fm7 – B♭7 resolving to C.}}
 
 Exercise: for each non-standard ii–V, find the diatonic ii and V it borrows. Then write one of your own that resolves to F.
 
@@ -844,11 +836,9 @@ Exercise: for each non-standard ii–V, find the diatonic ii and V it borrows. T
 - The tritone is the only interval that is the same whether you go up or down.
 - A tritone substitute sits a half step above its target. Habit: play a dominant seventh a half step above the chord you are heading to.
 
-{{chords: G7 Db7 | guitar piano}}
-
 The secondary dominants above, with tritone substitutions: C – B♭7 – Am – G♭7 – F – A♭7 – G. Each substitute leads by a half step.
 
-{{chords: C Bb7 Am Gb7 F Ab7 G | guitar piano}}
+{{chords: C Bb7 Am Gb7 F Ab7 G | guitar piano | Each secondary dominant replaced by its tritone substitute: every substitute slides down a half step into its target.}}
 
 Exercise: play both versions. Name the half step in each substitution.
 
@@ -860,7 +850,7 @@ Exercise: play both versions. Name the half step in each substitution.
 
 Example: C♯°7 leads to Dm, because C♯ resolves up to D.
 
-{{chords: C#o7 Dm | guitar piano}}
+{{chords: C#o7 Dm | guitar piano | C♯°7 to Dm: the diminished chord acting as a leading-tone chord.}}
 
 Exercise: for each diatonic chord of C, play the diminished seventh a semitone below it, then the chord. Note which bass sounds best.
 
@@ -873,11 +863,11 @@ Exercise: for each diatonic chord of C, play the diminished seventh a semitone b
   - B to B♭ gives B♭7.
   - D to D♭ gives D♭7.
   - F to E gives E7, which the author does not use.
-- Raising each note of the diminished chord gives minor sixths and half-diminished chords: Dø, Fm6, Fø and A♭m6.
+- Raising one note of the diminished chord by a half step gives four chords, each with two names: Bø (= Dm6), Dø (= Fm6), Fø (= A♭m6) and G♯ø (= Bm6).
 
-{{chords: Abo7 Bb7 Db7 E7 | guitar piano}}
+{{chords: Abo7 Bb7 Db7 E7 | guitar piano | G♯°7 (spelled A♭°7) and the dominants you get by lowering one of its notes a half step: B♭7, D♭7 and E7 (the fourth is G7 itself).}}
 
-{{chords: Dø Fm6 Fø Abm6 | guitar piano}}
+{{chords: Bø Dø Fø G#ø | guitar piano | The four chords you get by raising one note of G♯°7: each is a half-diminished chord that is also a minor sixth (Bø = Dm6, Dø = Fm6, Fø = A♭m6, G♯ø = Bm6).}}
 
 Exercise: play G7 – C, then each V alternative – C. Rate how strongly each one pulls home.
 
@@ -910,7 +900,7 @@ All of these use plagal motion (IV to I) rather than V to I.
 - **Double plagal:** ♭VII – IV – I. ♭VII is the "IV of IV". The coda of the Beatles' "Hey Jude" is the best-known example.
 - **Extended plagal:** ♭VI – ♭III – ♭VII – IV – I, a chain of plagal moves.
 
-{{chords: F Fm C | guitar piano}}
+{{chords: F Fm C | guitar piano | The plagal sigh IV – iv – I: the top voice falls A – A♭ – G.}}
 
 ### Four-chord schemas
 
@@ -920,7 +910,7 @@ All use I, IV, V and vi, so they sound related. The order is what tells them apa
 - **Singer/songwriter:** I – V – vi – IV or vi – IV – I – V, common in 1990s songwriting. Heard in the relative minor, it is i – VI – III – VII.
 - **Hopscotch:** IV – V – vi – I, common since about 2010.
 
-{{chords: C Am F G | guitar piano}}
+{{chords: C Am F G | guitar piano | Doo-wop, I – vi – IV – V: the four chords every four-chord schema is built from.}}
 
 ### Classical, puff and modal schemas
 
@@ -932,7 +922,7 @@ All use I, IV, V and vi, so they sound related. The order is what tells them apa
   - Dorian: a major IV with a minor tonic (Am – D).
   - Lydian: a major II with a major tonic (C – D).
 
-{{chords: Bb F C | guitar piano}}
+{{chords: Bb F C | guitar piano | The double plagal ♭VII – IV – I: two falling fourths into C.}}
 
 Exercise: take one song you know and decide which schema its chorus uses. Then rotate the schema (start it on a different chord) and hear whether it still sounds like the same family.
 
@@ -954,7 +944,7 @@ The blues grew up in the United States in the late 1800s. Together with ragtime,
 - The lyrics often follow **AAB form**: a line, the same line again (bars 5–8), then an answering line (bars 9–12).
 - The blues is a schema, so it survives many changes and still sounds like the blues.
 
-{{chords: F7 Bb7 C7 | guitar piano}}
+{{chords: F7 Bb7 C7 | guitar piano | The three chords of a blues in F, all dominant sevenths: I7, IV7 and V7.}}
 
 ### Variations
 
@@ -964,7 +954,7 @@ The blues grew up in the United States in the late 1800s. Together with ragtime,
 - **Jazz blues (in F):** F7 | B♭7 | F7 | F7 | B♭7 | B♭7 | F7 | F7 | Gm7 | C7 | F7 D7 | Gm7 C7. Bar 2 goes to IV early (a "quick change"), bars 9–10 become ii–V, and the last two bars turn around. Some players use Am7 (iii) instead of F7 in bar 11.
 - **Bird blues:** Charlie Parker's "Blues for Alice" (1951) fills the form with ii–V chains. It still reaches IV in bar 5 and keeps the jazz-blues ending.
 
-{{chords: Gm7 C7 F7 D7 | guitar piano}}
+{{chords: Gm7 C7 F7 D7 | guitar piano | The jazz-blues additions in F: the ii–V of bars 9–10 and the D7 turnaround of bar 11.}}
 
 ### Improvising on the blues
 
@@ -976,7 +966,7 @@ A practice order that builds from simple to detailed:
 5. Learn the chord scales: Mixolydian on the dominant chords, Dorian on the minor chords.
 6. Connect the guide tones with scale notes in between, by half step where you can.
 
-{{scale: F blues | guitar piano}}
+{{scalemap: F blues 7 | The F blues scale against an F7 chord: R, 5 and ♭7 are chord tones; the grey ♭3 and ♭5 are the blue notes that rub against the chord.}}
 
 Exercise: compose a 12-bar riff blues in F on the F minor pentatonic. Write a three- or four-bar melody, repeat it in bars 5–8, and write new material for bars 9–12 that returns to the opening idea.
 
@@ -993,9 +983,9 @@ Jazz harmony is tonal harmony with every chord expanded: sevenths are the defaul
 - **Minor ii – V – i:** iiø7 – V7♭9 – i. In C minor: Dø7 – G7♭9 – Cm.
 - **Turnaround:** I – vi – ii – V, which loops back to the top of a form. Each chord can be made a dominant (I – VI7 – II7 – V7).
 
-{{chords: Dm7 G7 Cmaj7 | guitar piano}}
+{{chords: Dm7 G7 Cmaj7 | guitar piano | The major ii–V–I in C.}}
 
-{{chords: Dø G7b9 Cm | guitar piano}}
+{{chords: Dø G7b9 Cm | guitar piano | The minor ii–V–i in C minor: a half-diminished ii and a V7♭9.}}
 
 ### Making it sound like jazz
 
@@ -1009,7 +999,7 @@ Jazz harmony is tonal harmony with every chord expanded: sevenths are the defaul
 - Pianist and teacher Barry Harris treats that added note as a full member of the scale, not just a passing note. His **major sixth diminished scale** on C is C D E F G A♭ A B: it alternates the notes of C6 (C E G A) with the notes of a diminished seventh chord (D F A♭ B).
 - Harris does not think in modes. To play the notes of E Phrygian, he would think of the C major scale started from its third note.
 
-{{notes: C D E F G Ab A B | piano}}
+{{notes: C D E F G Ab A B | piano | The C major sixth diminished scale: the notes of C6 alternating with a diminished seventh chord.}}
 
 ### Playing outside
 
@@ -1032,9 +1022,9 @@ After the blues, the most important jazz form is the 32-bar AABA song form, and 
 - Players embellish both sections freely. Famous bridge variations include Sonny Stitt's "The Eternal Triangle".
 - Tunes on rhythm changes include "Anthropology", "Oleo", "Moose the Mooche", "Cotton Tail", "Lester Leaps In" and "Rhythm-a-Ning".
 
-{{chords: Bb G7 Cm7 F7 | guitar piano}}
+{{chords: Bb G7 Cm7 F7 | guitar piano | The A-section turnaround of rhythm changes in B♭.}}
 
-{{chords: D7 G7 C7 F7 | guitar piano}}
+{{chords: D7 G7 C7 F7 | guitar piano | The bridge: four dominants moving round the circle of fifths.}}
 
 Exercise: write a Roman numeral analysis of rhythm changes in B♭, then transpose it to F. Compose an eight-bar A-section melody over it.
 
@@ -1055,7 +1045,7 @@ Choro and samba are two of the main traditions of Brazilian popular music, both 
   - Secondary dominants.
 - **Baixaria** is the countermelody played in the low register of the guitar, a speciality of the seven-string guitar. It answers and decorates the melody between phrases.
 
-{{chords: C C#o7 Dm7 G7 | guitar piano}}
+{{chords: C C#o7 Dm7 G7 | guitar piano | A diminished passing chord between I and ii, the choro trademark.}}
 
 ### Samba rhythm
 
@@ -1086,7 +1076,7 @@ Bossa nova peaked between about 1958 and 1962, shaped above all by João Gilbert
 - **Voice leading on the guitar.** The guitar part moves in four careful voices, and many chord choices follow from that voice leading rather than from the melody. When the guitar leaves out the third, the chord can sound ambiguous.
 - **Performance.** The singer and guitarist share the work equally, with a cool, unforced voice instead of virtuoso display.
 
-{{chords: G9 G7b9 Cmaj7 | guitar piano}}
+{{chords: G9 G7b9 Cmaj7 | guitar piano | The 9 → ♭9 cliché on a dominant, then the resolution.}}
 
 Example: Cmaj7 – A7♭9 – Dm9 – G13 – Cmaj7. Each chord keeps its classical function; the extensions give the colour.
 
@@ -1123,7 +1113,7 @@ Sources: Bin Md Tarip, Theoretical Perspectives on Clave in Salsa Music (Univers
 - **Secondary dominants** such as III7 and VI7 appear briefly, for a beat or two, to colour a transition.
 - **Passing diminished sevenths**, taken from jazz, fill the gap between two chords a step apart.
 
-{{chords: Cmaj7 Bbmaj7 Fmaj7 | guitar piano}}
+{{chords: Cmaj7 Bbmaj7 Fmaj7 | guitar piano | I – ♭VIImaj7 – IVmaj7: three major seventh chords, bright and wistful.}}
 
 Exercise: build an eight-bar vamp on Cmaj7 – Fmaj7, then add a passing diminished seventh and one borrowed ♭VIImaj7.
 
@@ -1140,7 +1130,7 @@ Flamenco is the music of Andalusia in southern Spain. Its harmony mixes a modal 
 - So G and G♯ both appear: G in the melody and the chords that lead home, G♯ in the tonic chord itself. One writer describes the music as moving constantly between E Phrygian and E Phrygian dominant.
 - Guitarists often add the ♭2 (F) to the tonic chord, which keeps the Phrygian colour even on the major chord.
 
-{{scale: E phrygian dominant | guitar piano}}
+{{scale: E phrygian dominant | guitar piano | The flamenco mode on E: Phrygian, with the major third G♯ in the home chord.}}
 
 ### The Andalusian cadence
 
@@ -1150,7 +1140,7 @@ Flamenco is the music of Andalusia in southern Spain. Its harmony mixes a modal 
   - Modal: iv – ♭III – ♭II – I in E Phrygian. E is the tonic, and the cadence ends at home.
   - Flamenco musicians hear E as home, so flamenco studies usually use the modal reading. In pop and classical contexts (the lament bass) the tonal reading is normal.
 
-{{chords: Am G F E | guitar piano}}
+{{chords: Am G F E | guitar piano | The Andalusian cadence por arriba, landing on E.}}
 
 ### Positions (keys)
 
@@ -1159,7 +1149,7 @@ Guitarists name keys by position, not by note name, and change actual pitch with
 - **Por medio:** the A position. Cadence Dm – C – B♭ – A. Used for bulerías and many other palos.
 - Other positions exist (for example on F♯ and on B), each with its own open-string colour.
 
-{{chords: Dm C Bb A | guitar piano}}
+{{chords: Dm C Bb A | guitar piano | The same cadence por medio, landing on A.}}
 
 ### Compás and cambio
 
@@ -1187,9 +1177,9 @@ Eighteenth-century musicians learned stock patterns by heart and combined them, 
 - **Do–Re–Mi:** melody 1 – 2 – 3 over bass 1 – 7 – 1. Chords I – V6 – I (C – G/B – C).
 - **Meyer:** melody 1 – 7 … 4 – 3, bass 1 – 2 … 7 – 1. Chords I – V4/3 – V6/5 – I (C – G7/D – G7/B – C). A question-and-answer pair in four stages.
 
-{{chords: C G/B Am C/E | guitar piano}}
+{{chords: C G/B Am C/E | guitar piano | The Romanesca: the bass falls C – B – A – E under I – V6 – vi – I6.}}
 
-{{chords: C G7/D G7/B C | guitar piano}}
+{{chords: C G7/D G7/B C | guitar piano | The Meyer: I – V4/3 – V6/5 – I, a four-stage question and answer.}}
 
 ### Answering and sequential schemas
 
@@ -1202,17 +1192,17 @@ Eighteenth-century musicians learned stock patterns by heart and combined them, 
 - **Fonte:** a falling sequence, "the fountain". First a minor step, then the same a tone lower in major: V7/ii – ii – V7 – I (A7/C♯ – Dm – G7/B – C).
 - **Ponte:** "the bridge". A dominant held over a pedal before the return of the opening: G – G7 over a held G.
 
-{{chords: F C/E Bdim/D G7 C | guitar piano}}
+{{chords: F C/E Bdim/D G7 C | guitar piano | The Prinner with the extra dominant: bass F – E – D – G – C.}}
 
-{{chords: C7/E F D7/F# G | guitar piano}}
+{{chords: C7/E F D7/F# G | guitar piano | The Monte: climbing by step, each chord preceded by its own dominant.}}
 
-{{chords: A7/C# Dm G7/B C | guitar piano}}
+{{chords: A7/C# Dm G7/B C | guitar piano | The Fonte: falling by step, first to Dm, then a tone lower to C.}}
 
 ### Closing schemas
 
 - **Quiescenza:** after a cadence, over a held tonic in the bass. The melody turns ♭7 – 6 – 7 – 1. Chords I7 – IV/I – V7/I – I (C7 – F/C – G7/C – C). It says "this is the end" in many classical and baroque pieces.
 
-{{chords: C7 F/C G7/C C | guitar piano}}
+{{chords: C7 F/C G7/C C | guitar piano | The Quiescenza: closing chords over a held C in the bass.}}
 
 ### Basses and sequences used in every style
 
@@ -1227,9 +1217,9 @@ Eighteenth-century musicians learned stock patterns by heart and combined them, 
   - Its jazz form adds sevenths: see **Jazz standard progressions** ("Autumn Leaves").
 - **Rule of the octave:** a standard eighteenth-century way to harmonise a scale in the bass. Root-position chords on 1 and 5; first-inversion and 6/5 chords on most other degrees, so the bass can move by step.
 
-{{chords: Am Em/G Dm/F E | guitar piano}}
+{{chords: Am Em/G Dm/F E | guitar piano | The lament bass A – G – F – E, harmonised.}}
 
-{{chords: C F Bdim Em Am Dm G C | guitar piano}}
+{{chords: C F Bdim Em Am Dm G C | guitar piano | The circle-of-fifths sequence in C: every root falls a fifth.}}
 
 Example: an eight-bar phrase built from schemas in C: Romanesca (C – G/B – Am – C/E), then Prinner (F – C/E – Bdim/D – C), then a cadence (F – G7 – C).
 
@@ -1252,9 +1242,9 @@ The progressions jazz musicians expect to meet in the standard repertoire. Examp
 - **Backdoor:** Fm7 – B♭7 – Cmaj7 (iv7 – ♭VII7 – I). Named by educator Jerry Coker. Some tunes use a major IV instead ("Cherokee").
 - **Minor plagal:** Fm6 – Cmaj7. Used as a gentle ending.
 
-{{chords: Dm7 G7 Cmaj7 | guitar piano}}
+{{chords: Dm7 G7 Cmaj7 | guitar piano | The basic major ii–V–I.}}
 
-{{chords: Fm7 Bb7 Cmaj7 | guitar piano}}
+{{chords: Fm7 Bb7 Cmaj7 | guitar piano | The backdoor cadence iv7 – ♭VII7 – I.}}
 
 ### Turnarounds
 
@@ -1265,9 +1255,9 @@ Two-bar patterns that lead back to the top of a form:
 - I – ♯I°7 – ii – V: C – C♯°7 – Dm7 – G7 (the diminished replaces A7).
 - **Tritone turnaround:** I – ♭III7 – ♭VI7 – ♭II7 (C – E♭7 – A♭7 – D♭7). Every chord after I is the tritone substitute of the I – VI7 – II7 – V7 version. Tadd Dameron's "Lady Bird" ends with a close relative (Cmaj7 – E♭7 – A♭maj7 – D♭7).
 
-{{chords: C A7 Dm7 G7 | guitar piano}}
+{{chords: C A7 Dm7 G7 | guitar piano | The turnaround I – VI7 – ii – V.}}
 
-{{chords: C Eb7 Ab7 Db7 | guitar piano}}
+{{chords: C Eb7 Ab7 Db7 | guitar piano | The tritone turnaround: every chord after I is a tritone substitute.}}
 
 ### Cycle progressions
 
@@ -1275,16 +1265,16 @@ Two-bar patterns that lead back to the top of a form:
 - **Diatonic cycle with the relative minor:** ii – V – I – IV – iiø – V – i. In G minor / B♭ major ("Autumn Leaves"): Cm7 – F7 – B♭maj7 – E♭maj7 – Am7♭5 – D7♭9 – Gm. A circle-of-fifths sequence with sevenths, landing first in the major key, then in its relative minor.
 - **Cycle plus a shift:** "All the Things You Are" opens Fm7 – B♭m7 – E♭7 – A♭maj7 – D♭maj7, a cycle in A♭, then G7 – Cmaj7 jumps to a new key a major third away.
 
-{{chords: E7 A7 D7 G7 C | guitar piano}}
+{{chords: E7 A7 D7 G7 C | guitar piano | The ragtime progression: dominants round the circle of fifths into C.}}
 
-{{chords: Cm7 F7 Bbmaj7 Ebmaj7 Am7b5 D7b9 Gm | guitar piano}}
+{{chords: Cm7 F7 Bbmaj7 Ebmaj7 Am7b5 D7b9 Gm | guitar piano | The "Autumn Leaves" cycle: a ii–V–I in B♭, then a minor ii–V–i in G minor.}}
 
 ### Minor-key devices
 
 - **Line cliché:** a minor chord held while one voice falls chromatically: Cm – Cm(maj7) – Cm7 – Cm6 (C – B – B♭ – A). Often the line is put in the bass instead.
 - **Minor turnaround:** i – VI7 – iiø – V7 (Cm – A♭7 – Dø – G7). A♭7 here doubles as a German augmented sixth.
 
-{{chords: Cm Cm/B Cm/Bb Cm/A | guitar piano}}
+{{chords: Cm Cm/B Cm/Bb Cm/A | guitar piano | The line cliché with the falling line in the bass: C – B – B♭ – A under a C minor chord.}}
 
 ### Coltrane changes
 
@@ -1292,7 +1282,7 @@ Two-bar patterns that lead back to the top of a form:
   - Opening: Bmaj7 – D7 | Gmaj7 – B♭7 | E♭maj7 | Am7 – D7 | Gmaj7 …
 - The same idea can replace a plain ii – V – I. In C: Dm7 – E♭7 – A♭maj7 – B7 – Emaj7 – G7 – Cmaj7. The three tonics C, A♭ and E split the octave into equal major thirds. Coltrane used this in "Countdown", a reworking of "Tune Up".
 
-{{chords: Bmaj7 D7 Gmaj7 Bb7 Ebmaj7 | guitar piano}}
+{{chords: Bmaj7 D7 Gmaj7 Bb7 Ebmaj7 | guitar piano | The opening of "Giant Steps": tonics B, G and E♭, a major third apart.}}
 
 ### Modal jazz
 
@@ -1300,8 +1290,6 @@ Two-bar patterns that lead back to the top of a form:
 - **"So What"** (Miles Davis, 1959): 32-bar AABA. The A sections are D Dorian (Dm7), the bridge moves up a half step to E♭ Dorian (E♭m7). John Coltrane's "Impressions" uses the same plan.
 - The **"So What chord"**, associated with Bill Evans: three stacked fourths with a major third on top. Over D: E A D G B.
 - Modal tunes favour quartal voicings, sus chords and pedal points.
-
-{{notes: E A D G B | piano}}
 
 Example: a 32-bar chorus in C that uses five devices: bars 1–8 a cycle (Cmaj7 – A7 – Dm7 – G7, then Em7 – A7 – Dm7 – G7), bars 9–16 the same with a backdoor ending (Fm7 – B♭7), bridge as the ragtime progression, last A with a tritone turnaround.
 
@@ -1327,9 +1315,9 @@ Gospel players name chords by scale-degree numbers, so the progressions are know
 - **Plagal "amen" endings:** F – C, and the darker F – Fm6 – C (IV – iv6 – I).
 - **Backdoor ending:** B♭7 – C (♭VII7 – I).
 
-{{chords: C Dm7 Em7 F | guitar piano}}
+{{chords: C Dm7 Em7 F | guitar piano | The 1–4 walk-up: C to F by step through Dm7 and Em7.}}
 
-{{chords: Bø E7alt Am7 | guitar piano}}
+{{chords: Bø E7alt Am7 | guitar piano | The 7–3–6: a minor ii–V into Am7.}}
 
 ### Bass walk-ups
 
@@ -1337,7 +1325,7 @@ Gospel players name chords by scale-degree numbers, so the progressions are know
 - From 2 up to 5: D – E – F – F♯ – G under Dm7 – C/E – F – F♯°7 – C/G (or G7).
 - The diminished chord on the raised fourth (F♯°7) is a gospel favourite on the way to the dominant or to C/G.
 
-{{chords: Dm7 C/E F F#o7 C/G | guitar piano}}
+{{chords: Dm7 C/E F F#o7 C/G | guitar piano | The bass walk-up from 2 to 5: D – E – F – F♯ – G.}}
 
 Example: a full ending in C: C – Em7 – A7 – Dm7 – G7 – C, then the amen: F – Fm6 – C.
 
@@ -1354,7 +1342,7 @@ Sources: [Hear and Play, the 1–4 walk-up](https://www.hearandplay.com/main/cla
 - Thirds are sometimes left out, so chords float between major and minor.
 - Progressions are often familiar (ii – V – I, IV – I) with these colours: Dm9 – G13 – Cmaj9.
 
-{{chords: Dm9 G13 Cmaj9 | guitar piano}}
+{{chords: Dm9 G13 Cmaj9 | guitar piano | ii–V–I with neo-soul colours: minor ninth, thirteenth, major ninth.}}
 
 ### Standard moves
 
@@ -1363,9 +1351,9 @@ Sources: [Hear and Play, the 1–4 walk-up](https://www.hearandplay.com/main/cla
 - **Passing diminished:** a diminished seventh between two chords a whole step apart: Dm7 – E♭°7 – Em7.
 - **Dorian vamp:** i9 – IV9 (Cm9 – F9). The major IV with a minor tonic gives the Dorian sound.
 
-{{chords: Cmaj7 Cm6 G | guitar piano}}
+{{chords: Cmaj7 Cm6 G | guitar piano | The minor plagal move IVmaj7 – iv6 – I (in G).}}
 
-{{chords: Dm7 D#o7 Em7 | guitar piano}}
+{{chords: Dm7 D#o7 Em7 | guitar piano | A passing diminished chord between ii and iii.}}
 
 ### The "Just the Two of Us" progression
 
@@ -1373,7 +1361,7 @@ Sources: [Hear and Play, the 1–4 walk-up](https://www.hearandplay.com/main/cla
 - **Disputed key.** Some analyses read it in F minor (♭VImaj7 – V7 – i7). Japanese pop theory names it from A♭ major (IVmaj7 – III7 – vi7), where it is called the "Just the Two of Us progression", a close relative of the royal road (see **Pop loops, EDM and the royal road**).
 - Either way, the core is a major seventh chord falling a half step to a dominant that resolves to a minor chord.
 
-{{chords: Dbmaj7 C7 Fm7 | guitar piano}}
+{{chords: Dbmaj7 C7 Fm7 | guitar piano | The "Just the Two of Us" loop.}}
 
 Example: an R&B eight-bar loop in G: Cmaj7 – Cm6 – Gmaj7 – Em9 | Am9 – D13 – Gmaj7 – G7.
 
@@ -1392,9 +1380,9 @@ Sources: Jiang, R&B harmony and chord structures (Atlantis Press), for IVmaj7 �
 - **II7 (V/V):** a major II before V is a country and bluegrass signature: G – A7 – D7 – G.
 - **Ragtime progression:** III7 – VI7 – II7 – V7 – I (B7 – E7 – A7 – D7 – G in G). Common in bluegrass and western swing; Reverend Gary Davis's "Salty Dog" uses it.
 
-{{chords: G C D7 | guitar piano}}
+{{chords: G C D7 | guitar piano | I – IV – V7 in G, the core of country.}}
 
-{{chords: G A7 D7 G | guitar piano}}
+{{chords: G A7 D7 G | guitar piano | The country II7 (V/V) move: G – A7 – D7 – G.}}
 
 ### The Nashville Number System
 
@@ -1426,9 +1414,9 @@ Sources: Wikipedia, [Nashville Number System](https://en.wikipedia.org/wiki/Nash
   - **Borrowed ♭III:** I – ♭III – IV (E – G – A), a blues-rock staple from the minor pentatonic.
 - **Power chords** (root and fifth, written 5) are the default sound of distorted guitar.
 
-{{chords: D C G D | guitar piano}}
+{{chords: D C G D | guitar piano | Mixolydian rock: I – ♭VII – IV – I in D.}}
 
-{{chords: Ab Bb C | guitar piano}}
+{{chords: Ab Bb C | guitar piano | The Aeolian cadence ♭VI – ♭VII – I.}}
 
 ### Metal
 
@@ -1441,9 +1429,9 @@ Sources: Wikipedia, [Nashville Number System](https://en.wikipedia.org/wiki/Nash
   - **Chromatic riffs:** power chords sliding by half step.
 - Each metal subgenre has its own harmonic habits; one recent study found clear signatures per subgenre.
 
-{{chords: E5 C5 D5 | guitar piano}}
+{{chords: E5 C5 D5 | guitar piano | The Aeolian metal riff i – ♭VI – ♭VII on E.}}
 
-{{chords: E5 F5 | guitar piano}}
+{{chords: E5 F5 | guitar piano | The Phrygian move i – ♭II: a half step above the tonic.}}
 
 Example: a riff in E: E5 (two bars, with open-string pedal) – F5 – E5 – C5 – D5 – E5.
 
@@ -1466,7 +1454,7 @@ For the classic four-chord pop schemas (doo-wop, singer/songwriter, hopscotch), 
   - i – VI – iv – VII: Am – F – Dm – G.
 - **Source note:** these lists come from producer guides, not corpus studies. One vendor reports that 90% of the tracks in its own dataset use a minor tonic; treat that as one dataset, not a general fact.
 
-{{chords: Am F C G | guitar piano}}
+{{chords: Am F C G | guitar piano | The common EDM minor loop i – VI – III – VII.}}
 
 ### J-pop: the royal road
 
@@ -1477,7 +1465,7 @@ For the classic four-chord pop schemas (doo-wop, singer/songwriter, hopscotch), 
   - Minor-key forms: ♭VImaj7 – ♭VII7 – v7 – i, and iv7 – v7 – ♭IIImaj7 – ♭VI.
 - The **Komuro progression**, vi – IV – V – I (Am – F – G – C), is named after producer Tetsuya Komuro, who used it heavily in the 1990s.
 
-{{chords: Fmaj7 G7 Em7 Am | guitar piano}}
+{{chords: Fmaj7 G7 Em7 Am | guitar piano | The royal road IVmaj7 – V7 – iii7 – vi in C.}}
 
 Example: a J-pop chorus in C: Fmaj7 – G7 – Em7 – Am | Dm7 – G7 – C – C.
 
@@ -1503,7 +1491,7 @@ Sources: [Violet Recording, EDM progressions](https://violetrecording.com/edm-ch
   - Minor versions: i – iv (Am – Dm).
 - **Sources disagree** on which two-chord vamp is the most typical (I – IV or I – ii), and many famous songs break these patterns.
 
-{{chords: G C D C | guitar piano}}
+{{chords: G C D C | guitar piano | The roots and ska progression I – IV – V – IV.}}
 
 Example: an eight-bar roots verse in G: G – C – G – C | G – C – D – C, with every chord played as a short off-beat skank.
 
@@ -1530,9 +1518,9 @@ Sources: Hutchinson, Music Theory for the 21st-Century Classroom, "Accompaniment
   - Many play countermelodies instead of block chords.
   - DADGAD tuning (guitar) and GDAD (bouzouki) make these open sounds easy.
 
-{{chords: Em D | guitar piano}}
+{{chords: Em D | guitar piano | Dorian folk harmony: a minor home chord and a major chord a step below.}}
 
-{{chords: A G | guitar piano}}
+{{chords: A G | guitar piano | Mixolydian folk harmony: two major chords a step apart.}}
 
 Example: an E Dorian reel, eight bars: Em | Em | D | D | Em | Em | D | Em.
 
@@ -1554,9 +1542,9 @@ Sources: [Slow Players, modes and keys](https://slowplayers.org/modes-keys/); Wi
   - i – ♭VI – V – ♭VI (Am – F – E – F).
 - Solos often sit on a single one- or two-chord vamp for a long time.
 
-{{chords: C F G F | guitar piano}}
+{{chords: C F G F | guitar piano | The montuno vamp I – IV – V – IV.}}
 
-{{chords: Am Dm E7 | guitar piano}}
+{{chords: Am Dm E7 | guitar piano | A minor montuno vamp i – iv – V7.}}
 
 ### Argentine tango
 
@@ -1567,7 +1555,7 @@ Sources: [Slow Players, modes and keys](https://slowplayers.org/modes-keys/); Wi
 - From the 1950s, Astor Piazzolla brought in jazz harmony (extended chords, tritone substitutes), the basis of tango nuevo.
 - **Source note:** the sources describe tango harmony only in general terms. A detailed list of standard tango progressions was not found in free sources.
 
-{{chords: Am E7 Dm Am | guitar piano}}
+{{chords: Am E7 Dm Am | guitar piano | A tango phrase alternating tonic and dominant in A minor.}}
 
 Example: a tango phrase in A minor: Am – E7 – Am – E7 | Dm – Am – E7 – Am, then a middle section in C major: C – G7 – C – G7.
 
@@ -1586,9 +1574,9 @@ For background, see **Choro and samba** and **Bossa nova harmony**. Examples in 
 - **Diminished ladder:** a rising bass with diminished chords between diatonic ones: C – C♯°7 – Dm7 – D♯°7 – Em7.
 - **Neighbour diminished:** G – G°7 – G, decorating a held chord.
 
-{{chords: C A7 Dm7 G7 | guitar piano}}
+{{chords: C A7 Dm7 G7 | guitar piano | The samba and choro turnaround I – VI7 – ii – V.}}
 
-{{chords: C C#o7 Dm7 D#o7 Em7 | guitar piano}}
+{{chords: C C#o7 Dm7 D#o7 Em7 | guitar piano | The diminished ladder: a rising bass with diminished chords between diatonic ones.}}
 
 ### Bossa nova
 
@@ -1597,9 +1585,9 @@ For background, see **Choro and samba** and **Bossa nova harmony**. Examples in 
 - **Major and minor ii – Vs together:** tunes such as "Manhã de Carnaval" move between a minor key and its relative major using minor ii – Vs (Bø – E7 into Am) and major ii – Vs (Dm7 – G7 into C).
 - **Descending chromatic bass** under one chord or through a cadence: Am – Am/G♯ – Am/G – D/F♯ – Fmaj7 – E7.
 
-{{chords: Cmaj7 D7 Dm7 Db7 Cmaj7 | guitar piano}}
+{{chords: Cmaj7 D7 Dm7 Db7 Cmaj7 | guitar piano | The "Ipanema" move I – II7 – ii7 – ♭II7 – I.}}
 
-{{chords: Am Am/G# Am/G D/F# Fmaj7 E7 | guitar piano}}
+{{chords: Am Am/G# Am/G D/F# Fmaj7 E7 | guitar piano | A descending chromatic bass through a cadence in A minor.}}
 
 Example: an eight-bar bossa in C: Cmaj7 | D7 | Dm7 | D♭7 | Cmaj7 | A7♭9 | Dm9 | G13.
 

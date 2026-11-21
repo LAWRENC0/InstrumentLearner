@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import { PARSED_KNOWLEDGE, parseInline, topicSearchText } from '../knowledge/parseKnowledge';
 import ChordShapes, { PitchShapes } from './ChordShapes';
 import CircleOfFifths from './CircleOfFifths';
+import { ArpeggioMap, ScaleChordMap, VoicingMap } from './NeckMaps';
+import { useShowFretNumbers } from '../utils/preferences';
 
 function Inline({ text }) {
   return parseInline(text).map((part, index) => {
@@ -57,40 +59,78 @@ function Callout({ label, text }) {
   );
 }
 
+const blockLabels = (block) => (block.type === 'shapes' ? block.items.map((item) => item.name) : [block.label]);
+
 function Diagram({ block }) {
-  if (block.type === 'shapes') return <ChordShapes items={block.items} instruments={block.instruments} />;
-  return <div className="mt-4"><PitchShapes label={block.label} pcs={block.pcs} instruments={block.instruments} /></div>;
+  let figure;
+  if (block.type === 'shapes') figure = <ChordShapes items={block.items} instruments={block.instruments} />;
+  else if (block.type === 'voicings') figure = <div className="mt-4"><VoicingMap type={block.chord} voicing={block.voicing} strings={block.strings} /></div>;
+  else if (block.type === 'arpeggio') figure = <div className="mt-4"><ArpeggioMap type={block.chord} initialRoot={block.root} /></div>;
+  else if (block.type === 'scalemap') figure = <div className="mt-4"><ScaleChordMap scale={block.scale} chord={block.chord} initialRoot={block.root} /></div>;
+  else figure = <div className="mt-4"><PitchShapes label={block.label} pcs={block.pcs} instruments={block.instruments} /></div>;
+  return (
+    <>
+      {block.description && <p className="mt-4 text-sm leading-relaxed text-slate-300"><Inline text={block.description} /></p>}
+      {figure}
+    </>
+  );
 }
 
-// A run of diagrams shown as one compact row, collapsed by default.
-// The row lists what the diagrams show; the button expands them in place.
+// Rows for the collapsed view: each described diagram starts a row with its description;
+// diagrams without one join the row before (e.g. the other string sets of the same chord).
+function describedRows(blocks) {
+  const rows = [];
+  blocks.forEach((block) => {
+    const last = rows[rows.length - 1];
+    if (block.description || !last) rows.push({ description: block.description, labels: [...blockLabels(block)] });
+    else last.labels.push(...blockLabels(block));
+  });
+  return rows;
+}
+
+// A run of diagrams shown as one compact panel, collapsed by default.
+// Before opening, it says what each diagram is for and lists what it shows.
 function DiagramGroup({ blocks }) {
   const [open, setOpen] = useState(false);
-  const labels = blocks.flatMap((block) => (block.type === 'shapes' ? block.items.map((item) => item.name) : [block.label]));
+  const [showFretNumbers, setShowFretNumbers] = useShowFretNumbers();
   const instruments = [...new Set(blocks.flatMap((block) => block.instruments))];
-  const count = labels.length;
+  const count = blocks.reduce((sum, block) => sum + blockLabels(block).length, 0);
   return (
     <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/30 p-3">
+      {!open && (
+        <div className="mb-3 space-y-2">
+          {describedRows(blocks).map((row, index) => (
+            <div key={index}>
+              {row.description && <p className="text-sm leading-relaxed text-slate-300"><Inline text={row.description} /></p>}
+              <div className="mt-1.5 flex flex-wrap gap-1.5">
+                {row.labels.map((label, labelIndex) => (
+                  <span key={`${label}-${labelIndex}`} className="rounded-lg bg-white/5 px-2 py-1 text-xs font-medium text-slate-400">{label}</span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-2">
         <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open}
           className="glass-btn shrink-0 px-3 py-1.5 text-xs font-semibold text-slate-100">
           {open ? 'Hide diagrams' : `Show ${count === 1 ? 'diagram' : `${count} diagrams`}`}
         </button>
         <span className="text-[11px] uppercase tracking-[0.15em] text-slate-500">{instruments.join(' · ')}</span>
+        {open && instruments.includes('guitar') && (
+          <button type="button" onClick={() => setShowFretNumbers((value) => !value)} aria-pressed={showFretNumbers}
+            className="glass-btn ml-auto px-3 py-1.5 text-xs font-semibold text-slate-100">
+            {showFretNumbers ? 'Hide fret numbers' : 'Show fret numbers'}
+          </button>
+        )}
       </div>
-      {!open && (
-        <div className="mt-2 flex flex-wrap gap-1.5">
-          {labels.map((label, index) => (
-            <span key={`${label}-${index}`} className="rounded-lg bg-white/5 px-2 py-1 text-xs font-medium text-slate-300">{label}</span>
-          ))}
-        </div>
-      )}
       {open && blocks.map((block, index) => <Diagram key={index} block={block} />)}
     </div>
   );
 }
 
-const isDiagram = (block) => block.type === 'shapes' || block.type === 'pitches';
+const DIAGRAM_TYPES = ['shapes', 'pitches', 'voicings', 'arpeggio', 'scalemap'];
+const isDiagram = (block) => DIAGRAM_TYPES.includes(block.type);
 
 function Blocks({ blocks }) {
   // Merge consecutive diagram blocks into one group.
@@ -104,7 +144,14 @@ function Blocks({ blocks }) {
 
   return items.map((block, index) => {
     if (block.type === 'diagram-group') return <DiagramGroup key={index} blocks={block.blocks} />;
-    if (block.type === 'circle') return <CircleOfFifths key={index} />;
+    if (block.type === 'circle') {
+      return (
+        <div key={index}>
+          {block.description && <p className="mt-4 text-sm leading-relaxed text-slate-300"><Inline text={block.description} /></p>}
+          <CircleOfFifths />
+        </div>
+      );
+    }
     if (block.type === 'h3') {
       return (
         <h3 key={index} className="mt-7 flex items-center gap-3 text-[17px] font-semibold text-white first:mt-0">

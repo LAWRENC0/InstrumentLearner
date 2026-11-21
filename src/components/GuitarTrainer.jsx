@@ -48,7 +48,7 @@ export default function GuitarTrainer({
   onExplorerShiftApply, explorerShowAll, onExplorerShowAll, explorerShowScale, onExplorerShowScale,
   explorerScalePitchClasses, onExplorerDrag, getExplorerDragPreview,
   displayScaleDegrees, displayScaleRoot, displayScaleType,
-  intervalDisplay = 'both', showFretNumbers = true,
+  intervalDisplay = 'both', showFretNumbers,
 }) {
   const isExplorer = mode === 'Fretboard Explorer';
   const showDegreeSelector = IDENTIFY_EXERCISES.includes(question.pentatonicExercise);

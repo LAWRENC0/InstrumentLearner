@@ -8,6 +8,7 @@ import TheoryBrowser from './components/TheoryBrowser';
 import ChordBuilder from './components/ChordBuilder';
 import BottomSheet from './components/BottomSheet';
 import { parseNoteName } from './utils/noteInput';
+import { useShowFretNumbers } from './utils/preferences';
 import {
   CHORD_DIFFICULTIES, MODES, SCALE_TRIAD_EXERCISES, buildQuestion,
 } from './utils/questionHelpers';
@@ -464,7 +465,7 @@ function App() {
   const [menuOpen, setMenuOpen] = useState(true);
   const [controlsOpen, setControlsOpen] = useState(false);
   const [intervalDisplay, setIntervalDisplay] = useState('both');
-  const [showFretNumbers, setShowFretNumbers] = useState(true);
+  const [showFretNumbers, setShowFretNumbers] = useShowFretNumbers();
   const trainer = useGuitarTrainerState();
 
   const modeSetters = {
@@ -612,7 +613,7 @@ function App() {
             <button type="button" onClick={() => setShowFretNumbers((value) => !value)}
               aria-pressed={showFretNumbers}
               className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">
-              Fret numbers: {showFretNumbers ? 'ON' : 'OFF'}
+              {showFretNumbers ? 'Hide fret numbers' : 'Show fret numbers'}
             </button>
             <button type="button" onClick={() => trainer.setAudioEnabled((value) => !value)}
               className="glass-btn px-4 py-3 text-left text-sm font-semibold text-slate-100">

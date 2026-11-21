@@ -80,7 +80,6 @@ function ChordFigure({ name, instruments }) {
               scalePitchClasses={[]}
               displayScaleDegrees={false}
               scaleType="major"
-              showFretNumbers
             />
           </div>
         ) : (
@@ -156,7 +155,6 @@ export function PitchShapes({ label, pcs, instruments }) {
             scalePitchClasses={[]}
             displayScaleDegrees={false}
             scaleType="major"
-            showFretNumbers
           />
         </div>
       )}

@@ -9,9 +9,8 @@ A note on sources: this file mixes well-established principles with approaches t
 ## Transposition: written and sounding pitch
 @group Basics
 
-{{notes: C E G | piano}}
+{{notes: C E G | piano | The same chord twice: concert C–E–G, and below it the trumpet's written D–F♯–A, a whole step higher.}}
 {{notes: D F# A | piano}}
-
 
 - A B♭ trumpet is a transposing instrument. The written note sounds a major second (whole step) lower. Written C sounds B♭; written D sounds C.
 - Concert pitch is what the listener hears. Written pitch is what the player reads. The app shows concert pitch by default; the "Bb trumpet" option shows written pitch.
@@ -25,9 +24,6 @@ Exercise: write a concert C major scale, then write the trumpet part in D major.
 ## Valves and slides
 @group Basics
 
-{{notes: Bb A G | piano}}
-
-
 - Three piston valves change the length of tubing. Valve 1 lowers the pitch by 2 semitones, valve 2 by 1, valve 3 by 3.
 - Combinations add the lowerings: 1+2 lowers by 3, 2+3 by 4, 1+3 by 5, 1+2+3 by 6.
 - Each valve loop has a slide ring: pulling a slide lengthens its tube. The 1st and 3rd slides are the ones used for intonation in most charts. The main tuning slide sets the overall pitch.
@@ -38,8 +34,7 @@ Exercise: play the open G, then press valve 1 and valve 2 separately, then toget
 ## The harmonic series and partials
 @group Basics
 
-{{notes: Bb Bb F Bb D F Ab Bb | piano}}
-
+{{notes: Bb Bb F Bb D F Ab Bb | piano | The pitch classes of the open (no valves) harmonic series: a B♭ major chord plus A♭, the flat seventh partial.}}
 
 - A trumpet is a brass instrument with a tube of about 1.47 m. The bore is mostly cylindrical and flares at the bell. The pitch you produce depends on how you buzz your lips and on the tube length the valves select.
 - Each note is a **partial** of the harmonic series: partial 1 is the fundamental (the pedal), partial 2 is an octave above, partial 3 a fifth above that, and so on. Partial n sounds at n times the fundamental frequency.
@@ -52,9 +47,6 @@ Exercise: play open partials 2 to 6 (lip slurs, no valves) and tune each one wit
 
 ## Embouchure: the lip setup
 @group Embouchure and air
-
-{{notes: Bb | piano}}
-
 
 - The **embouchure** is the set of lip, jaw and facial muscles that controls the buzz. It is the single most important skill on the trumpet.
 - Mouthpiece placement: the rim sits on the lips with the upper lip and lower lip sharing the pressure. Many players place more of the mouthpiece on the upper lip; the exact ratio varies from player to player.
@@ -88,9 +80,6 @@ Exercise: play one note eight times, tonguing each time with "tu" at the same te
 ## Range: low, middle and high
 @group Range and tone
 
-{{notes: Bb F Bb | piano}}
-
-
 - Practical range for most players runs from about F♯3 (written, sounding E3) to about C6 (written, sounding B♭5). The app's range covers concert B♭1 to C6.
 - **Low register** (roughly the pedal up to the first partials): the lips are relaxed and vibrate more, the air moves slowly and steadily, and the mouthpiece pressure is light. Low notes need air more than pressure.
 - **Middle register** (about the staff range): the most common playing area. The balance of air and lip tension is at its most efficient here.
@@ -102,9 +91,6 @@ Exercise: play a single slur from middle C upwards in half steps as high as you 
 ## Pedal tones
 @group Range and tone
 
-{{notes: Bb A G | piano}}
-
-
 - A **pedal tone** is a fundamental (partial 1) played with the valves. Pedals sit in the bottom of the register.
 - **Disputed:** their value for range. One view holds that pedals help set a good lip position and help build a stable embouchure. A counter view notes that many pedal players let their lips roll out and that pedals alone do not build the muscles needed for the high register.
 - Practical routine most teachers accept: play pedals softly, with a relaxed embouchure and steady air, for short sessions. Then return to the middle register with the same setup.
@@ -115,9 +101,6 @@ Exercise: play the pedal B♭ (no valves, soft), then the pedal with valve 2 (A)
 ## Lip slurs
 @group Range and tone
 
-{{notes: Bb F Bb D F | piano}}
-
-
 - A **lip slur** changes partial without changing valves. The lips alone move the pitch up or down the harmonic series.
 - Slur exercise: play open partials 2 to 6 in one slurred phrase, then back down. Keep the air steady and the tone even.
 - Lip slurs train the embouchure's flexibility and help you hear the harmonic series.
@@ -126,9 +109,6 @@ Exercise: slur from the open B♭ up to the octave and back, then add valves to 
 
 ## Valve combinations and fingering alternatives
 @group Fingerings and effects
-
-{{notes: D | piano}}
-
 
 - Many notes have several valve combinations, each with a different tuning. The conventional fingering is the one most in tune without slide help.
 - Combinations 1+3 and 1+2+3 are the most out of tune; they often need the 1st and 3rd slides. Learn your own corrections.
@@ -139,9 +119,6 @@ Exercise: choose one note (for example the D). Play it on every partial and valv
 
 ## Half valves, trills and valve effects
 @group Fingerings and effects
-
-{{notes: Bb A | piano}}
-
 
 - **Half valve** (or half-valve) technique: the valve is pressed partway. It can change tuning and tone colour, and is used for special effects (a "shake" or a bent note). Keep the valve controlled, not loose.
 - **Valve trill**: alternate two valve combinations quickly, for example open and valve 1 (a whole step between them), or valves 2 and 1+2. Press with the fingers, not the wrist.
@@ -170,8 +147,7 @@ Exercise: play a long note from pianissimo to fortissimo over eight beats, then 
 ## Intonation and tuning
 @group Intonation and practice
 
-{{notes: Bb C D Eb F G A | piano}}
-
+{{notes: Bb C D Eb F G A | piano | The concert B♭ major scale to check note by note with a tuner.}}
 
 - Intonation is measured in cents from equal temperament. A note 20 cents sharp is audible; 50 cents is a quarter of a semitone and clearly wrong.
 - Most intonation problems come from valve combinations, not from the lips. Pull a slide to make a note flatter, push it in to make it sharper.
@@ -206,9 +182,6 @@ Exercise: record yourself on a scale, then name one problem in the recording and
 ## Ear training for trumpet
 @group Intonation and practice
 
-{{notes: Bb D | piano}}
-
-
 - Identify intervals by the lip and valve shape: a major third and a minor third feel different in the embouchure as well as the ear.
 - Sing before you play: sing each note of a scale before playing it, then check.
 - Use the Interval Shift game in the app to practise intervals from a given fingering.
@@ -233,7 +206,7 @@ Exercise: play a random note, sing the note a perfect fifth above, then play it.
 - **Jazz blues, written G:** G7 | C7 | G7 | G7 | C7 | C7 | G7 | G7 | Am7 | D7 | G7 E7 | Am7 D7. Some players use Bm7 (iii) instead of G7 in bar 11.
 - **Bird blues** (Charlie Parker's "Blues for Alice"), written G: it opens Gmaj7 | F♯ø B7 | Em7 A7 | Dm7 G7 | C7 …, a chain of ii – Vs that still reaches IV (C7) in bar 5 and ends like the jazz blues.
 
-{{chords: G7 C7 D7 | piano}}
+{{chords: G7 C7 D7 | piano | The three chords of the blues in written G (concert F).}}
 
 ### Other standard progressions, written
 
@@ -259,9 +232,7 @@ This order comes from the course handouts for B♭ instruments. Concert F blues 
 5. **Chord scales:** Mixolydian on the dominant chords, Dorian on the minor chords.
 6. **Connect the guide tones** with scale notes in between, by half step where possible. Write out your own solos this way.
 
-{{scale: G blues | piano}}
-
-{{notes: F E | piano}}
+{{scale: G blues | piano | The written G blues scale (concert F blues).}}
 
 ### Building blocks to practise every day
 
@@ -313,9 +284,9 @@ A trumpet plays one note at a time, so the way to learn a progression is to **ar
   - **Bossa nova "Ipanema" move:** Cmaj7 – D7 – Dm7 – D♭7. Over D7 play D Lydian dominant (with G♯); over D♭7, aim for C♭ (B) and F, the guide tones shared with G7.
 - Brass and the harmonic series: arpeggios that sit on one valve combination (for example C – E – G on open valves, written) are the natural starting point; the others need clean valve changes.
 
-{{chords: Dm7 G7 Cmaj7 | piano}}
+{{chords: Dm7 G7 Cmaj7 | piano | ii–V–I in written C, for the arpeggio and guide-tone drills.}}
 
-{{chords: E7 A7 D7 G7 C | piano}}
+{{chords: E7 A7 D7 G7 C | piano | The ragtime progression in written C.}}
 
 Example: the guide-tone line through written C – A7 – Dm7 – G7 – C: E (third of C) – C♯ (third of A7) – C (seventh of Dm7) – B (third of G7) – C.
 

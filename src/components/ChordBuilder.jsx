@@ -7,6 +7,7 @@ import {
 } from '../utils/chordBuilder';
 import { guitarShapesForPcs, pianoMidisForPcs } from '../utils/voicings';
 import { NOTE_NAMES } from '../utils/musicTheory';
+import { useShowFretNumbers } from '../utils/preferences';
 
 const LETTERS = ['C', 'D', 'E', 'F', 'G', 'A', 'B'];
 const LETTER_PC = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 };
@@ -53,6 +54,7 @@ function Group({ title, children }) {
 export default function ChordBuilder({ instrument }) {
   const [history, setHistory] = useState([INITIAL]);
   const [shapeIndex, setShapeIndex] = useState(0);
+  const [showFretNumbers, setShowFretNumbers] = useShowFretNumbers();
   const state = history[history.length - 1];
   const described = describeState(state);
   const pcs = stateTones(state);
@@ -203,9 +205,17 @@ export default function ChordBuilder({ instrument }) {
       </section>
 
       <section className="glass p-4">
-        <p className="mb-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
-          {instrument === 'guitar' ? 'Shape on the fretboard' : 'Keys'}
-        </p>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400">
+            {instrument === 'guitar' ? 'Shape on the fretboard' : 'Keys'}
+          </p>
+          {instrument === 'guitar' && (
+            <button type="button" onClick={() => setShowFretNumbers((value) => !value)} aria-pressed={showFretNumbers}
+              className="glass-btn px-3 py-1.5 text-xs font-semibold text-slate-100">
+              {showFretNumbers ? 'Hide fret numbers' : 'Show fret numbers'}
+            </button>
+          )}
+        </div>
         {instrument === 'guitar' ? (
           shapeMissing ? (
             <p className="text-sm text-slate-400">No guitar shape for these notes within the neck. Try another inversion or colour.</p>
@@ -214,7 +224,7 @@ export default function ChordBuilder({ instrument }) {
               <Fretboard
                 rootPosition={null} selectedNotes={shape} answerState="idle" onToggle={noop} revealNames
                 boxPositions={[]} validPositions={[]} highlightedPosition={null} requiredString="any"
-                requiredStrings={[]} scalePitchClasses={[]} displayScaleDegrees={false} scaleType="major" showFretNumbers
+                requiredStrings={[]} scalePitchClasses={[]} displayScaleDegrees={false} scaleType="major"
               />
             </div>
           )
