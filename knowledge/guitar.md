@@ -2,7 +2,7 @@
 
 Everything specific to the six-string guitar in standard tuning: the fretboard, shapes, scale patterns and the technique of both hands. Read the music theory file alongside this one. In this file, "string 1" is the high E, as in the app.
 
-How to use this file: learn the fretboard maps first, then the shapes, then the technique. Every technique has an exercise. Play them slowly with a metronome; speed comes last.
+How to use this file: learn the fretboard maps first, then the shapes, then the technique. The **Styles and progressions** group applies the theory file's progression library to the guitar: blues, jazz, Brazilian, flamenco and rhythm guitar across styles. Every technique has an exercise. Play them slowly with a metronome; speed comes last.
 
 ## Standard tuning and string numbers
 @group Fretboard
@@ -448,6 +448,197 @@ Exercise: play a chord and move the bar gently up and down, returning to the ori
 
 Exercise: play a simple melody (Twinkle Twinkle) with chords underneath: the melody on string 1, the chords on strings 2 to 5.
 
+## Progressions on the fretboard
+@group Styles and progressions
+
+The music theory file lists the standard progressions of each style (group **Progression standards**). This topic shows how a guitarist finds them quickly.
+
+### Roots on strings 6 and 5
+
+- With a root on string 6 at fret n:
+  - **IV** is on string 5 at the same fret n.
+  - **V** is on string 5 at fret n + 2.
+  - **vi** (relative minor) is on string 6 at fret n − 3 (or n + 9).
+- So I – IV – V is one E-shape barre and two A-shape barres a whole step apart. In G: G at fret 3 (string 6), C at fret 3 (string 5), D at fret 5 (string 5).
+- This box is the same in every key. It is the guitarist's version of the **Nashville numbers**: think 1 – 4 – 5 – 6, not letter names.
+
+{{chords: G C D Em | guitar}}
+
+### Circle-of-fifths movement
+
+- When roots fall by fifths (ii – V – I, the ragtime progression, "Autumn Leaves"), alternate shapes: root on string 6, then root on string 5, then string 6 again. The hand barely moves.
+- Example in C: Dm7 (root string 5, fret 5) – G7 (root string 6, fret 3) – Cmaj7 (root string 5, fret 3).
+- With drop-2 voicings on strings 4–1, every chord of a cycle can be reached within two frets.
+
+{{chords: Dm7 G7 Cmaj7 | guitar}}
+
+{{chords: E7 A7 D7 G7 C | guitar}}
+
+### Open-string keys
+
+- Many styles are built around open strings:
+  - Rock, country, folk and bluegrass favour **E, A, D and G**, where the open strings ring as roots and drones.
+  - Flamenco uses the **E position** (por arriba) and **A position** (por medio), and a capo to change pitch without changing shapes.
+  - Celtic accompanists often retune to **DADGAD**, so open strings make drones in D.
+- A **capo** turns any open-string progression into another key with the same shapes: C – Am – F – G with a capo at fret 2 sounds as D – Bm – G – A.
+
+Example: the Mixolydian rock progression I – ♭VII – IV – I in D is D – C – G – D, all open chords.
+
+Exercise: play I – IV – V – vi in G, C, D and A using only the string 6 / string 5 box. Say the numbers aloud, not the letters.
+
+Exercise: play the "Autumn Leaves" cycle (Cm7 – F7 – B♭maj7 – E♭maj7 – Am7♭5 – D7♭9 – Gm) alternating string 5 and string 6 roots, without moving more than three frets.
+
+Sources: the music theory file, **Progression standards** group; Wikipedia, [Nashville Number System](https://en.wikipedia.org/wiki/Nashville_Number_System); Moore, [The Flamenco Key](https://pages.ucsd.edu/~moore/solbul.pdf) (positions); [Slow Players, modes and keys](https://slowplayers.org/modes-keys/) (DADGAD).
+
+## Blues guitar: inflections and positions
+@group Styles and progressions
+
+### String inflections
+
+- A **string bend** raises a fretted note by pushing the string sideways. Blues players bend most often by a semitone or a whole tone, and sometimes by a tone and a half.
+- A **bend and release** gives three pitches from one pluck: the note, the bent note, and the note again.
+- Many blues bends are **between** the equal-tempered notes. One study counts over a hundred inflections in a single period of Lonnie Johnson's recordings, many of them not matching equal temperament.
+- **The "blue third":** the third of the key, played somewhere between minor and major. Ethnomusicologist Gerhard Kubik describes this "neutral" third as roughly 320 to 360 cents above the root (a minor third is 300, a major third 400). On guitar this is a quarter-tone bend of the minor third.
+- T-Bone Walker changed his wound G string for a plain one so that he could bend more: an early example of choosing strings for the style.
+
+{{notes: A C | guitar}}
+
+### Positions and motion
+
+- The pentatonic boxes are tied to chord shapes. The study maps the scale onto the C, A and G shapes of the CAGED system, each within a four-fret span.
+- Lonnie Johnson often linked two of these areas by **sliding with the third finger** along one string.
+- The study's central idea: blues lines come from the **layout of the fretboard and the movements of the hand** as much as from scales. Players develop motives (short figures) for each of the I, IV and V chords and vary them.
+- The **blue fifth** (♭5) is used sparingly but in an attention-drawing way, which may be why writers have given it so much weight.
+
+{{scale: A minor pentatonic | guitar}}
+
+{{scale: A blues | guitar}}
+
+Example: over A7 in an A blues, bend C (string 3, fret 5) up a quarter tone toward C♯ and release. Over D7, aim for C as the seventh of D7 without bending.
+
+Exercise: write one short motive for each chord of a 12-bar blues in A (A7, D7, E7). Play the whole form using only those three motives, varied each time.
+
+Exercise: play C on string 3 (fret 5), then bend it slowly from C to C♯ and stop at three points on the way. Sing each pitch. Decide which one sounds most "blue" over an A7 chord.
+
+Sources: Nelson, *Melodic Improvisation on a Twelve-Bar Blues Model* thesis (City, University of London), on Lonnie Johnson and T-Bone Walker, citing Kubik (1999); Open Music Theory v2, "Blues Harmony".
+
+## Jazz guitar: comping the standard progressions
+@group Styles and progressions
+
+- **Shell voicings** on the low strings: root on string 6 or 5, plus the third and seventh. They outline the harmony and leave room for a pianist or soloist.
+  - For a ii – V – I in C: Dm7 (D on string 5, F and C above), G7 (G on string 6, F and B), Cmaj7 (C on string 5, E and B).
+- **Drop-2 voicings** on strings 4–1 or 3–1 for a lighter, higher sound. Keep common tones on the same string and move other voices by step.
+- **Guide-tone line:** in a ii – V – I, the seventh of each chord falls a half step to the third of the next. Play only those two notes on strings 3 and 2 and listen to the line.
+- Apply the same shapes to the jazz progressions in the theory file:
+  - **Turnarounds:** C – A7 – Dm7 – G7, then the tritone version C – E♭7 – Dm7 – D♭7 (the bass moves by half step).
+  - **Backdoor:** Fm7 – B♭7 – Cmaj7.
+  - **Minor ii – V:** Dø – G7♭9 – Cm6.
+  - **"So What":** quartal voicings (stacked fourths) on strings 4–1 over Dm7 and E♭m7.
+
+{{chords: Dm7 G7 Cmaj7 | guitar}}
+
+{{chords: C Eb7 Dm7 Db7 | guitar}}
+
+{{chords: Dø G7b9 Cm6 | guitar}}
+
+Example: comp a two-bar turnaround in C: Cmaj7 (two beats), A7 (two beats), Dm7 (two beats), G7 (two beats), with each chord short and on beats 2 and 4.
+
+Exercise: play the "Autumn Leaves" cycle with shell voicings only, then with drop-2 voicings on strings 4–1. Record both and compare.
+
+Sources: Open Music Theory v2, "Jazz Voicings" and "ii–V–I"; the music theory file, **Jazz standard progressions**.
+
+## Brazilian guitar: samba, choro and the seven-string
+@group Styles and progressions
+
+### The samba levada
+
+- A **levada** is the rhythmic accompaniment pattern played by the guitarist's right hand.
+- The roles are split, like a percussion section:
+  - The **thumb** plays the bass notes, in the role of the surdo (bass drum).
+  - The **fingers** play short block chords on the higher strings, in the rhythm of the tamborim.
+- The best-known tamborim pattern, called **teleco-teco** by musicians, groups 16 pulses as 2 + 2 + 3 + 2 + 2 + 2 + 3. The name itself is the rhythm: "te-co" is a group of two, "te-le-co" a group of three.
+- In partido alto, the same pattern appears in the pandeiro, rotated, so guitar and percussion cross and complete each other.
+- Chord changes are often **anticipated**: they arrive a sixteenth before the bar. In a progression such as F – D7 – Gm – C7, the guitarist's chord pulls fall on the three-pulse groups.
+
+{{chords: F D7 Gm C7 | guitar}}
+
+### Choro and the seven-string guitar
+
+- The **seven-string guitar** adds a low string below the sixth. Traditionally it is tuned to **C**; some players argue for **B**, which continues the fourths between the bass strings. Modern strings make C, B and even A possible.
+- **Dino Sete Cordas** (from the 1950s–60s) defined the traditional style, with a steel seventh string played with a thumbpick for volume. Later players moved to nylon strings for more tone colour; Raphael Rabello extended the style with solo virtuosity.
+- **Baixaria** is the bass counter-melody that answers the melody:
+  - It works as **question and answer** with the soloist.
+  - It leads the changes between sections and the returns to the A section.
+  - Some baixarias are fixed by the composer ("baixaria de obrigação") and appear in the score.
+  - **Slurs** (hammer-ons and pull-offs) are essential: the note is plucked once and the left hand links it to the next.
+  - Modern players colour baixarias with substitutions, for example an arpeggio of G♭7 (the tritone substitute) before F instead of the diatonic C7.
+- Choro harmony (diminished passing chords, secondary dominants, I – VI7 – ii – V) is covered in the theory file under **Brazilian standard progressions**.
+
+{{chords: C C#o7 Dm7 G7 | guitar}}
+
+### Bossa nova guitar
+
+- The guitar moves in **four careful voices**, and many chord choices follow from smooth voice leading rather than from the melody.
+- Leaving out the third of a chord makes it ambiguous, a sound bossa nova guitarists use on purpose.
+- The thumb keeps a steady bass on beats 1 and 2 (in 2/4), while the fingers play syncopated chords.
+
+Example: a samba levada on F – D7 – Gm – C7: thumb on the root of each chord on the beat, fingers on the top three strings following 2 + 2 + 3 + 2 + 2 + 2 + 3, with each new chord arriving a sixteenth early.
+
+Exercise: clap the 2 + 2 + 3 + 2 + 2 + 2 + 3 pattern while saying "te-co te-co te-le-co te-co te-co te-co te-le-co". Then play it with your fingers on one chord, with your thumb on beats 1 and 2.
+
+Exercise: write a two-bar baixaria that leads from G7 to C, ending on the C in the bass. Use at least one slur.
+
+Sources: Livramento, the guitar in samba (UDESC, Portuguese), for the levada, teleco-teco and partido alto; Borges, the seven-string guitar in choro (UnB, Portuguese), for tuning, strings and baixaria, citing Braga (2004) and Carrilho; Gava, The Harmonic Language of Bossa Nova (UNESP, Portuguese).
+
+## Flamenco guitar: positions, compás and right hand
+@group Styles and progressions
+
+### Positions
+
+- Flamenco guitarists think in **positions**, not keys. Each position has its own chord shapes and open-string colours; a capo moves it to suit the singer.
+  - **Por arriba** (E position): Am – G – F – E. The home chord is E major, over a Phrygian scale.
+  - **Por medio** (A position): Dm – C – B♭ – A.
+- See **Flamenco harmony** in the theory file for the mode, the Andalusian cadence and the 12-beat compás.
+
+{{chords: Am G F E | guitar}}
+
+{{chords: Dm C Bb A | guitar}}
+
+### Right-hand techniques
+
+- **Rasgueado:** strumming with the fingers, often flicking them out one after another for a rolling burst. Used to accompany song and dance.
+- **Picado:** single-note runs played with rest strokes, alternating index and middle fingers.
+- **Tremolo:** the flamenco pattern is p – i – a – m – i (thumb, then four notes on the treble string). The classical tremolo is p – a – m – i, with three treble notes.
+- **Alzapúa:** a thumb technique that uses down- and up-strokes, thought to come from plectrum playing. Considered one of the hardest techniques.
+- **Golpe:** tapping the soundboard with a finger, usually on a tap-plate (golpeador) that protects the top.
+- Many flamenco players support the guitar with the upper right arm at the elbow, which frees the hand for these techniques.
+
+Example: in por arriba, rock between E and F with rasgueados on the accents of the compás (3, 6, 8, 10, 12), then play the Andalusian cadence once to close.
+
+Exercise: play the flamenco tremolo (p – i – a – m – i) on string 1 over an open E bass, slowly, until all four treble notes are even. Then compare with the classical p – a – m – i.
+
+Sources: [Richter Guitar, flamenco techniques and definitions](https://richterguitar.com/flamenco-guitar/flamenco-guitar-techniques-and-definitions/); Wikipedia, [Rasgueado](https://en.wikipedia.org/wiki/Rasgueado) and [Flamenco guitar](https://en.wikipedia.org/wiki/Flamenco_guitar); Moore, [The Flamenco Key](https://pages.ucsd.edu/~moore/solbul.pdf). The techniques are described here only in outline; learning them properly needs a teacher or a dedicated method.
+
+## Rhythm guitar across styles
+@group Styles and progressions
+
+How the same few chords change character with the right-hand pattern. Each style's progressions are in the theory file's **Progression standards** group.
+
+- **Reggae:** short chords on the off-beats (the skank), usually small triads on the top three or four strings, cut short by releasing the left-hand pressure. Bass and drums carry the beats. Progressions are simple: I – IV, I – IV – V – IV.
+- **Rock:** power chords and open chords, often on modal progressions such as I – ♭VII – IV (D – C – G) or ♭VI – ♭VII – I (A♭ – B♭ – C).
+- **Metal:** palm-muted power chords on a low pedal tone, with Aeolian (E5 – C5 – D5), Phrygian (E5 – F5) or tritone (E5 – B♭5) moves.
+- **Country and bluegrass:** "boom-chick" (bass note on the beat, chord strum after), with alternating bass between root and fifth, on I – IV – V and II7.
+- **Celtic:** open drones and power chords in DADGAD, with a minor home chord and a major chord a step below (Em – D) for Dorian tunes.
+- **Salsa and Latin:** guitar parts follow the clave and the piano montuno; see **Afro-Cuban clave and salsa** in the theory file.
+
+{{chords: G C D C | guitar}}
+
+{{chords: E5 F5 | guitar}}
+
+Exercise: play G – C – D – C four times, once in each style: reggae skank, rock eighth notes, country boom-chick, and a palm-muted metal version (G5 – C5 – D5 – C5). Keep the tempo the same.
+
+Sources: [Guitar World, Bob Marley rhythm styles](https://guitarworld.com/lessons/bob-marley-reggae-rhythm-guitar); [Splice, reggae chord progressions](https://splice.com/blog/reggae-chord-progressions/); Lilja, [Harmonic function and modality in classic heavy metal](https://uis.brage.unit.no/uis-xmlui/handle/11250/3047843); Open Music Theory v2, "Modal Schemas"; [Slow Players, modes and keys](https://slowplayers.org/modes-keys/).
+
 ## Genre-specific technique
 @group Genres and practice
 
@@ -462,6 +653,8 @@ Exercise: play a simple melody (Twinkle Twinkle) with chords underneath: the mel
 - **Country**: hybrid picking, bends with the pedal steel feel, the Travis picking pattern, the open chords.
 - **Flamenco**: rasgueado (fanned strumming with the fingers), tremolo, golpe (tapping the body), Phrygian scales, the Andalusian cadence.
 - **Fingerstyle folk**: Travis picking, alternate bass patterns, open tunings.
+
+For each style's chord progressions and a deeper look at blues, jazz, Brazilian and flamenco guitar, see the **Styles and progressions** group.
 
 Exercise: choose one genre above and learn one signature technique, then play a short phrase in that style over a I–IV–V progression in A.
 

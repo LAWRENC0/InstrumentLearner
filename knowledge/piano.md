@@ -2,7 +2,7 @@
 
 Everything specific to the piano keyboard: layout, hand position, fingering, touch and tone, pedalling, ornaments, the common accompaniment patterns, chord voicings and inversions, and comping. Read the music theory file alongside this one.
 
-How to use this file: learn the layout and hand position first, then work through the technique sections slowly. Every section has an exercise, and the diagrams show chord shapes on a keyboard.
+How to use this file: learn the layout and hand position first, then work through the technique sections slowly. The **Styles and progressions** group applies the theory file's progression library to the keyboard: jazz voicings from stride to Bill Evans, choro, salsa montuno, gospel and R&B. Every section has an exercise, and the diagrams show chord shapes on a keyboard.
 
 A note on sources: where experienced teachers disagree, both views are given and marked **(disputed)**.
 
@@ -185,6 +185,8 @@ Exercise: play a C major chord with each pattern above, in turn. Hold the chord 
 - **Upper structures**: a triad played above a different bass note, to create extensions. For example, a D major triad over a C bass gives C9♯11: the D is the 9th and the F♯ is the raised 11th.
 - Left-hand voicings are usually lower and simpler. Right-hand voicings sit higher and move more freely.
 
+For the history of these voicings (stride, locked hands, Bud Powell, Bill Evans) and two complete rootless voicing sets, see **Jazz piano: from stride to rootless voicings**.
+
 Exercise: comp a ii–V–I (Dm7 – G7 – Cmaj7) with shell voicings in the left hand and rootless voicings in the right. Keep the chords moving smoothly.
 
 {{chords: Dm7 G7 Cmaj7 | piano}}
@@ -211,6 +213,179 @@ Exercise: write a four-part version of I–vi–IV–V–I in C, where each voic
 {{chords: G7 Db7 Fm | piano}}
 
 Exercise: play G7 and D♭7 one after the other, with the same hand position, and listen for the half step to C.
+
+## Progressions at the keyboard
+@group Styles and progressions
+
+The music theory file lists the standard progressions of each style (group **Progression standards**). This topic is about playing them well on the piano.
+
+### Split the jobs between the hands
+
+- **Left hand:** the bass, or the bass plus a shell (root and seventh, or root and third).
+- **Right hand:** the rest of the chord, the melody, or both.
+- Keep the hands out of each other's register: a left hand that sits too high blurs the right; a left-hand chord too low (below about the C an octave below middle C) sounds muddy.
+
+### Voice-lead every progression
+
+- Keep common notes in place and move the others by the smallest step.
+- In any chain of roots falling by fifths (ii – V – I, the ragtime progression, "Autumn Leaves"), the seventh of one chord falls a half step to the third of the next. Practise just those two notes in the right hand while the left plays roots.
+- In C: Dm7 – G7 – Cmaj7 gives the lines C – B – B (seventh, third, seventh) and F – F – E (third, seventh, third).
+
+{{chords: Dm7 G7 Cmaj7 | piano}}
+
+### Classical schemas at the keyboard
+
+- Eighteenth-century keyboard players learned harmony by playing stock bass lines and adding the upper voices (the **partimento** tradition). The galant schemas in the theory file are exactly those patterns.
+- Practise them with the bass in the left hand and the melody plus one inner voice in the right:
+  - **Prinner:** bass F – E – D – C, right hand A – G – F – E above it (parallel tenths).
+  - **Romanesca:** bass C – B – A – E, chords C – G/B – Am – C/E.
+  - **Lament bass:** A – G – F – E in the left hand, chords Am – Em/G – Dm/F – E.
+
+{{chords: F C/E Bdim/D C | piano}}
+
+{{chords: Am Em/G Dm/F E | piano}}
+
+Exercise: play I – vi – ii – V – I in all twelve keys with the left hand on roots and the right hand on three-note voicings that move by step.
+
+Exercise: play the Prinner in C, G and F. Keep the right hand a tenth above the left throughout.
+
+Sources: Open Music Theory v2, "Galant Schemas", "The Rule of the Octave" and "Jazz Voicings"; the music theory file, **Progression standards**.
+
+## Jazz piano: from stride to rootless voicings
+@group Styles and progressions
+
+The jazz piano trio study traces how the pianist's left hand moved from playing the beat to playing colour.
+
+### Stride and swing left hands
+
+- In **stride**, the left hand plays low notes on beats 1 and 3 and mid-range chords on 2 and 4, while the right hand plays the melody.
+- Teacher John Mehegan points out that stride uses a **single note or a tenth** in the bass instead of the octave of ragtime. That makes the left hand lighter and faster.
+- Swing-era pianists turned the tenth into a pattern of its own: tenth – chord – tenth – chord, or **streams of tenths** moving in parallel (diatonic or chromatic), sometimes played with the thumb's upper note first ("backward tenths").
+- Boogie-woogie, from the blues, uses a repeating walking bass figure in the left hand.
+
+{{notes: C E | piano}}
+
+### Locked hands (block chords)
+
+- The melody note is doubled an octave lower, and the notes of the chord are packed between the two, so the whole texture moves in parallel with the melody.
+- Pianist **Milt Buckner** created the style around 1942 (with Lionel Hampton). George Shearing made it famous and credited Buckner. Nat King Cole, Bud Powell and Bill Evans all used it.
+- Example: for a Cmaj7 under melody note B, play C E G B with B doubled.
+
+{{notes: B C E G B | piano}}
+
+### Shells and rootless voicings
+
+- **Bud Powell** reduced the left hand to sparse **shells** (root and third, or root and seventh) and used distinctive four-note voicings; in "Un Poco Loco" he harmonises the melody with a major seventh ♭5 voicing (1 – 3 – ♭5 – 7).
+- **Bill Evans** moved the left hand up to just below and above middle C with **four-note rootless voicings**: guide tones (thirds and sevenths) plus colour notes and extensions. They voice-lead smoothly and leave the root to the bassist.
+- Two voicing sets for ii – V – I in C (names vary; Mehegan called one of them the "A form"):
+  - **Third on the bottom:** Dm9 = F A C E, G13 = F A B E, Cmaj9 = E G B D.
+  - **Seventh on the bottom:** Dm9 = C E F A, G13 = B E F A, Cmaj9 = B D E G.
+  - Alternating the two sets keeps every voice within a step.
+- Opening up these voicings as "drop 2" gives a wider, shimmering sound.
+
+{{notes: F A C E | piano}}
+
+{{notes: F A B E | piano}}
+
+{{notes: E G B D | piano}}
+
+Example: the "Autumn Leaves" cycle (Cm7 – F7 – B♭maj7 – E♭maj7 – Am7♭5 – D7♭9 – Gm) with left-hand rootless voicings alternating third-on-bottom and seventh-on-bottom, right hand playing the melody.
+
+Exercise: play ii – V – I in all twelve keys with both rootless sets. Then play a melody in locked hands over the same progression.
+
+Sources: Muscarella, *The Twentieth Century Jazz Piano Trio* (thesis, University of Évora), citing Mehegan, LaVerne and Billy Taylor; Open Music Theory v2, "Jazz Voicings".
+
+## Choro and Brazilian piano
+@group Styles and progressions
+
+### Background
+
+- Choro piano was shaped by two composers, **Ernesto Nazareth** and **Chiquinha Gonzaga**, and by the **pianeiros**: popular pianists who played in shops, cinemas and dance halls and wrote the rhythms of choro down for piano.
+- Choro grew from European dances (polka, waltz) mixed with the Cuban **habanera** and Afro-Brazilian syncopation.
+- A typical choro is in **rondo form with three sections** (A, B, C). B and C usually change key, and each returns to A.
+- The bass line is expressive and active, held in the pianist's left hand, just as the seven-string guitar's baixaria does in a band.
+
+### The four subgenres
+
+- **Waltz:** left hand oom-pah-pah (bass, chord, chord), strongly influenced by Chopin in Nazareth's case.
+- **Maxixe:** a lively syncopated dance; its rhythmic cells sit in both hands.
+- **Brazilian tango:** a duple-metre dance built on the **habanera rhythm** (in 2/4: dotted eighth, sixteenth, two eighths). It is a cousin of the maxixe, not of the Argentine tango.
+- **Choro-samba:** samba rhythm patterns, diminished passing chords and melodic anticipations.
+
+{{chords: C C#o7 Dm7 G7 | piano}}
+
+### Keyboard habits
+
+- Chromatic scales and runs in the left hand under chords in the right (a Nazareth trademark, and hard for pianists trained only in popular styles).
+- Diminished passing chords between chords a step apart (C – C♯°7 – Dm7).
+- Anticipated chords that arrive just before the beat.
+
+Example: a Brazilian tango left hand in C: C (dotted eighth) – G (sixteenth) – E – G (eighths), with the right hand playing a syncopated melody above.
+
+Exercise: play C – C♯°7 – Dm7 – G7 – C with a habanera left hand, then with a waltz left hand in 3/4, and hear how the same chords change style.
+
+Sources: Farinha, *Choro piano* dissertation (York University), on Nazareth, Gonzaga, the pianeiros and the choro subgenres; Simas, harmony in waltz, choro and samba (UFPE, Portuguese).
+
+## Salsa montuno and Latin piano
+@group Styles and progressions
+
+- The **piano montuno** (also called guajeo) is a repeating two-bar figure that outlines the harmony in a syncopated rhythm. It is the piano's main job in salsa.
+- It must line up with the **clave**: a montuno written for 3-2 clave starts on the other bar for 2-3. The study analyses a standard montuno in C in both versions.
+- With the clave, the montuno makes the downbeat of the 2-side bar as strong as the first downbeat, so the two bars balance.
+- The **tumbao** is the bass part, with its anticipated notes; the piano stays above it.
+- Common montuno harmonies: I – IV – V – IV (C – F – G – F), ii – V (Dm7 – G7), minor i – iv – V7 (Am – Dm – E7). Pianists often play montunos in octaves in the right hand with chord notes filled in.
+- Tango piano (Argentine) is mostly common-practice minor-key harmony; see **Latin progressions** in the theory file.
+
+{{chords: C F G F | piano}}
+
+{{chords: Am Dm E7 | piano}}
+
+Example: in 2-3 clave, start the montuno on the bar with two clave notes. Play broken C and F chords on the off-beats of bar one, then G and F in bar two, so a chord change falls just before each downbeat.
+
+Exercise: clap 3-2 son clave with your left hand on your knee and play a two-bar montuno on C – F – G – F with the right. Then switch to 2-3 by starting the montuno on its second bar.
+
+Sources: Bin Md Tarip, *Theoretical Perspectives on Clave in Salsa Music* (University of British Columbia), citing Mauleón's *Salsa Guidebook*; [Piano With Jonny, piano montunos](https://pianowithjonny.com/piano-lessons/piano-montunos-the-complete-guide/).
+
+## Gospel and R&B at the keyboard
+@group Styles and progressions
+
+**Source note:** the gospel moves come from teaching sites, not scholarly studies.
+
+- **Bass walk-ups in the left hand:** from I to IV, step through ii and iii (C – D – E – F) with matching right-hand chords (C – Dm7 – Em7 – F). From 2 to 5: D – E – F – F♯ – G under Dm7 – C/E – F – F♯°7 – C/G.
+- **7–3–6:** Bø – E7alt – Am7, a minor ii – V into vi, usually followed by Dm7 – G7 – C.
+- **Amen endings:** F – C, or F – Fm6 – C.
+- **Right-hand triads over left-hand bass:** many gospel and R&B colours are a simple triad over a different bass note (an upper structure). D major over C gives C with ♯11 colour; B♭ over C gives C9sus.
+- **R&B and neo-soul:** IVmaj7 – iv6 – I (Cmaj7 – Cm6 – G in G), and ii9 – V13 – Imaj9 with rootless voicings.
+
+{{chords: Dm7 C/E F F#o7 C/G | piano}}
+
+{{chords: Bø E7alt Am7 | piano}}
+
+{{chords: Cmaj7 Cm6 G | piano}}
+
+Exercise: play a 3–6–2–5–1 (Em7 – A7 – Dm7 – G7 – C) with right-hand triads over left-hand roots, then insert a 7–3–6 before it and finish with an amen ending.
+
+Sources: [Hear and Play, the 1–4 walk-up](https://www.hearandplay.com/main/classic-1-4-walk-up-chord-progression); [Pianote, gospel piano 101](https://www.pianote.com/blog/gospel-piano-101/); [PianoGroove, gospel progressions](https://www.pianogroove.com/?p=5342); Jiang, R&B harmony (Atlantis Press).
+
+## Accompaniment textures across styles
+@group Styles and progressions
+
+The same chords sound like a different style with a different left- and right-hand pattern. These add to **Accompaniment patterns**.
+
+- **Polka:** bass on the beats, short chords on the off-beats ("oom-pah") in 2/4.
+- **Reggae:** short chords on the off-beats, with the bass carrying the downbeats. On keyboards the off-beat chord is often played as a quick double stab.
+- **Habanera / Brazilian tango:** the habanera rhythm in the left hand (dotted eighth, sixteenth, two eighths).
+- **Waltz:** bass on beat 1, chord on beats 2 and 3.
+- **Montuno:** a syncopated two-bar figure tied to the clave.
+- **Stride:** bass (single note or tenth) on 1 and 3, chord on 2 and 4.
+- **Boogie-woogie:** a walking left-hand ostinato on the blues progression.
+- **Gospel and pop ballad:** sustained block chords, with octaves in the left hand and the melody on top.
+
+{{chords: G C D C | piano}}
+
+Exercise: play G – C – D – C in each texture above. Keep the tempo the same and decide which texture suits which progression from the theory file.
+
+Sources: Hutchinson, *Music Theory for the 21st-Century Classroom*, "Accompanimental Textures" (polka, reggae off-beats); Farinha, choro piano dissertation (habanera, waltz); Muscarella, jazz piano trio thesis (stride, boogie-woogie); Bin Md Tarip, clave in salsa (montuno).
 
 ## Pianistic technique: arm weight, wrist and fingers
 @group Basics

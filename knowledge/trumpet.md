@@ -2,7 +2,7 @@
 
 Everything specific to the B♭ trumpet: transposition, valves and slides, the harmonic series, embouchure, air, tonguing, range, pedal tones, flexibility, intonation, mutes and practice. Read the music theory file alongside this one, especially the sections on intervals and the harmonic series.
 
-How to use this file: read a topic, do its exercise with a tuner and a metronome, and write down what you hear. Many trumpet skills are physical, so short daily sessions beat one long one.
+How to use this file: read a topic, do its exercise with a tuner and a metronome, and write down what you hear. The **Styles and improvisation** group applies the theory file's progression library to the trumpet: chord symbols in written pitch, a blues practice order, jazz articulation and progression drills. Many trumpet skills are physical, so short daily sessions beat one long one.
 
 A note on sources: this file mixes well-established principles with approaches that teachers disagree about. Where that happens, both views are given and marked **(disputed)**. Settle those questions with a method book such as Farkas's *The Art of Brass Playing* or a qualified teacher.
 
@@ -214,6 +214,114 @@ Exercise: record yourself on a scale, then name one problem in the recording and
 - Use the Interval Shift game in the app to practise intervals from a given fingering.
 
 Exercise: play a random note, sing the note a perfect fifth above, then play it. Check by tuner.
+
+## Reading chord symbols on B♭ trumpet
+@group Styles and improvisation
+
+- Chord symbols on a trumpet part are transposed like the notes: **up a whole step** from concert pitch. A concert F7 is written G7.
+- Rhythm-section players read concert pitch, so check which version a chart shows before you improvise.
+- Common jazz keys and what the trumpet reads:
+  - Concert F → written G.
+  - Concert B♭ → written C.
+  - Concert E♭ → written F.
+  - Concert C → written D.
+- The Roman numerals do not change. A concert ii – V – I in B♭ (Cm7 – F7 – B♭maj7) is written Dm7 – G7 – Cmaj7, still ii – V – I.
+
+### The blues in written pitch
+
+- **Basic blues, concert F, written G:** G7 (4 bars) | C7 (2) | G7 (2) | D7 | C7 | G7 | D7.
+- **Jazz blues, written G:** G7 | C7 | G7 | G7 | C7 | C7 | G7 | G7 | Am7 | D7 | G7 E7 | Am7 D7. Some players use Bm7 (iii) instead of G7 in bar 11.
+- **Bird blues** (Charlie Parker's "Blues for Alice"), written G: it opens Gmaj7 | F♯ø B7 | Em7 A7 | Dm7 G7 | C7 …, a chain of ii – Vs that still reaches IV (C7) in bar 5 and ends like the jazz blues.
+
+{{chords: G7 C7 D7 | piano}}
+
+### Other standard progressions, written
+
+- **Rhythm changes,** concert B♭, written C: C – A7 – Dm7 – G7 (A sections), E7 – A7 – D7 – G7 (bridge).
+- **Minor ii – V – i,** concert G minor, written A minor: Bø – E7♭9 – Am.
+- **Andalusian cadence,** concert A minor, written B minor: Bm – A – G – F♯.
+
+Exercise: write out a concert F jazz blues in written pitch, bar by bar. Then do the same for concert B♭ (written C).
+
+Sources: Jazz Theory (MTC130), "The Blues" and "The Blues: Improv Strategies" (B♭ instrument editions); the music theory file, **The blues** and **Jazz standard progressions**.
+
+## Improvising on the blues: a trumpet practice order
+@group Styles and improvisation
+
+This order comes from the course handouts for B♭ instruments. Concert F blues = **written G blues**.
+
+1. **Minor pentatonic** of the written key over the whole form: G B♭ C D F.
+2. **Triads** of each chord (G, C, D), in different inversions. Improvise with triad notes only.
+3. **Four-note arpeggios** (1 3 5 7): up, down, and up one chord, down the next.
+4. **Guide tones:** the third and seventh of each chord, connected chord to chord.
+   - G7: B and F. C7: E and B♭. D7: F♯ and C. Am7: C and G.
+   - From G7 to C7, the seventh F falls a half step to the third E; the third B falls a half step to B♭, the seventh of C7.
+5. **Chord scales:** Mixolydian on the dominant chords, Dorian on the minor chords.
+6. **Connect the guide tones** with scale notes in between, by half step where possible. Write out your own solos this way.
+
+{{scale: G blues | piano}}
+
+{{notes: F E | piano}}
+
+### Building blocks to practise every day
+
+From *A Guide to Exploring Jazz Improvisation*, which is written for any instrument:
+- **Scales:** all twelve major scales, plus Dorian and Mixolydian, at quarter note = 92 or slower. Cycle through keys in different orders (round the circle, by half step, by whole step).
+- **Triads:** 1 3 5 up through the keys in half steps, then 5 3 1, then alternating up and down, then spaced in whole steps and in fourths. Then minor, diminished and augmented, then seventh chords.
+- **Intervals:** one interval a week, from minor thirds up to major sevenths, moved through the keys.
+- **Rhythm:** off-beats; groups of four or five eighth notes followed by an eighth rest (so the pattern moves across the beat); triplets. Apply each rhythm to scales and triads, then to a tune.
+
+Example: over written G7 – C7, play the line D – E – F (G7) then E (C7): the last note of G7 is its seventh, falling by half step to the third of C7.
+
+Exercise: play a whole written G blues using only guide tones as long notes. Then fill the gaps with scale notes, keeping the guide tones on beat 1 of each bar.
+
+Sources: Jazz Theory (MTC130), "The Blues: Improv Strategies" (B♭ trumpet edition); Kelly, Rasmussen and Roberts, *A Guide to Exploring Jazz Improvisation, Book 1* (CC BY 4.0).
+
+## Jazz articulation and swing on trumpet
+@group Styles and improvisation
+
+- Jazz articulation is lighter and more legato than classical. Teachers often replace the classical "ta" with a softer **"da"** or **"doo"**.
+- A common set of syllables (conventions differ between teachers):
+  - **"Doo":** long notes on the beat.
+  - **"Dah":** accented long notes, on or off the beat.
+  - **"Dn"** (or "nn"): **ghost notes**, swallowed so they are barely heard.
+- Swing eighths are played long–short (roughly 2:1, see **Rhythm and meter** in the theory file). Many teachers say the special jazz articulation rules apply **only to eighth notes**.
+- A widely taught habit: tongue the off-beat eighths and slur into the next on-beat, so the off-beats are lightly accented. This gives the line its swing.
+- Lead trumpeter Mike Lovatt teaches using a soft "d" tongue to accent notes inside a legato line, rather than slurring everything.
+- Dynamics move constantly inside a phrase; jazz phrasing is shaped by small changes of volume.
+- Expressive effects (falls, doits, shakes, growl, mutes) are covered in **Half valves, trills and valve effects** and **Flutter tongue, growl and effects**.
+
+Example: a swung written-G scale: G (doo) A (dah, tongued off-beat) slurred to B, C (tongued off-beat) slurred to D, and so on, with every off-beat slightly accented.
+
+Exercise: play a written G major scale in swung eighths three ways: all tongued, all slurred, then tonguing the off-beats and slurring to the on-beats. Record all three and listen for which one swings.
+
+Sources: Florida Bandmasters Association, [How to "Doo-Dit": classical vs jazz articulation](https://fba.flmusiced.org/media/2648/how-to-doo-dit-classical-vs-jazz-articulation.pdf); [Mike Lovatt, articulation in swing style (MusicGurus)](https://www.musicgurus.com/courses/explore-swing-style-on-the-trumpet-mike-lovatt/lessons/articulation-slinky-swing-style-trumpet-mike-lovatt); [Hickey's jazz method sample](https://www.hickeys.com/samples/094/sku94937.pdf); Open Music Theory v2, "Swing Rhythms". These are teaching materials rather than research, and teachers disagree on the exact syllables.
+
+## Playing the progression library on trumpet
+@group Styles and improvisation
+
+A trumpet plays one note at a time, so the way to learn a progression is to **arpeggiate it** and to find a **guide-tone line** through it. All examples are in written pitch.
+
+- **Arpeggio drill:** play each chord of the progression as 1 3 5 7, one chord per bar, then 7 5 3 1, then alternate. Keep the time steady.
+- **Guide-tone drill:** play only the third or seventh of each chord, choosing whichever is closest to the last note.
+- Progressions to work through (from the theory file's **Progression standards**):
+  - **ii – V – I:** Dm7 – G7 – Cmaj7. Guide tones F – F – E, C – B – B.
+  - **Minor ii – V – i:** Bø – E7♭9 – Am. Over E7♭9 use E Phrygian dominant (the fifth mode of A harmonic minor).
+  - **Turnaround:** C – A7 – Dm7 – G7. The C♯ in A7 leads up to D.
+  - **Ragtime progression:** E7 – A7 – D7 – G7 – C. Each third falls a half step to the next seventh.
+  - **Andalusian cadence:** Am – G – F – E (in E Phrygian with G♯ on the last chord).
+  - **Bossa nova "Ipanema" move:** Cmaj7 – D7 – Dm7 – D♭7. Over D7 play D Lydian dominant (with G♯); over D♭7, aim for C♭ (B) and F, the guide tones shared with G7.
+- Brass and the harmonic series: arpeggios that sit on one valve combination (for example C – E – G on open valves, written) are the natural starting point; the others need clean valve changes.
+
+{{chords: Dm7 G7 Cmaj7 | piano}}
+
+{{chords: E7 A7 D7 G7 C | piano}}
+
+Example: the guide-tone line through written C – A7 – Dm7 – G7 – C: E (third of C) – C♯ (third of A7) – C (seventh of Dm7) – B (third of G7) – C.
+
+Exercise: choose three progressions from the list. Play each one as arpeggios for four choruses, then as a guide-tone line, then improvise using only chord tones on the beat.
+
+Sources: the music theory file, **Jazz standard progressions**, **Brazilian standard progressions** and **Flamenco harmony**; Jazz Theory (MTC130) handouts; Kelly, Rasmussen and Roberts, *A Guide to Exploring Jazz Improvisation, Book 1*.
 
 ## Practice map
 @group Intonation and practice

@@ -57,14 +57,53 @@ function Callout({ label, text }) {
   );
 }
 
+function Diagram({ block }) {
+  if (block.type === 'shapes') return <ChordShapes items={block.items} instruments={block.instruments} />;
+  return <div className="mt-4"><PitchShapes label={block.label} pcs={block.pcs} instruments={block.instruments} /></div>;
+}
+
+// A run of diagrams shown as one compact row, collapsed by default.
+// The row lists what the diagrams show; the button expands them in place.
+function DiagramGroup({ blocks }) {
+  const [open, setOpen] = useState(false);
+  const labels = blocks.flatMap((block) => (block.type === 'shapes' ? block.items.map((item) => item.name) : [block.label]));
+  const instruments = [...new Set(blocks.flatMap((block) => block.instruments))];
+  const count = labels.length;
+  return (
+    <div className="mt-4 rounded-2xl border border-white/10 bg-slate-950/30 p-3">
+      <div className="flex flex-wrap items-center gap-2">
+        <button type="button" onClick={() => setOpen((value) => !value)} aria-expanded={open}
+          className="glass-btn shrink-0 px-3 py-1.5 text-xs font-semibold text-slate-100">
+          {open ? 'Hide diagrams' : `Show ${count === 1 ? 'diagram' : `${count} diagrams`}`}
+        </button>
+        <span className="text-[11px] uppercase tracking-[0.15em] text-slate-500">{instruments.join(' · ')}</span>
+      </div>
+      {!open && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {labels.map((label, index) => (
+            <span key={`${label}-${index}`} className="rounded-lg bg-white/5 px-2 py-1 text-xs font-medium text-slate-300">{label}</span>
+          ))}
+        </div>
+      )}
+      {open && blocks.map((block, index) => <Diagram key={index} block={block} />)}
+    </div>
+  );
+}
+
+const isDiagram = (block) => block.type === 'shapes' || block.type === 'pitches';
+
 function Blocks({ blocks }) {
-  return blocks.map((block, index) => {
-    if (block.type === 'shapes') {
-      return <ChordShapes key={index} items={block.items} instruments={block.instruments} />;
-    }
-    if (block.type === 'pitches') {
-      return <PitchShapes key={index} label={block.label} pcs={block.pcs} instruments={block.instruments} />;
-    }
+  // Merge consecutive diagram blocks into one group.
+  const items = [];
+  blocks.forEach((block) => {
+    const last = items[items.length - 1];
+    if (isDiagram(block) && last?.type === 'diagram-group') last.blocks.push(block);
+    else if (isDiagram(block)) items.push({ type: 'diagram-group', blocks: [block] });
+    else items.push(block);
+  });
+
+  return items.map((block, index) => {
+    if (block.type === 'diagram-group') return <DiagramGroup key={index} blocks={block.blocks} />;
     if (block.type === 'circle') return <CircleOfFifths key={index} />;
     if (block.type === 'h3') {
       return (

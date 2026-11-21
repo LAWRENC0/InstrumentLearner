@@ -33,3 +33,8 @@ desktop.ini
 *.swp
 
 # ideas.txt
+# Downloaded source PDFs for the knowledge base (large, kept out of git).
+# The catalogue of what is here, with licences and links, is knowledge/sources/SOURCES.md.
+knowledge/sources/**/*.pdf
+# Plain-text extractions of the source PDFs (regenerated from the PDFs).
+knowledge/sources/_text/
