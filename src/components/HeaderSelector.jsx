@@ -1,4 +1,5 @@
 import BottomSheet from './BottomSheet';
+import { feedbackUrl, useFeedbackTopic } from '../utils/feedback';
 
 const INSTRUMENTS = [
   { id: 'guitar', label: 'Guitar' },
@@ -64,6 +65,9 @@ export default function HeaderSelector({
   const showExercise = instrument === 'guitar' && exercises?.length > 0;
   const subtitle = [mode, showDifficulty ? difficulty : null, showExercise ? exercise : null]
     .filter(Boolean).join(' · ');
+  const theoryTopic = useFeedbackTopic();
+  const where = [instrument === null ? 'Start screen' : instrumentLabel, instrument === null ? null : subtitle,
+    instrument === 'theory' ? theoryTopic : null].filter(Boolean).join(' › ');
 
   return (
     <>
@@ -119,6 +123,16 @@ export default function HeaderSelector({
             </div>
           </Section>
         )}
+        <Section title="Feedback">
+          <a href={feedbackUrl(where)} target="_blank" rel="noreferrer"
+            onClick={(event) => { event.currentTarget.href = feedbackUrl(where); }}
+            className="glass-btn block px-4 py-3 text-left text-sm font-semibold text-slate-100">
+            Send feedback or a question
+            <span className="mt-0.5 block text-xs font-normal leading-snug text-slate-400">
+              Opens GitHub (free account needed). The page you are on is filled in for you.
+            </span>
+          </a>
+        </Section>
       </BottomSheet>
     </>
   );

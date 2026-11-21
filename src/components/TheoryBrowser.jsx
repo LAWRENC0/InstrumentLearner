@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { PARSED_KNOWLEDGE, parseInline, topicSearchText } from '../knowledge/parseKnowledge';
 import ChordShapes, { PitchShapes } from './ChordShapes';
 import CircleOfFifths from './CircleOfFifths';
 import { ArpeggioMap, ScaleChordMap, VoicingMap } from './NeckMaps';
 import { useShowFretNumbers } from '../utils/preferences';
+import { setFeedbackTopic } from '../utils/feedback';
 
 function Inline({ text }) {
   return parseInline(text).map((part, index) => {
@@ -175,6 +176,11 @@ export default function TheoryBrowser() {
   const [query, setQuery] = useState('');
 
   const file = PARSED_KNOWLEDGE.find((item) => item.id === fileId);
+  // Tell the feedback button which file and topic are on screen.
+  useEffect(() => {
+    setFeedbackTopic(openTopic === null ? file.title : `${file.title} › ${file.topics[openTopic].title}`);
+    return () => setFeedbackTopic(null);
+  }, [file, openTopic]);
   const needle = query.trim().toLowerCase();
   const visibleTopics = useMemo(() => file.topics
     .map((topic, index) => ({ topic, index }))

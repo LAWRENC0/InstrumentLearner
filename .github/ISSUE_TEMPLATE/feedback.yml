@@ -1,0 +1,34 @@
+name: Feedback
+description: A question, a comment on the layout, a mistake you spotted, or an idea for Instrument Learner.
+title: "[Feedback] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Instrument Learner! The "Where" field was filled in by the app, so you only need to pick a type and write your message.
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type
+      options:
+        - Question
+        - Layout or design
+        - Bug (something doesn't work)
+        - Content error (wrong note, chord or fact)
+        - Idea or request
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: where
+    attributes:
+      label: Where in the app
+      description: Filled in automatically. Edit it if it's not quite right.
+  - type: textarea
+    id: message
+    attributes:
+      label: Message
+      description: What did you notice, or what would you like? Screenshots are welcome (paste or drag them in).
+    validations:
+      required: true

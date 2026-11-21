@@ -9,6 +9,10 @@ export default defineConfig({
     port: 5173,
   },
   base: '/InstrumentLearner/',
+  // Shown in feedback issues so reports can be matched to a build.
+  define: {
+    __BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+  },
   build: {
     outDir: 'docs',
   },
